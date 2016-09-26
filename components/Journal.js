@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
-import NavLink from './NavLink'
 
-exports class Navbar extends Component {
+export class Journal extends Component {
   constructor(props) {
     super(props)
   }
-
   render() {
     return (
-      
+      <div className="journal">Journal yo</div>
     )
   }
 }

@@ -4,4 +4,9 @@ export class SignIn extends Component {
   constructor(props) {
     super(props)
   }
+  render() {
+    return (
+      <div className="sign-in">Sign in friends</div>
+    )
+  }
 }

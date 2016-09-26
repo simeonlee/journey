@@ -1,0 +1,14 @@
+.second {
+  margin: 20px;
+}
+
+.custom-header {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  text-align: center;
+}
+
+.links {
+  flex: 1;
+}
