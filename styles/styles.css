@@ -10,7 +10,7 @@
 }
 
 .nav-active {
-  background-color: #FFFFFF;
+  box-shadow: 0 2px 0 0 #00bfff;
 }
 
 .navbar-format {
