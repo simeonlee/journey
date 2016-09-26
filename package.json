@@ -4,6 +4,7 @@
   "description": "A modern journal for improving mood",
   "main": "client/index.js",
   "scripts": {
+    // "start": "concurrently --kill-others \"nodemon server/server.js\" \"npm run webpack\" \"npm run watch-css\"",
     "start": "nodemon server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack --progress --colors --watch --inline --content-base .",
@@ -52,6 +53,7 @@
     "http-server": "^0.8.5",
     "mocha": "^3.0.2",
     "node-sass": "^3.10.0",
+    "sass-loader": "^4.0.2",
     "sinon": "^1.17.6",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.1"
