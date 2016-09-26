@@ -39,3 +39,10 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+#floobits
+.floo
+.flooignore
+
+#webpack build
+build
