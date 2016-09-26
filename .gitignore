@@ -44,5 +44,9 @@ jspm_packages
 .floo
 .flooignore
 
+<<<<<<< 71c2f741d435fa4187f806bbc7ebcb00b57bbc4c
 # build
 dist
+
+#authentication
+keys.js
