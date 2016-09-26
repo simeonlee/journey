@@ -6,7 +6,7 @@ export class Home extends Component {
   }
   render() {
     return (
-      <div className="">
+      <div className="col-md-offset-2 col-md-8">
         <h1>
           Home
         </h1>
