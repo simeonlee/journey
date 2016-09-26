@@ -11,7 +11,6 @@ export class App extends React.Component {
       <div>
         <Nav />
       </div>
-      {this.props.children}
     )
   }
 }
