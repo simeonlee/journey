@@ -6,7 +6,9 @@
   "scripts": {
     "start": "webpack --inline --content-base .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-server": "nodemon server/server.js"
+    "start-server": "nodemon server/server.js",
+    "build-css": "node-sass --include-path scss client/styles/scss/main.scss client/styles/css/main.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
   },
   "repository": {
     "type": "git",
