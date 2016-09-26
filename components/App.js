@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Nav } from './Nav'
-import { Home } from './Home'
+
 
 export class App extends React.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export class App extends React.Component {
     return (
       <div>
         <Nav />
-        {this.props.children || <Home/>}
+        {this.props.children}
       </div>
     )
   }
