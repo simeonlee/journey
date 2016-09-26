@@ -8,7 +8,7 @@ export class Profile extends Component {
     return (
       <div>
         <div>
-          Profile
+          Home
         </div>
       </div>
     )

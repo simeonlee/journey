@@ -9,6 +9,6 @@
   text-align: center;
 }
 
-.links {
-  flex: 1;
+.page-container {
+  margin-top: 50px;
 }

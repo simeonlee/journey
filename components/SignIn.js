@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Nav } from './Nav'
 
 export class SignIn extends Component {
   constructor(props) {
@@ -6,8 +7,10 @@ export class SignIn extends Component {
   }
   render() {
     return (
-      <div className="sign-in">
-        <Nav />
+      <div>
+        <div>
+          What up
+        </div>
       </div>
     )
   }
