@@ -15,7 +15,7 @@ render((
       <Route path="journal" component={Journal}/>
       <Route path="/dashboard" component={Dashboard}/>
       <Route path="/profile" component={Profile}/>
-      <Route path="/signin" component={SignIn}/>
+      <Route path="/login" component={SignIn}/>
     </Route>
   </Router>
 ), document.getElementById('app'))
