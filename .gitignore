@@ -49,4 +49,4 @@ jspm_packages
 dist
 
 #authentication
-keys.js
+auth.js
