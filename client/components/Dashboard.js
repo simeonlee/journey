@@ -39,9 +39,9 @@ export class Dashboard extends Component {
 
     var globe = new THREE.Mesh(new THREE.TetrahedronGeometry(100, 4), golf);
     var sprite1 = new SpriteText2D("Welcome to Journey", { align: textAlign.center,  font: '18px Helvetica', fillStyle: '#000000' , antialias: false });
-    var sprite2 = new SpriteText2D("Let's embark on your path together", { align: textAlign.center,  font: '18px Helvetica', fillStyle: '#000000' , antialias: false });
+    var sprite2 = new SpriteText2D("Let's experience your journey together", { align: textAlign.center,  font: '18px Helvetica', fillStyle: '#000000' , antialias: false });
     var sprite3 = new SpriteText2D("This place will be your memory palace", { align: textAlign.center,  font: '18px Helvetica', fillStyle: '#000000' , antialias: false });
-    var sprite4 = new SpriteText2D("Uncage your thoughts in this safe place", { align: textAlign.center,  font: '18px Helvetica', fillStyle: '#000000' , antialias: false });
+    var sprite4 = new SpriteText2D("Release your thoughts in this safe place", { align: textAlign.center,  font: '18px Helvetica', fillStyle: '#000000' , antialias: false });
 
     globe.add(sprite1);
     globe.add(sprite2);
