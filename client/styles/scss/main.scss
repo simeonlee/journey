@@ -1,5 +1,6 @@
 $major: 'Cinzel';
 $minor: 'Raleway';
+$haze: #eeeeee;
 
 @import 'nav';
 
@@ -33,23 +34,12 @@ ul {
   list-style-type: none;
 }
 
-.custom-header {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  text-align: center;
-}
-
-.page-container {
-  margin-top: 50px;
-}
-
-.margin-right {
-  margin-right: 15px;
-}
-
 .transparent {
   opacity: 0.9;
+}
+
+.haze-background {
+  background-color: $haze !important;
 }
 
 .btn {
