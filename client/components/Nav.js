@@ -18,7 +18,7 @@ export class Nav extends Component {
             <div className="navbar-header custom-header">
               <IndexLink to="/" className="navbar-brand">Journey</IndexLink>
             </div>
-            <ul className="nav navbar-nav navbar-right second navbar-format margin-right">
+            <ul className="nav navbar-nav navbar-right second navbar-format">
               <li className="navbar-links"><Link activeClassName="nav-active" to="/profile">Profile</Link></li>
               <li className="navbar-links"><Link activeClassName="nav-active" to="/signin">Sign In</Link></li>
             </ul>
