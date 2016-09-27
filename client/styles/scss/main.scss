@@ -44,6 +44,24 @@ ul {
   margin-top: 50px;
 }
 
-// .margin-right {
-//   margin-right: 15px;
-// }
+.margin-right {
+  margin-right: 15px;
+}
+
+.transparent {
+  opacity: 0.9;
+}
+
+.btn {
+    border: 1px solid #000;
+    border-radius: 5px;
+    color: #000;
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background: #000;
+    color: #fff;
+}

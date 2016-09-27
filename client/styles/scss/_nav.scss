@@ -1,5 +1,6 @@
 $major: 'Cinzel';
 $minor: 'Raleway';
+$haze: #eeeeee;
 
 nav {
   z-index: 9999999;
@@ -14,13 +15,17 @@ nav button {
   font-size: 26px;
 }
 
+.haze {
+  background-color: $haze !important;
+}
+
 .wrap {
   border: 0 !important;
   border-radius: 0 !important;
 }
 
 .navbar-toggle {
-  background-color: $smoke !important;
+  background-color: $haze !important;
 }
 
 .navbar-collapse {
