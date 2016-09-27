@@ -1,0 +1,68 @@
+$major: 'Cinzel';
+$minor: 'Raleway';
+$silver: #BDC3C7;
+
+nav {
+  z-index: 9999999;
+}
+
+nav button {
+  border: 0 !important;
+}
+
+.brand-centered {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.navbar-brand {
+  height: 60px;
+  font-family: $major, serif;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left, .navbar-right {
+  width: 40%;
+}
+
+.nav > li {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* line height is 20px by default so add 30px top and bottom to equal the new .navbar-brand 80px height */
+.nav > li > a {
+  padding-top: 22px;
+  padding-bottom: 22px;
+  font-size: 16px;
+}
+.navbar-toggle {
+  padding: 0;
+  margin: 25px 15px 25px 0;
+}
+
+.wrap {
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.navbar-collapse {
+  border: 0px solid rgba(255, 255, 255, 0.0) !important;
+}
+
+.nav-active {
+  box-shadow: 0 2px 0 0 $silver;
+}
+
+
+.navbar-nav > li > .dropdown-menu {
+  z-index: 9999999;
+}
