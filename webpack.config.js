@@ -1,11 +1,11 @@
 module.exports = {
   entry: './client/index.js',
-
   output: {
     path: __dirname + '/dist/',
     filename: 'bundle.js'
   },
-
+  debug: true,
+  devtool: "#eval-source-map",
   module: {
     loaders: [
       {
