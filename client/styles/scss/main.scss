@@ -1,5 +1,36 @@
+$major: 'Cinzel';
+$minor: 'Raleway';
+
+@import 'nav';
+
 * {
   font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  &:link {
+    text-decoration: none;
+    color: black;
+  }
+  &:visited {
+    text-decoration: none;
+    color: black;
+  }
+  &:hover {
+    text-decoration: none;
+    color: black;
+  }
+  &:active {
+    text-decoration: none;
+    color: black;
+  }
+}
+
+ul {
+  list-style-type: none;
 }
 
 .custom-header {
@@ -13,6 +44,6 @@
   margin-top: 50px;
 }
 
-.margin-right {
-  margin-right: 15px;
-}
+// .margin-right {
+//   margin-right: 15px;
+// }
