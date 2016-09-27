@@ -1,3 +1,7 @@
+// nav {
+//   z-index: 9999999;
+// }
+
 .custom-header {
   position: absolute;
   top: 0;
@@ -24,4 +28,21 @@
 
 .margin-right {
   margin-right: 15px;
+}
+
+.dashboard-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -9999999;
+}
+
+#globe {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
