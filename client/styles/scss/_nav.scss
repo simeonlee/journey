@@ -1,0 +1,41 @@
+$major: 'Cinzel';
+$minor: 'Raleway';
+
+nav {
+  z-index: 9999999;
+}
+
+nav button {
+  border: 0 !important;
+}
+
+.navbar-brand {
+  font-family: $major, serif;
+  font-size: 26px;
+}
+
+.wrap {
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.navbar-toggle {
+  background-color: $smoke !important;
+}
+
+.navbar-collapse {
+  border: 0px solid rgba(255, 255, 255, 0.0) !important;
+}
+
+.nav-active {
+  box-shadow: 0 2px 0 0 #00bfff;
+}
+
+.navbar-format {
+  width: 40%;
+}
+
+.navbar-links {
+  width: 50%;
+  text-align: center;
+}
