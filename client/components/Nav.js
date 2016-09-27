@@ -28,7 +28,7 @@ export class Nav extends Component {
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li><Link activeClassName="nav-active" to="/profile">Profile</Link></li>
-              <li><Link activeClassName="nav-active" to="/signin">Log In</Link></li>
+              <li><Link activeClassName="nav-active" to="/login">Log In</Link></li>
             </ul>
           </div>
         </div>
