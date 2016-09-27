@@ -20,13 +20,13 @@ const config = {
   src: {
     html: ['./client/**/*.html', './client/*.ico'],
     css: './client/styles/scss/*.scss',
-    js: './client/index.js',
+    js: ['./client/index.js', './client/**/*.js'],
     img: ['./client/images/**', './client/images/**/*', '!./client/images/**/*.sketch']
   },
   build: {
     html: './dist/',
     css: './dist/styles/css/',
-    js: './dist/',
+    js: '',
     img: './dist/images/'
   }
 };
@@ -67,9 +67,9 @@ gulp.task('build-css', function() {
 });
 
 gulp.task('webpack', function() {
-  return gulp.src(config.src.js)
+  return gulp.src('./client/index.js')
     .pipe(webpack(require('./webpack.config.js')))
-    .pipe(gulp.dest(config.build.js));
+    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('copy-html-files', function () {
