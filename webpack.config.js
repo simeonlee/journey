@@ -1,14 +1,18 @@
 module.exports = {
-  entry: './index.js',
-
+  entry: './client/index.js',
   output: {
-    filename: 'bundle.js',
-    path: __dirname + '/build'
+    path: __dirname + '/dist/',
+    filename: 'bundle.js'
   },
-
+  debug: true,
+  devtool: "#eval-source-map",
   module: {
     loaders: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader?presets[]=es2015&presets[]=react' }
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader?presets[]=es2015&presets[]=react'
+      }
     ]
   }
 }
