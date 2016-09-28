@@ -21,12 +21,14 @@ const config = {
     html: ['./client/**/*.html', './client/*.ico'],
     css: './client/styles/scss/*.scss',
     js: ['./client/index.js', './client/**/*.js'],
+    json: './client/**/*.json',
     img: ['./client/images/**', './client/images/**/*', '!./client/images/**/*.sketch']
   },
   build: {
     html: './dist/',
     css: './dist/styles/css/',
     js: '',
+    json: './dist/',
     img: './dist/images/'
   }
 };
@@ -72,6 +74,12 @@ gulp.task('webpack', function() {
     .pipe(gulp.dest('./dist/'));
 });
 
+gulp.task('copy-json-files', function () {
+  gulp.src(config.src.json)
+    .pipe(plumber())
+    .pipe(gulp.dest(config.build.json));
+});
+
 gulp.task('copy-html-files', function () {
   gulp.src(config.src.html)
     .pipe(plumber())
@@ -103,13 +111,14 @@ gulp.task('stop', shell.task([
 gulp.task('build', function() {
   runSequence(
     'clean',
-    ['build-css', 'webpack', 'copy-html-files', 'image']
+    ['build-css', 'webpack', 'copy-json-files', 'copy-html-files', 'image']
   );
 });
 
 gulp.task('watch', function() {
   gulp.watch(config.src.css, ['build-css']);
   gulp.watch(config.src.js, ['webpack']);
+  gulp.watch(config.src.json, ['copy-json-files']);
   gulp.watch(config.src.html, ['copy-html-files']);
   gulp.watch(config.src.img, ['image']);
 });
