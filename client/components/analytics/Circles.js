@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
-export default class Affirmations extends Component {
+export default class Circles extends Component {
   constructor(props) {
     super(props);
   }
@@ -16,7 +16,7 @@ export default class Affirmations extends Component {
 
   render() {
     return (
-      <div></div>
+      <div className="analytics-container"></div>
     )
   }
   
@@ -57,12 +57,12 @@ export default class Affirmations extends Component {
     this.x = d3.scale.linear().range([0, this.r]);
     this.y = d3.scale.linear().range([0, this.r]);
 
-    // Set Radius
-    this.r = (this.w < this.h) ? this.w : this.h;
+    // // Set Radius
+    // this.r = (this.w < this.h) ? this.w : this.h;
 
-    // Ranges
-    this.x = d3.scale.linear().range([0, this.r]);
-    this.y = d3.scale.linear().range([0, this.r]);
+    // // Ranges
+    // this.x = d3.scale.linear().range([0, this.r]);
+    // this.y = d3.scale.linear().range([0, this.r]);
 
     // set svg element's size and position
     d3.select(ReactDOM.findDOMNode(this)).select('svg')
