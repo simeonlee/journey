@@ -1,32 +1,31 @@
 text {
   font-size: 9px;
-  font-weight: 600;
   pointer-events: none;
-  font-family: 'Open Sans', sans-serif;
-  text-shadow: 1px 1px #fff;
+  // text-shadow: 1px 1px #fff;
 }
 
 text.parent {
   font-size: 16px;
-  fill: #1f77b4;
+  fill: #404040;
 }
 
 circle {
   fill: #ffffff;
-  /*stroke: #999;*/
+  fill-opacity: .8;
   pointer-events: all;
   cursor: pointer;
+  // stroke: #999;
 }
 
 circle.parent {
-  fill: rgba(70, 129, 179, 0.5);
-  fill-opacity: .1;
-  /*stroke: steelblue;*/
+  fill: #C0C0C0;
+  fill-opacity: .2;
 }
 
 circle.parent:hover {
-  stroke: #73adde;
-  stroke-width: .5px;
+  fill-opacity: .4;
+  // stroke: #73adde;
+  // stroke-width: .5px;
 }
 
 circle.child {
