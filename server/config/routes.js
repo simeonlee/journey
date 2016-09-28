@@ -1,9 +1,9 @@
 var passport = require('passport');
 
 module.exports = (app, express) => {
-  app.post('/auth/facebook',
-    passport.authenticate('facebook', { successRedirect: '/',
-                                        failureRedirect: '/login' }),
+
+  app.get('/auth/facebook',
+    passport.authenticate('facebook', {scope: ['email']}),
     (req, res) => {
       console.log('POST REQ TO LOGIN/FACEBOOK!!!')
       res.send();
@@ -11,10 +11,10 @@ module.exports = (app, express) => {
   );
 
   // handle the callback after facebook has authenticated the user
-  app.get('/login/facebook/callback',
+  app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect : '/home',
-      failureRedirect : '/'
+      successRedirect : '/',
+      failureRedirect : '/login'
     })
   );
 }
