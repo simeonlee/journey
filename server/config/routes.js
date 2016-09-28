@@ -1,9 +1,9 @@
 var passport = require('passport');
 
 module.exports = (app, express) => {
-  app.post('/login/facebook',
-    passport.authenticate('facebook', { successRedirect: '/login/facebook/callback',
-                                        failureRedirect: '/dashboard' }),
+  app.post('/auth/facebook',
+    passport.authenticate('facebook', { successRedirect: '/',
+                                        failureRedirect: '/login' }),
     (req, res) => {
       console.log('POST REQ TO LOGIN/FACEBOOK!!!')
       res.send();

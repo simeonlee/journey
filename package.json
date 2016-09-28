@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/scrumptiousAmpersand/journal#readme",
   "dependencies": {
+    "axios": "^0.14.0",
     "babel-loader": "^6.2.5",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",

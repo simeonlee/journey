@@ -2,11 +2,11 @@ var express = require('express');
 var app = express();
 var passport = require('passport');
 
-// configure server with middleware.
-require('./config/middleware.js')(app, express, passport);
-
 // configure passport.
 require('./config/authentication.js')(passport);
+
+// configure server with middleware.
+require('./config/middleware.js')(app, express, passport);
 
 // configure server with routing.
 require('./config/routes.js')(app, express, passport);
