@@ -6,6 +6,10 @@ module.exports = function(sequelize) {
       type: Sequelize.STRING(20),
       unique: true
     },
+    facebookID: {
+      type: Sequelize.STRING,
+      unique: true
+    },
     password: Sequelize.STRING(30),
     email: Sequelize.STRING(50),
     phone: Sequelize.STRING(20),
