@@ -8,23 +8,16 @@ export class SignIn extends Component {
   }
 
   responseFacebook (response, a) {
-    console.log(response, a);
+    console.log('response', response, a);
     //anything else you want to do(save to localStorage)...
     //TODO: Replace response.userId with the actual userId.
-    axios.post(`/user?ID=${response.userId}`);
+    axios.post(`/user?ID=${response}`);
   }
 
   render() {
     return (
       <div>
-        <FacebookLogin socialId="3888420283131154eaae86dcd03afe5e"
-                       language="en_US"
-                       scope="public_profile,email"
-                       responseHandler={this.responseFacebook}
-                       xfbml={true}
-                       version="v2.5"
-                       class="facebook-login"
-                       buttonText="Login With Facebook"/>
+        <a href="/auth/facebook">Login with Facebook</a>
       </div>
     )
   }
