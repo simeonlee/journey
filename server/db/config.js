@@ -45,4 +45,15 @@ User.hasMany(Amazing);
 Reflection.belongsTo(User, {foreignKey: 'userId'});
 User.hasMany(Reflection);
 
-module.exports = sequelize;
+module.exports = {
+  sequelize: sequelize,
+  User: User,
+  Address: Note,
+  Interaction: Interaction,
+  ToDo: ToDo,
+  Gratitude: Gratitude,
+  Outlook: Outlook,
+  Affirmation: Affirmation,
+  Amazing: Amazing,
+  Reflection: Reflection
+};
