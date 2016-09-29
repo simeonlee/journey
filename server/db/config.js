@@ -1,7 +1,7 @@
 var settings = require('../../settings').db;
 var Sequelize = require('sequelize');
 
-var sequelize = new Sequelize('Journey', settings.username, settings.password, {
+var sequelize = new Sequelize('journey', settings.username, settings.password, {
   host: 'localhost',
   dialect: 'mysql',
   port: 3306,
@@ -9,6 +9,7 @@ var sequelize = new Sequelize('Journey', settings.username, settings.password, {
 });
 
 var User = require('./models/users/user')(sequelize);
+var FacebookUser = require('./models/users/facebookUser')(sequelize);
 var Address = require('./models/users/address')(sequelize);
 var Interaction = require('./models/users/interaction')(sequelize);
 
@@ -20,6 +21,9 @@ var Outlook = require('./models/journals/journeys/outlook')(sequelize);
 var Affirmation = require('./models/journals/journeys/affirmation')(sequelize);
 var Amazing = require('./models/journals/journeys/amazing')(sequelize);
 var Reflection = require('./models/journals/journeys/reflection')(sequelize);
+
+FacebookUser.belongsTo(User, {foreignKey: 'userId'});
+User.hasOne(FacebookUser);
 
 Address.belongsTo(User, {foreignKey: 'userId'});
 Interaction.belongsTo(User, {foreignKey: 'userId'});
@@ -48,6 +52,7 @@ User.hasMany(Reflection);
 module.exports = {
   sequelize: sequelize,
   User: User,
+  FacebookUser: FacebookUser,
   Address: Note,
   Interaction: Interaction,
   ToDo: ToDo,
