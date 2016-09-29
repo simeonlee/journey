@@ -3,7 +3,7 @@ var app = express();
 var passport = require('passport');
 
 // configure passport.
-require('./config/authentication.js')(passport);
+require('./config/passport.js')(passport);
 
 // configure server with middleware.
 require('./config/middleware.js')(app, express, passport);
@@ -12,7 +12,7 @@ require('./config/middleware.js')(app, express, passport);
 require('./config/routes.js')(app, express, passport);
 
 /* === connect database to server === */
-var sequelize = require('./db/config');
+var { sequelize } = require('./db/config');
 
 sequelize
   .authenticate()
