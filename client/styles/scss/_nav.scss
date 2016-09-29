@@ -1,7 +1,3 @@
-$major: 'Cinzel';
-$minor: 'Raleway';
-$silver: #BDC3C7;
-
 nav {
   z-index: 9999999;
 }
@@ -38,7 +34,7 @@ nav button {
   justify-content: center;
 }
 
-/* line height is 20px by default so add 30px top and bottom to equal the new .navbar-brand 80px height */
+/* line height is 16px so add 44px top and bottom to equal the new .navbar-brand 60px height */
 .nav > li > a {
   padding-top: 22px;
   padding-bottom: 22px;

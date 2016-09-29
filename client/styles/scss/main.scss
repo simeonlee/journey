@@ -1,13 +1,20 @@
 $major: 'Cinzel';
 $minor: 'Raleway';
-$haze: #eeeeee;
+$haze: #ECECEC;
+$porcelain: #ECF0F1;
+$silver: #BDC3C7;
 
 @import 'nav';
-@import 'analytics';
+@import 'circles';
+@import 'calendar';
 
 * {
   font-family: 'Raleway', sans-serif;
   font-weight: 300;
+}
+
+body {
+  background-color: $haze;
 }
 
 a {
@@ -39,8 +46,16 @@ ul {
   opacity: 0.9;
 }
 
+.white-background {
+  background-color: #FFFFFF !important;
+}
+
 .haze-background {
   background-color: $haze !important;
+}
+
+.porcelain-background {
+  background-color: $porcelain !important;
 }
 
 .btn {
@@ -55,4 +70,12 @@ ul {
 .btn:hover {
     background: #000;
     color: #fff;
+}
+
+.dashboard-container {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
