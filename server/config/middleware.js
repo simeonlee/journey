@@ -6,7 +6,6 @@ module.exports = (app, express) => {
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
   app.use(express.static(__dirname + '/../../dist'));
-
   // The '/scripts' endpoint below serves up 'node_modules' buried in the
   // root directory which is inaccessible by index.html from /client
   // See article:
