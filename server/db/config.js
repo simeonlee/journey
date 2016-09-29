@@ -26,24 +26,24 @@ Address.belongsTo(User, {foreignKey: 'userId'});
 Interaction.belongsTo(User, {foreignKey: 'userId'});
 
 Note.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Note);
+User.hasMany(Note, {as: 'Notes'});
 
 ToDo.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(ToDo);
+User.hasMany(ToDo, {as: 'ToDos'});
 
 Gratitude.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Gratitude);
+User.hasMany(Gratitude, {as: 'Gratitudes'});
 
 Outlook.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Outlook);
+User.hasMany(Outlook, {as: 'Outlooks'});
 
 Affirmation.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Affirmation);
+User.hasMany(Affirmation, {as: 'Affirmations'});
 
 Amazing.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Amazing);
+User.hasMany(Amazing, {as: 'Amazings'});
 
 Reflection.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Reflection);
+User.hasMany(Reflection, {as: 'Reflections'});
 
 module.exports = sequelize;
