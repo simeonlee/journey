@@ -8,6 +8,7 @@ export class Journal extends Component {
 
   componentWillMount() {
     this.setState({ week: getWeek(0)})
+    fetch('localhost:3000/api/journal/' + this.state.userId + '/' + this.state.date)
   }
 
   render() {

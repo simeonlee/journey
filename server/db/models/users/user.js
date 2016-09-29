@@ -21,5 +21,54 @@ module.exports = function(sequelize, Affirmation, Amazing, Gratitude, Outlook, R
     createdAt: Sequelize.DATE
   });
 
+  var getEntriesOnDate = (req, res, next, userId, date) => {
+    var results = []
+    User.find({
+      where: {
+        userId: userId
+      }
+    })
+    .then((user) => {
+      user.getAffirmations({
+        where: {
+          datetime: date
+        }
+      })
+      .then((affirmation) => {
+        results.push(affirmation)
+        user.getAmazings({
+          where: {
+            datetime: date
+          }
+        })
+        .then((amazing) => {
+          results.push(amazing)
+          user.getGratitudes({
+            where: {
+              datetime: date
+            }
+          })
+          .then((gratitude) => {
+            results.push(gratitude)
+            user.getOutlooks({
+              where: {
+                datetime: date
+              }
+            })
+            .then((outlook) => {
+              results.push(outlook)
+              user.getReflections({
+                where: {
+                  datetime: date
+                }
+              })
+              .then(reflection => {
+                results.push(reflection)
+                res.send(results);
+              })
+      })
+    })
+  }
+
   return User;
 };

@@ -11,7 +11,8 @@ require('./config/middleware.js')(app, express);
 require('./config/routes.js')(app, express);
 
 /* === connect database to server === */
-var sequelize = require('./db/config');
+var controllers = require('./db/config');
+var sequelize = controllers.sequelize;
 
 sequelize
   .authenticate()
