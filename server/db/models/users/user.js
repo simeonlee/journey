@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 
-module.exports = function(sequelize) {
+module.exports = function(sequelize, Affirmation, Amazing, Gratitude, Outlook, Reflection) {
   var User = sequelize.define('users', {
     username: Sequelize.STRING(20),
     password: Sequelize.STRING(30),
