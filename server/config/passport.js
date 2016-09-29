@@ -20,24 +20,30 @@ module.exports = (passport) => {
         // return user from db.
         User.findOrCreate({
           where: {
-            username: 'connorch'
+            username: 'TESTING123'
           },
           defaults: {
-            facebookID: '12345',
-            password: 'password',
-            email: 'connorchev@gmail.com',
+            password: '12345',
+            email: 'avocado@gmail.com',
             phone: '716-472-9022',
-            firstName: 'Connor',
-            lastName: 'Chevli',
+            firstName: 'Chris',
+            lastName: 'Avocado',
             age: 23,
             gender: 'male',
             bio: 'male',
+            job: 'fulltime avocado',
+            industry: 'avacadoing',
+            employer: 'lettuce',
+            wantsEmails: 0,
+            wantsTexts: 1,
+            lastLoginDate: Date.now(),
+            createdAt: Date.now()
           }
         })
         .spread(function(user, created) {
-          console.log(user.get({
-            plain: true
-          }))
+          // console.log(user.get({
+          //   plain: true
+          // }))
           console.log(created)
 
           /*
@@ -50,21 +56,64 @@ module.exports = (passport) => {
             }
             created: true
           */
-        })
-        res.send();
-        return done(null, profile);
 
+          passport.serializeUser(function(user, done) {
+            done(null, user);
+          });
+
+          passport.deserializeUser(function(id, done) {
+            User.findById(id, function(err, user) {
+              done(err, user);
+            });
+          });
+        })
       });
     }
   ));
-
-  passport.serializeUser(function(user, done) {
-    done(null, user.id);
-  });
-
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
-    });
-  });
 }
+
+
+//--------
+//uncomment below and push command b to populate database with avocado dummy data
+//--------
+
+
+// User.findOrCreate({
+//   where: {
+//     username: 'avocado'
+//   },
+//   defaults: {
+//     password: '12345',
+//     email: 'avocado@gmail.com',
+//     phone: '716-472-9022',
+//     firstName: 'Chris',
+//     lastName: 'Avocado',
+//     age: 23,
+//     gender: 'male',
+//     bio: 'male',
+//     job: 'fulltime avocado',
+//     industry: 'avacadoing',
+//     employer: 'lettuce',
+//     wantsEmails: 0,
+//     wantsTexts: 1,
+//     lastLoginDate: Date.now(),
+//     createdAt: Date.now()
+//   }
+// })
+// .spread(function(user, created) {
+//   console.log(user.get({
+//     plain: true
+//   }))
+//   console.log(created)
+
+//   /*
+//     {
+//       username: 'sdepold',
+//       job: 'Technical Lead JavaScript',
+//       id: 1,
+//       createdAt: Fri Mar 22 2013 21: 28: 34 GMT + 0100(CET),
+//       updatedAt: Fri Mar 22 2013 21: 28: 34 GMT + 0100(CET)
+//     }
+//     created: true
+//   */
+// })
