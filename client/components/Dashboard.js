@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Glyphicon } from 'react-bootstrap';
-import Calendar from './analytics/Calendar'
+import Calendar from './analytics/calendar/Calendar'
 import Circles from './analytics/Circles'
 import ScatterChart from './analytics/scatterchart/ScatterChart'
 import Timeline from './analytics/timeline/Timeline'
