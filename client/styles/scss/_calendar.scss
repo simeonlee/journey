@@ -1,3 +1,43 @@
+.dashboard {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.dashboard-calendar {
+  width: 80%;
+  padding: 10px;
+  border: 1px solid $silver;
+  border-radius: 3px;
+}
+
+.calendar-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.calendar-title {
+  font-size: 18px;
+  font-weight: 400;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.calendar-settings {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .calendar {
   // display: flex;
   // align-items: center;
@@ -44,4 +84,9 @@ rect.day-cell:hover {
   background: rgba(0, 0, 0, 0.85);
   border-radius: 3px;
   text-align: center;
+}
+
+.glyphicon.glyphicon-triangle-bottom {
+    margin-left: 4px;
+    font-size: 10px;
 }

@@ -3,6 +3,7 @@ $minor: 'Raleway';
 $haze: #ECECEC;
 $porcelain: #ECF0F1;
 $silver: #BDC3C7;
+$lynch: #6C7A89;
 
 @import 'nav';
 @import 'circles';
@@ -10,7 +11,8 @@ $silver: #BDC3C7;
 
 * {
   font-family: 'Raleway', sans-serif;
-  font-weight: 300;
+  font-weight: 200;
+  color: $lynch;
 }
 
 body {
@@ -70,15 +72,4 @@ ul {
 .btn:hover {
     background: #000;
     color: #fff;
-}
-
-.dashboard {
-  position: absolute;
-  top: 60px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
