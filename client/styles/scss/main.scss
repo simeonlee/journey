@@ -7,7 +7,10 @@ $lynch: #6C7A89;
 
 @import 'nav';
 @import 'circles';
+@import 'dashboard';
 @import 'calendar';
+@import 'timeline';
+@import 'interaction';
 
 * {
   font-family: 'Raleway', sans-serif;
@@ -16,7 +19,6 @@ $lynch: #6C7A89;
 }
 
 body {
-  background-color: $haze;
 }
 
 a {
