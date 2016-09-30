@@ -7,16 +7,7 @@ export default class Calendar extends Component {
     this.state = {
       width: 900,
       height: 120,
-      data: [
-        {
-          date: new Date(),
-          count: 2
-        },
-        {
-          date: new Date(),
-          count: 2
-        },
-      ]
+      data: []
     }
 
     this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -31,7 +22,7 @@ export default class Calendar extends Component {
     this.tooltip;
     this.tooltipEnabled = true;
     
-    this.colorRange = ['#FFFFFF', '#6C7A89'];
+    this.colorRange = ['#ECECEC', '#6C7A89'];
 
     this.percent = d3.format(".1%");
     this.format = d3.time.format("%Y-%m-%d");
@@ -59,6 +50,15 @@ export default class Calendar extends Component {
     this.setState({ width: parentNode[0][0].offsetWidth });
   }
 
+  generateTestData(dateRange) {
+    var data = {};
+    for (var i = dateRange.length / 5; i < dateRange.length; i++) {
+      data[dateRange[i]] = { count: Math.floor(Math.random() * 4) }
+    }
+    console.log(data);
+    return data;
+  }
+
   setDates() {
     /**
      * Divide this.state.width by 'SQUARE_LENGTH' and 'SQUARE_PADDING' to get
@@ -70,19 +70,12 @@ export default class Calendar extends Component {
 
     this.now = moment().endOf('day').toDate();
 
-
-    this.dateRange = d3.time.days(this.startDate, this.now); // generates an array of date objects within the specified range
-
+    // Generate an array of date objects within the specified range
+    this.dateRange = d3.time.days(this.startDate, this.now); 
     console.log(this.dateRange);
 
-    this.testData = {};
-    for (var i = this.dateRange.length / 5; i < this.dateRange.length; i++) {
-      this.testData[this.dateRange[i]] = { count: Math.floor(Math.random() * 4) }
-    }
-
-    console.log(this.testData);
-
-    this.setState.data = this.testData;
+    // Generate dummy data of random counts for every day
+    this.setState.data = this.generateTestData(this.dateRange);
 
     this.firstDate = moment(this.dateRange[0]);
 
@@ -166,16 +159,16 @@ export default class Calendar extends Component {
       return this.daysOfChart.indexOf(d.toDateString()) > -1;
     }).attr('fill', (d, i) => {
       // return this.color(this.dayRects.data()[i].count);
-      console.log(this.testData);
+      console.log(this.state.data);
       console.log(d);
       console.log(i);
-      console.log(this.testData[d]);
-      if (this.testData[d]) {
-        console.log(this.testData[d].count);
-        console.log(this.color(this.testData[d].count));
-        return this.color(this.testData[d].count);
+      // console.log(this.state.data[d]);
+      if (this.state.data[d]) {
+        console.log(this.state.data[d].count);
+        console.log(this.color(this.state.data[d].count));
+        return this.color(this.state.data[d].count);
       } else {
-        return '#FFFFFF';
+        return '#ECECEC';
       }
     });
 
