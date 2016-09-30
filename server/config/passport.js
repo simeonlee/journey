@@ -12,15 +12,6 @@ module.exports = (passport) => {
       profileFields: configAuth.facebook.profileFields
     },
     function(accessToken, refreshToken, profile, done) {
-      console.log(profile._json);
-      // if user is already in DB.
-        // redirect to home with that session stored.
-
-      // if user is not in the DB.
-        // prompt user to sign up.  
-        // user will provide other info
-          //username, password, etc.
-
       User.findOrCreate(
         {
           where: {username: profile._json.displayName},
@@ -35,24 +26,16 @@ module.exports = (passport) => {
       ).spread((user, wasCreated) => {
         return done(null, user.id);
       });
-      // User.findOrCreate({}, function(err, user) {
-      //   if (err) { return done(err); }
-      //   done(null, user);
-      // });
     }
   ));
 
   passport.serializeUser(function(user, done) {
-    console.log('IM SERIALIZING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    console.log('user', user);
     done(null, user);
   });
 
   passport.deserializeUser(function(id, done) {
-    console.log('deserializing!!!');
     User.findOne({where: {id: id}})
     .then((user) => {
-      console.log('user ========> ', user);
       done(null, user);
     });
   });
@@ -80,7 +63,7 @@ EXAMPLE PROFILE:
 
 
 //-----------------------------------
-// uncomment below to populate
+// Uncomment below to populate the
 // database with avocado dummy data
 //-----------------------------------
 
@@ -105,21 +88,4 @@ EXAMPLE PROFILE:
 //     lastLoginDate: Date.now(),
 //     createdAt: Date.now()
 //   }
-// })
-// .spread(function(user, created) {
-//   console.log(user.get({
-//     plain: true
-//   }))
-//   console.log(created)
-
-//   /*
-//     {
-//       username: 'sdepold',
-//       job: 'Technical Lead JavaScript',
-//       id: 1,
-//       createdAt: Fri Mar 22 2013 21: 28: 34 GMT + 0100(CET),
-//       updatedAt: Fri Mar 22 2013 21: 28: 34 GMT + 0100(CET)
-//     }
-//     created: true
-//   */
 // })
