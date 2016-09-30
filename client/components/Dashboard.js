@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import Circles from './analytics/Circles'
+import { Glyphicon } from 'react-bootstrap';
 import Calendar from './analytics/Calendar'
+import Timeline from './analytics/Timeline'
+import Circles from './analytics/Circles'
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -17,10 +19,19 @@ export default class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard">
-        <Calendar 
-          startDelay={this.state.startDelay}
-          elementDelay={this.state.data.elementDelay}
-        />
+        <div className="dashboard-calendar">
+          <div className="calendar-header">
+            <div className="calendar-title">Entries in the last year</div>
+            <div className="calendar-settings">Calendar settings<Glyphicon glyph="triangle-bottom" /></div>
+          </div>
+          <Calendar
+            startDelay={this.state.startDelay}
+            elementDelay={this.state.data.elementDelay}
+          />
+        </div>
+        <div className="dashboard-timeline">
+          <Timeline />
+        </div>
       </div>
     )
   }
