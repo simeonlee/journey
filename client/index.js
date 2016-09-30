@@ -7,12 +7,13 @@ import Dashboard from './components/Dashboard'
 import { Profile } from './components/Profile'
 import { SignIn } from './components/SignIn'
 import { Home } from './components/Home'
+import { authenticateUser } from './utils'
 
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
-      <Route path="journal" component={Journal}/>
+      <Route path="/journal" component={Journal} onEnter={authenticateUser}/>
       <Route path="/dashboard" component={Dashboard}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/login" component={SignIn}/>
