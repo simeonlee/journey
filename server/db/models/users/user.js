@@ -66,9 +66,14 @@ module.exports = function(sequelize, Affirmation, Amazing, Gratitude, Outlook, R
                 results.push(reflection)
                 res.send(results);
               })
+            })
+          })
+        })
       })
     })
   }
 
-  return User;
+  return {
+    User: User
+  };
 };

@@ -22,29 +22,65 @@ var Reflection = require('./models/journals/journeys/reflection')(sequelize);
 
 var User = require('./models/users/user')(sequelize, Affirmation.Affirmation, Amazing.Amazing, Gratitude.Gratitude, Outlook.Outlook, Reflection.Reflection);
 
-Address.belongsTo(User, {foreignKey: 'userId'});
-Interaction.belongsTo(User, {foreignKey: 'userId'});
+var UserController = User.User;
 
-Note.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Note, {as: 'Notes'});
+Address.belongsTo(UserController, {foreignKey: 'userId'});
+Interaction.belongsTo(UserController, {foreignKey: 'userId'});
 
-ToDo.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(ToDo, {as: 'ToDos'});
+Note.belongsTo(UserController, {foreignKey: 'userId'});
+UserController.hasMany(Note, {as: 'Notes'});
 
-Gratitude.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Gratitude, {as: 'Gratitudes'});
+ToDo.belongsTo(UserController, {foreignKey: 'userId'});
+UserController.hasMany(ToDo, {as: 'ToDos'});
 
-Outlook.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Outlook, {as: 'Outlooks'});
+Gratitude.belongsTo(UserController, {foreignKey: 'userId'});
+UserController.hasMany(Gratitude, {as: 'Gratitudes'});
 
-Affirmation.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Affirmation, {as: 'Affirmations'});
+Outlook.belongsTo(UserController, {foreignKey: 'userId'});
+UserController.hasMany(Outlook, {as: 'Outlooks'});
 
-Amazing.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Amazing, {as: 'Amazings'});
+Affirmation.belongsTo(UserController, {foreignKey: 'userId'});
+UserController.hasMany(Affirmation, {as: 'Affirmations'});
 
-Reflection.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Reflection, {as: 'Reflections'});
+Amazing.belongsTo(UserController, {foreignKey: 'userId'});
+UserController.hasMany(Amazing, {as: 'Amazings'});
+
+Reflection.belongsTo(UserController, {foreignKey: 'userId'});
+UserController.hasMany(Reflection, {as: 'Reflections'});
+
+
+
+sequelize.sync({force: true})
+.then(function() {
+  UserController.create({
+    username: 'Akai',
+    password: 'yumyum',
+    email: 'fakemail@sofake.com',
+    phone: '8888888888',
+    firstName: 'Akai',
+    lastName: 'Senghor',
+    age: 23,
+    gender: 'male',
+    bio: 'what dis',
+    website: 'http://www.akaidasbest.com',
+    job: 'software engineer',
+    industry: 'software',
+    employer: 'none',
+    wantsEmails: false,
+    wantsTexts: false,
+  })
+  .then(user => {
+    Gratitude.create({
+      entry: 'test entry, please ignore',
+      interface: 'que?'
+    }).then(gratitude => {
+      //user.setGratitudes(gratitude);
+    })
+  })
+})
+
+
+
 
 module.exports = {
   sequelize: sequelize,

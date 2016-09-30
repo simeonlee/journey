@@ -62,6 +62,7 @@ ul {
   overflow-y: hidden;
   white-space: nowrap;
   padding: 0;
+  margin-top: 10px;
 }
 
 .timeline-date {
@@ -75,4 +76,20 @@ ul {
   border: 1px solid;
   position: absolute;
   left: 5%;
+}
+
+.journal-content {
+  margin-top: 20px;
+}
+
+.journal-section {
+  padding: 20px;
+}
+
+.journal-content {
+  background: transparent;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  z-index: -1;
 }
