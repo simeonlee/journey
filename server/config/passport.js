@@ -25,13 +25,16 @@ module.exports = (passport) => {
         {
           where: {username: profile._json.displayName},
           defaults: {
+            username: profile._json.displayName,
             password: '',
             email: 'avocado@gmail.com',
             firstName: 'Connor',
             lastName: 'Chevli'
           }
         }
-      );
+      ).spread((user, wasCreated) => {
+        return done(null, user.id);
+      });
       // User.findOrCreate({}, function(err, user) {
       //   if (err) { return done(err); }
       //   done(null, user);
@@ -40,12 +43,17 @@ module.exports = (passport) => {
   ));
 
   passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    console.log('IM SERIALIZING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    console.log('user', user);
+    done(null, user);
   });
 
   passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
+    console.log('deserializing!!!');
+    User.findOne({where: {id: id}})
+    .then((user) => {
+      console.log('user ========> ', user);
+      done(null, user);
     });
   });
 }
