@@ -10,7 +10,7 @@ module.exports = (app, express) => {
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
       successRedirect : '/',
-      failureRedirect : '/login'
+      failureRedirect : '/'
     })
   );
 }
