@@ -1,9 +1,42 @@
 import React, { Component } from 'react'
+import { Settings } from './Settings'
 
 export class Profile extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      section: 'settings',
+      user: {
+
+      }
+    }
+    this._section = this._section.bind(this)
+    this._onClick = this._onClick.bind(this)
   }
+
+  componentWillMount() {
+    // user query
+  }
+
+  _section() {
+    switch(this.state.section) {
+      case 'settings':
+        return (<Settings user={this.state.user}/>);
+        break;
+      case 'personal':
+        return (<div>test</div>);
+        break;
+      default:
+        return null;
+    }
+  }
+
+  _onClick(section) {
+    this.setState({
+      section: section
+    })
+  }
+
   render() {
     return (
       <div className="col-md-offset-2 col-md-8">
@@ -12,16 +45,12 @@ export class Profile extends Component {
         </h2>
         <div>
           <ul className="ul-profile col-md-3">
-            <li className="profile-list"><a href="settings" className="activeClassName">Settings</a></li>
-            <li className="profile-list"><a href="personal-info" className="activeClassName">Personal Info</a></li>
-            <li className="profile-list"><a href="" className="activeClassName">Whatever</a></li>
-            <li className="profile-list"><a href="" className="activeClassName">We</a></li>
-            <li className="profile-list"><a href="" className="activeClassName">Need</a></li>
-            <li className="profile-list"><a href="" className="activeClassName">Yo</a></li>
+            <li onClick={() => {this._onClick('settings')}} className="profile-list">Settings</li>
+            <li onClick={() => {this._onClick('personal')}} className="profile-list">Personal Info</li>
           </ul>
         </div>
         <div className="col-md-9">
-          yoyo
+          {this._section()}
         </div>
       </div>
     )
