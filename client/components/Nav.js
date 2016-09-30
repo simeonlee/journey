@@ -8,10 +8,10 @@ export class Nav extends Component {
 
   render() {
     return (
-      <nav className="transparent haze-background wrap navbar navbar-default" role="navigation">
+      <nav className="transparent white-background wrap navbar navbar-default" role="navigation">
         <div className="container-fluid">
           <div className="navbar-header">
-            <button type="button" className="haze-background navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
+            <button type="button" className="white-background navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
               <span className="sr-only">Toggle navigation</span>
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
