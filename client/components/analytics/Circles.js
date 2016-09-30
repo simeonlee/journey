@@ -16,7 +16,7 @@ export default class Circles extends Component {
 
   render() {
     return (
-      <div className="analytics-container"></div>
+      <div></div>
     )
   }
   

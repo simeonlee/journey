@@ -6,7 +6,7 @@ export default class Calendar extends Component {
     super(props);
     this.state = {
       width: 900,
-      height: 360,
+      height: 120,
       data: [
         {
           date: new Date(),
@@ -81,7 +81,7 @@ export default class Calendar extends Component {
     }
 
     console.log(this.testData);
-    
+
     this.setState.data = this.testData;
 
     this.firstDate = moment(this.dateRange[0]);
