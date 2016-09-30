@@ -72,10 +72,13 @@ ul {
     color: #fff;
 }
 
-.dashboard-container {
+.dashboard {
   position: absolute;
   top: 60px;
   right: 0;
   bottom: 0;
   left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

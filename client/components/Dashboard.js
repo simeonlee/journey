@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import Circles from './analytics/Circles'
 import Calendar from './analytics/Calendar'
 
@@ -8,15 +9,18 @@ export default class Dashboard extends Component {
     this.state = {
       data: {
         url: './data/sample.json',
-        elementDelay: 100
+        elementDelay: 10
       },
-      startDelay: 2000
+      startDelay: 20
     };
   }
   render() {
     return (
-      <div className="dashboard-container">
-        <Calendar />
+      <div className="dashboard">
+        <Calendar 
+          startDelay={this.state.startDelay}
+          elementDelay={this.state.data.elementDelay}
+        />
       </div>
     )
   }
