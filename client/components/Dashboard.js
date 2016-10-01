@@ -30,21 +30,19 @@ export default class Dashboard extends Component {
             elementDelay={this.state.data.elementDelay}
           />
         </div>
-        <div className="dashboard-body">
-          <div className="dashboard-element dashboard-scatterchart">
-            <div className="dashboard-header scatterchart-header">
-              <div className="header-title dashboard-title">Interactions by time</div>
-              <div className="header-subtitle dashboard-jump">Jump to<Glyphicon glyph="triangle-bottom" /></div>
-            </div>
-            <ScatterChart />
+        <div className="dashboard-element dashboard-scatterchart">
+          <div className="dashboard-header scatterchart-header">
+            <div className="header-title dashboard-title">Interactions by time</div>
+            <div className="header-subtitle dashboard-jump">Jump to<Glyphicon glyph="triangle-bottom" /></div>
           </div>
-          <div className="dashboard-element dashboard-timeline">
-            <div className="dashboard-header timeline-header">
-              <div className="header-title dashboard-title">Steps taken in your journey</div>
-              <div className="header-subtitle dashboard-jump">Jump to<Glyphicon glyph="triangle-bottom" /></div>
-            </div>
-            <Timeline />
+          <ScatterChart />
+        </div>
+        <div className="dashboard-element dashboard-timeline">
+          <div className="dashboard-header timeline-header">
+            <div className="header-title dashboard-title">Steps taken in your journey</div>
+            <div className="header-subtitle dashboard-jump">Jump to<Glyphicon glyph="triangle-bottom" /></div>
           </div>
+          <Timeline />
         </div>
       </div>
     )
@@ -58,5 +56,7 @@ export default class Dashboard extends Component {
   elementDelay={this.state.data.elementDelay}
   json={this.state.data.url}
 />
+
+<div className="dashboard-body"></div>
 
 */

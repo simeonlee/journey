@@ -4,6 +4,9 @@
 }
 
 .basic-interaction {
+  > div {
+    padding: 10px;
+  }
   margin: 24px;
   display: flex;
   align-items: center;
