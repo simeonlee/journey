@@ -1,9 +1,4 @@
 .dashboard {
-  // position: absolute;
-  // top: 60px;
-  // right: 0;
-  // bottom: 0;
-  // left: 0;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -11,25 +6,20 @@
 }
 
 .dashboard-body {
-  // position: absolute;
-  // bottom: 0;
-  // left: 0;
-  // right: 0;
   display: flex;
   align-items: flex-start;
   justify-content: space-around;
 }
 
-.dashboard-element {
-  padding: 10px;
+.dashboard-element { // main dashboard section
+  padding: 20px;
 }
 
 .dashboard-header {
   position: relative;
   display: flex;
   align-items: center;
-  height: 30px;
-  margin: 10px;
+  height: 20px;
 }
 
 .header-title {

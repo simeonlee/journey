@@ -5,7 +5,7 @@ export default class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: 600,
+      width: (window.innerWidth * 3 / 4),
       height: 120,
       data: []
     }

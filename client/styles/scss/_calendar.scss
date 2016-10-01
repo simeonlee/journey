@@ -1,44 +1,30 @@
 .dashboard-calendar {
   width: 80%;
-  // border-radius: 3px;
-  // border: 1px solid $silver;
 }
 
 .calendar {
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // display: block;
-  // margin: auto;
 }
 
 .calendar-svg {
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // display: block;
-  // margin: auto;
   box-sizing: initial;
 }
 
-text.month-name,
-text.calendar-heatmap-legend-text,
-text.day-initial {
-  font-size: 10px;
-  fill: #aaaaaa;
-  // font-family: Helvetica, arial, 'Open Sans', sans-serif
+text {
+  &.month-name,
+  &.calendar-heatmap-legend-text,
+  &.day-initial {
+    font-size: 10px;
+    fill: #aaaaaa;
+  }
 }
 
 .day-cell {
-  // fill: #fff;
-  fill-opacity: .9;
+  fill-opacity: .7;
   pointer-events: all;
   cursor: pointer;
-  // stroke: 1px solid $haze;
-}
-
-rect.day-cell:hover {
-  fill-opacity: 1.0;
+  &:hover {
+    fill-opacity: 1.0;
+  }
 }
 
 .day-cell-tooltip {

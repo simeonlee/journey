@@ -52,9 +52,11 @@ export default class Dashboard extends Component {
 }
 
 /*
+
 <Circles
   startDelay={this.state.startDelay}
   elementDelay={this.state.data.elementDelay}
   json={this.state.data.url}
 />
+
 */
