@@ -18,7 +18,7 @@ gulp.task('default', []);
 
 const config = {
   src: {
-    html: ['./client/**/*.html', './client/*.ico'],
+    html: ['./client/**/*.html', './client/**/*.ico'],
     css: './client/styles/scss/*.scss',
     js: ['./client/index.js', './client/**/*.js'],
     json: './client/**/*.json',
