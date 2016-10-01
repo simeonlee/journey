@@ -1,6 +1,6 @@
 var FacebookStrategy = require('passport-facebook').Strategy;
 var configAuth = require('../../auth.js');
-var db, {User} = require('../db/config.js');
+var db, {User, FacebookUser} = require('../db/config.js');
 var utils = require('../db/utils.js');
 
 module.exports = (passport) => {
@@ -12,29 +12,47 @@ module.exports = (passport) => {
       profileFields: configAuth.facebook.profileFields
     },
     function(accessToken, refreshToken, profile, done) {
-      User.findOrCreate(
-        {
-          where: {username: profile._json.displayName},
-          defaults: {
-            username: profile._json.displayName,
-            password: '',
-            email: 'avocado@gmail.com',
-            firstName: 'Connor',
-            lastName: 'Chevli'
-          }
+      // console.log('ACCESS TOKEN ===================================> ', accessToken);
+      // console.log('REFRESH TOKEN ==================================> ', refreshToken);
+      console.log('PROFILE ========================================> ', profile.id);
+
+      FacebookUser.findOrCreate({
+        where: {facebookID: profile.id},
+        defaults: {
+          facebookID: profile.id,
+          userId: 1
         }
-      ).spread((user, wasCreated) => {
-        return done(null, user.id);
+      }).spread((user, wasCreated) => {
+        console.log('FACEBOOK USER ====>', user);
+        return done(null, user);
       });
+
+      // User.findOrCreate(
+      //   {
+      //     where: {username: profile._json.displayName},
+      //     defaults: {
+      //       username: profile._json.displayName,
+      //       password: '',
+      //       email: 'avocado@gmail.com',
+      //       firstName: 'Connor',
+      //       lastName: 'Chevli'
+      //     }
+      //   }
+      // ).spread((user, wasCreated) => {
+      //   console.log('USER:::',user.id);
+      //   return done(null, user.id);
+      // });
     }
   ));
 
   passport.serializeUser(function(user, done) {
-    done(null, user);
+    console.log('SERIALIZING ========> ', user);
+    done(null, user.facebookID);
   });
 
   passport.deserializeUser(function(id, done) {
-    User.findOne({where: {id: id}})
+    console.log('DESERIALIZING!')
+    FacebookUser.findOne({where: {facebookID: id}})
     .then((user) => {
       done(null, user);
     });

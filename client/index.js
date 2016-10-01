@@ -12,10 +12,10 @@ import { authenticateUser } from './utils'
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Home}/>
+      <IndexRoute component={Home} onEnter={authenticateUser}/>
       <Route path="/journal" component={Journal} onEnter={authenticateUser}/>
-      <Route path="/dashboard" component={Dashboard}/>
-      <Route path="/profile" component={Profile}/>
+      <Route path="/dashboard" component={Dashboard} onEnter={authenticateUser}/>
+      <Route path="/profile" component={Profile} onEnter={authenticateUser}/>
       <Route path="/login" component={SignIn}/>
     </Route>
   </Router>

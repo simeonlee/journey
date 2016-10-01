@@ -1,23 +1,48 @@
 var passport = require('passport');
 var path = require('path');
+var { checkForFacebookUser } = require('./utils');
 
 module.exports = (app, express) => {
 
   //Serve up static files upon request.
-  app.get('/journal', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
-  });
+  // app.get('/', (req, res) => {
+  //   res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+  // });
 
-  app.get('/dashboard', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
-  });
+  app.get('/journal',
+    (req, res) => {
+      res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+    }
+  );
 
-  app.get('/login', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
-  });
+  app.get('/dashboard',
+    (req, res) => {
+      res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+    }
+  );
 
-  app.get('/profile', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+  app.get('/login',
+    (req, res) => {
+      res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+    }
+  );
+
+  app.get('/profile',
+    (req, res) => {
+      res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+    }
+  );
+
+  // app.get('*', (req, res) => {
+  //   res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+  // });
+
+  app.get('/auth', checkForFacebookUser);
+
+  app.get('/logout', (req, res) => { 
+    console.log('logging out');
+    req.logout();
+    res.redirect('/');
   });
 
   app.get('/auth/facebook',
@@ -27,8 +52,9 @@ module.exports = (app, express) => {
   // handle the callback after facebook has authenticated the user
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect : '/',
-      failureRedirect : '/login'
+      successRedirect: 'http://localhost:3000/',
+      failureRedirect: 'http://localhost:3000/login'
     })
   );
 }
+
