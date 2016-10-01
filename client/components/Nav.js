@@ -1,9 +1,27 @@
 import React, { Component } from 'react'
 import { Link, IndexLink } from 'react-router'
+import axios from 'axios'
 
 export class Nav extends Component {
   constructor(props) {
     super(props)
+    this.logInOrOut = this.logInOrOut.bind(this);
+  }
+
+  logout() {
+    axios.get('/logout');
+  }
+
+  logInOrOut() {
+    //check for auth here
+    if (true) {
+      return (<li><Link activeClassName="nav-active" to="/login">Log In</Link></li>);
+    } else {
+      // return (<li onClick={this.logout}>Log out</li>)
+      // return (<li class="nav-active" onClick={this.logout}>Log Out</li>);
+      // return (<li onClick={this.logout}><Link activeClassName="nav-active" to="/">Log Out</Link></li>);
+      return (<li onClick={this.logout}><Link activeClassName="nav-active" to="/login">Log Out</Link></li>);
+    }
   }
 
   render() {
@@ -28,7 +46,7 @@ export class Nav extends Component {
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li><Link activeClassName="nav-active" to="/profile">Profile</Link></li>
-              <li><Link activeClassName="nav-active" to="/login">Log In</Link></li>
+              {this.logInOrOut()}
             </ul>
           </div>
         </div>
