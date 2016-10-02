@@ -20,7 +20,7 @@ var Affirmation = require('./models/journals/journeys/affirmation')(sequelize);
 var Amazing = require('./models/journals/journeys/amazing')(sequelize);
 var Reflection = require('./models/journals/journeys/reflection')(sequelize);
 
-var User = require('./models/users/user')(sequelize, Affirmation.Affirmation, Amazing.Amazing, Gratitude.Gratitude, Outlook.Outlook, Reflection.Reflection);
+var User = require('./models/users/user')(sequelize, Affirmation, Amazing, Gratitude, Outlook, Reflection);
 
 var UserController = User.User;
 

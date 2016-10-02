@@ -7,7 +7,9 @@ export class Profile extends Component {
     this.state = {
       section: 'settings',
       user: {
-
+        username: 'wakaflackaflame',
+        wantsEmails: false,
+        wantsTexts: true,
       }
     }
     this._section = this._section.bind(this)
