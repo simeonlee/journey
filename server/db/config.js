@@ -8,6 +8,7 @@ var sequelize = new Sequelize('Journey', settings.username, settings.password, {
   logging: false,
 });
 
+var User = require('./models/users/user')(sequelize);
 var Address = require('./models/users/address')(sequelize);
 var Interaction = require('./models/users/interaction')(sequelize);
 
@@ -20,14 +21,13 @@ var Affirmation = require('./models/journals/journeys/affirmation')(sequelize);
 var Amazing = require('./models/journals/journeys/amazing')(sequelize);
 var Reflection = require('./models/journals/journeys/reflection')(sequelize);
 
-var User = require('./models/users/user')(sequelize, Affirmation, Amazing, Gratitude, Outlook, Reflection);
 
 var UserController = User.User;
 
 Address.belongsTo(UserController, {foreignKey: 'userId'});
 Interaction.belongsTo(UserController, {foreignKey: 'userId'});
 
-Note.belongsTo(UserController, {foreignKey: 'userId'});
+Note.belongsTo(UserController);
 UserController.hasMany(Note, {as: 'Notes'});
 
 ToDo.belongsTo(UserController, {foreignKey: 'userId'});

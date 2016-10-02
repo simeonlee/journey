@@ -1,6 +1,12 @@
 var Sequelize = require('sequelize');
 
-module.exports = function(sequelize, Affirmation, Amazing, Gratitude, Outlook, Reflection) {
+module.exports = function(sequelize) {
+  var Gratitude = require('./../journals/journeys/gratitude')(sequelize);
+  var Outlook = require('./../journals/journeys/outlook')(sequelize);
+  var Affirmation = require('./../journals/journeys/affirmation')(sequelize);
+  var Amazing = require('./../journals/journeys/amazing')(sequelize);
+  var Reflection = require('./../journals/journeys/reflection')(sequelize);
+  
   var User = sequelize.define('users', {
     username: Sequelize.STRING(20),
     password: Sequelize.STRING(30),
