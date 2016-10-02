@@ -19,7 +19,7 @@ export class Nav extends Component {
             </button>
           </div>
           <div className="brand-centered">
-            <IndexLink to="/" className="navbar-brand">Journey</IndexLink>
+            <IndexLink to="/" className="navbar-brand"><div className="logo">Journey</div></IndexLink>
           </div>
           <div className="navbar-collapse collapse" id="navigation">
             <ul className="nav navbar-nav navbar-left">
