@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Glyphicon } from 'react-bootstrap';
-import Calendar from './analytics/calendar/Calendar'
 import Circles from './analytics/Circles'
+import Calendar from './analytics/calendar/Calendar'
+import WordCloud from './analytics/wordcloud/WordCloud'
 import ScatterChart from './analytics/scatterchart/ScatterChart'
 import Timeline from './analytics/timeline/Timeline'
 
@@ -11,7 +12,8 @@ export default class Dashboard extends Component {
     super(props);
     this.state = {
       data: {
-        url: './data/sample.json',
+        circlesUrl: './data/sample.json',
+        wordCloudUrl: './data/wordCloudSample.js',
         elementDelay: 10
       },
       startDelay: 20
@@ -33,28 +35,50 @@ export default class Dashboard extends Component {
         <div className="dashboard-element dashboard-scatterchart">
           <div className="dashboard-header scatterchart-header">
             <div className="header-title dashboard-title">Interactions by time</div>
-            <div className="header-subtitle dashboard-jump">Jump to<Glyphicon glyph="triangle-bottom" /></div>
+            <div className="header-subtitle dashboard-jump">Time travel to<Glyphicon glyph="triangle-bottom" /></div>
           </div>
           <ScatterChart />
+        </div>
+        <div className="dashboard-element dashboard-circles">
+          <div className="dashboard-header circles-header">
+            <div className="header-title dashboard-title">Pensieve</div>
+            <div className="header-subtitle dashboard-jump">Time travel to<Glyphicon glyph="triangle-bottom" /></div>
+          </div>
+          <Circles
+            startDelay={this.state.startDelay}
+            elementDelay={this.state.data.elementDelay}
+            json={this.state.data.circlesUrl}
+          />
+          <div className="dashboard-footer circles-footer">
+            <div className="quote">
+              <div className="footer-text quote-text">I use the Pensieve. One simply siphons the excess thoughts from one's mind, pours them into the basin, and examines them at one's leisure. It becomes easier to spot patterns and links, you understand, when they are in this form.</div>
+              <div className="footer-text quote-attribution">- Albus Dumbledore, <span>Harry Potter and the Goblet of Fire</span></div>
+            </div>
+          </div>
         </div>
         <div className="dashboard-element dashboard-timeline">
           <div className="dashboard-header timeline-header">
             <div className="header-title dashboard-title">Steps taken in your journey</div>
-            <div className="header-subtitle dashboard-jump">Jump to<Glyphicon glyph="triangle-bottom" /></div>
+            <div className="header-subtitle dashboard-jump">Time travel to<Glyphicon glyph="triangle-bottom" /></div>
           </div>
           <Timeline />
         </div>
+        <div className="dashboard-element dashboard-wordcloud">
+          <div className="dashboard-header wordcloud-header">
+            <div className="header-title dashboard-title">Thought Cloud</div>
+            <div className="header-subtitle dashboard-jump">Time travel to<Glyphicon glyph="triangle-bottom" /></div>
+          </div>
+        </div>
       </div>
+
     )
   }
 }
 
 /*
 
-<Circles
-  startDelay={this.state.startDelay}
-  elementDelay={this.state.data.elementDelay}
-  json={this.state.data.url}
+<WordCloud
+  data={this.state.data.wordCloudUrl}
 />
 
 <div className="dashboard-body"></div>

@@ -10,9 +10,9 @@ export default class Circles extends Component {
     this.initD3();
   }
 
-  componentWillUnmount() {
-    clearInterval(this.resizeTimer);
-  }
+  // componentWillUnmount() {
+  //   clearInterval(this.resizeTimer);
+  // }
 
   render() {
     return (
@@ -21,11 +21,13 @@ export default class Circles extends Component {
   }
   
   initD3() {
-    this.vis = d3.select(ReactDOM.findDOMNode(this))
-      .insert('svg:svg').append('svg:g');
+    this.svg = d3.select(ReactDOM.findDOMNode(this))
+      .insert('svg')
+      .attr('class', 'circles-svg')
+      .append('g');
 
-    this.circlesGroup = this.vis.append('g');
-    this.textsGroup = this.vis.append('g');
+    this.circlesGroup = this.svg.append('g');
+    this.textsGroup = this.svg.append('g');
 
     // init pack layout
     this.pack = d3.layout.pack()
@@ -43,8 +45,12 @@ export default class Circles extends Component {
     }.bind(this));
 
     // resize event
-    var ns = Math.random();
-    d3.select(window).on('resize.' + ns, this.resizeHandler);
+    // var ns = Math.random();
+    // d3.select(window).on('resize.' + ns, this.resizeHandler);
+    d3.select(window).on('resize', () => {
+      this.update();
+      this.draw(this.props);
+    });
   }
 
   update() {
@@ -93,7 +99,7 @@ export default class Circles extends Component {
       .data(this.nodes);
 
     // enter
-    circles.enter().append('svg:circle')
+    circles.enter().append('circle')
       .attr('class', function(d) {
         return d.children ? 'parent' : 'child';
       })
@@ -129,7 +135,7 @@ export default class Circles extends Component {
       .data(this.nodes);
 
     // enter
-    texts.enter().append('svg:text')
+    texts.enter().append('text')
       .style('opacity', 0)
       .attr('x', function(d) { return d.x; })
       .attr('y', function(d) { return d.y; })
@@ -164,7 +170,7 @@ export default class Circles extends Component {
     this.x.domain([d.x - d.r, d.x + d.r]);
     this.y.domain([d.y - d.r, d.y + d.r]);
 
-    var t = this.vis.transition()
+    var t = this.svg.transition()
       .duration(d3.event.altKey ? 7500 : 750);
 
     t.selectAll('circle')
@@ -184,11 +190,11 @@ export default class Circles extends Component {
     d3.event.stopPropagation();
   }
 
-  resizeHandler() {
-    clearInterval(this.resizeTimer);
-    this.resizeTimer = setTimeout(function() {
-      this.update();
-      this.draw(this.props);
-    }.bind(this), 200);
-  }
+  // resizeHandler() {
+  //   clearInterval(this.resizeTimer);
+  //   this.resizeTimer = setTimeout(() => {
+  //     this.update();
+  //     this.draw(this.props);
+  //   }, 200);
+  // }
 }

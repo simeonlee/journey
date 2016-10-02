@@ -6,12 +6,12 @@ $silver: #BDC3C7;
 $lynch: #6C7A89;
 
 @import 'nav';
-@import 'circles';
 @import 'dashboard';
 @import 'calendar';
 @import 'timeline';
 @import 'scatterchart';
 @import 'interaction';
+@import 'circles';
 
 * {
   font-family: 'Raleway', sans-serif;

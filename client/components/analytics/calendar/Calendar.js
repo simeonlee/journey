@@ -209,17 +209,13 @@ export default class Calendar extends Component {
 
   generateTestData(dateRange) {
     var data = {};
-    // console.log(dateRange[0]);
     for (var i = Math.floor(dateRange.length / 5); i < dateRange.length; i++) {
       var date = dateRange[i];
-      // console.log(date);
       data[date] = {
         date: date,
         count: Math.floor(Math.random() * (this.max + 1))
       }
-      // console.log(data[date]);
     }
-    console.log('testData', data);
     return data;
   }
 

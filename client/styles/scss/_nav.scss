@@ -16,11 +16,15 @@ nav button {
   left: 0;
 }
 
+.logo {
+  color: $lynch;
+  font-size: 30px;
+  font-family: $major, serif;
+  letter-spacing: 1.5px !important;
+}
+
 .navbar-brand {
   height: 60px;
-  letter-spacing: 1.5px !important;
-  font-family: $major, serif;
-  font-size: 30px;
   display: flex;
   align-items: center;
 }

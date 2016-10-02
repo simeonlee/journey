@@ -1,60 +1,97 @@
 {
-  "name": "flare",
+  "name": "",
   "children": [
     {
-      "name": "analytics",
+      "name": "Morning",
       "children": [
         {
-          "name": "gratitudes",
+          "name": "Gratitudes",
           "children": [
-            {"name": "AgglomerativeCluster", "size": 3938},
-            {"name": "CommunityStructure", "size": 3812},
-            {"name": "MergeEdge", "size": 743}
+            {
+              "name": "spouse", 
+              "children": [
+                {"name": "strong", "size": 85},
+                {"name": "confident", "size": 53},
+                {"name": "intelligent", "size": 64},
+                {"name": "grateful", "size": 54},
+                {"name": "optimistic", "size": 53},
+                {"name": "hard-working", "size": 43},
+                {"name": "outgoing", "size": 34},
+                {"name": "extroverted", "size": 34},
+                {"name": "intuitive", "size": 23},
+                {"name": "respectful", "size": 23},
+                {"name": "thinker", "size": 12},
+                {"name": "perceptive", "size": 34}
+              ]
+            },
+            {"name": "family", "size": 85},
+            {"name": "friends", "size": 53},
+            {"name": "food", "size": 64},
+            {"name": "movies", "size": 54},
+            {"name": "tv", "size": 53},
+            {"name": "work", "size": 43},
+            {"name": "co-workers", "size": 34},
+            {"name": "dog", "size": 34}
           ]
         },
         {
-          "name": "outlooks",
+          "name": "Outlooks",
           "children": [
-            {"name": "BetweennessCentrality", "size": 3534},
-            {"name": "LinkDistance", "size": 5731}
+            {"name": "get promotion", "size": 85},
+            {"name": "make friends", "size": 53},
+            {"name": "talk to cute girl", "size": 64},
+            {"name": "journal", "size": 54},
+            {"name": "crush interview", "size": 53},
+            {"name": "save money", "size": 43},
+            {"name": "find perfect jeans", "size": 34}
           ]
         },
         {
-          "name": "affirmations",
+          "name": "Affirmations",
           "children": [
-            {"name": "AspectRatioBanker", "size": 7074}
+            {"name": "strong", "size": 85},
+            {"name": "confident", "size": 53},
+            {"name": "intelligent", "size": 64},
+            {"name": "grateful", "size": 54},
+            {"name": "optimistic", "size": 53},
+            {"name": "hard-working", "size": 43},
+            {"name": "outgoing", "size": 34},
+            {"name": "extroverted", "size": 34},
+            {"name": "intuitive", "size": 23},
+            {"name": "respectful", "size": 23},
+            {"name": "thinker", "size": 12},
+            {"name": "perceptive", "size": 34}
           ]
         }
       ]
     },
     {
-      "name": "animate",
+      "name": "Evening",
       "children": [
-        {"name": "Easing", "size": 17010},
-        {"name": "FunctionSequence", "size": 5842},
         {
-          "name": "interpolate",
+          "name": "Amazings",
           "children": [
-            {"name": "ArrayInterpolator", "size": 1983},
-            {"name": "ColorInterpolator", "size": 2047},
-            {"name": "DateInterpolator", "size": 1375},
-            {"name": "Interpolator", "size": 8746},
-            {"name": "MatrixInterpolator", "size": 2202},
-            {"name": "NumberInterpolator", "size": 1382},
-            {"name": "ObjectInterpolator", "size": 1629},
-            {"name": "PointInterpolator", "size": 1675},
-            {"name": "RectangleInterpolator", "size": 2042}
+            {"name": "bought new clothes", "size": 85},
+            {"name": "made a new friend", "size": 53},
+            {"name": "went for a ride", "size": 64},
+            {"name": "work ended early", "size": 54},
+            {"name": "talked to cute girl", "size": 53},
+            {"name": "got work done", "size": 43},
+            {"name": "started new hobby", "size": 34}
           ]
         },
-        {"name": "ISchedulable", "size": 1041},
-        {"name": "Parallel", "size": 5176},
-        {"name": "Pause", "size": 449},
-        {"name": "Scheduler", "size": 5593},
-        {"name": "Sequence", "size": 5534},
-        {"name": "Transition", "size": 9201},
-        {"name": "Transitioner", "size": 19975},
-        {"name": "TransitionEvent", "size": 1116},
-        {"name": "Tween", "size": 6006}
+        {
+          "name": "Reflections",
+          "children": [
+            {"name": "work quicker", "size": 85},
+            {"name": "less awkward", "size": 53},
+            {"name": "wake earlier", "size": 64},
+            {"name": "meditate", "size": 54},
+            {"name": "sleep better", "size": 53},
+            {"name": "eat healthy", "size": 43},
+            {"name": "exercise", "size": 34}
+          ]
+        }
       ]
     }
   ]
