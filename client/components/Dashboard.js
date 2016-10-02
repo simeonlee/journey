@@ -63,12 +63,6 @@ export default class Dashboard extends Component {
           </div>
           <Timeline />
         </div>
-        <div className="dashboard-element dashboard-wordcloud">
-          <div className="dashboard-header wordcloud-header">
-            <div className="header-title dashboard-title">Thought Cloud</div>
-            <div className="header-subtitle dashboard-jump">Time travel to<Glyphicon glyph="triangle-bottom" /></div>
-          </div>
-        </div>
       </div>
 
     )
@@ -77,10 +71,14 @@ export default class Dashboard extends Component {
 
 /*
 
-<WordCloud
-  data={this.state.data.wordCloudUrl}
-/>
-
-<div className="dashboard-body"></div>
+<div className="dashboard-element dashboard-wordcloud">
+  <div className="dashboard-header wordcloud-header">
+    <div className="header-title dashboard-title">Thought Cloud</div>
+    <div className="header-subtitle dashboard-jump">Time travel to<Glyphicon glyph="triangle-bottom" /></div>
+  </div>
+  <WordCloud
+    data={this.state.data.wordCloudUrl}
+  />
+</div>
 
 */
