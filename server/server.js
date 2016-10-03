@@ -1,17 +1,18 @@
 var express = require('express');
-
 var app = express();
+var passport = require('passport');
 
-// declare models for database.
+// configure passport.
+require('./config/passport.js')(passport);
 
 // configure server with middleware.
-require('./config/middleware.js')(app, express);
+require('./config/middleware.js')(app, express, passport);
 
 // configure server with routing.
-require('./config/routes.js')(app, express);
+require('./config/routes.js')(app, express, passport);
 
 /* === connect database to server === */
-var sequelize = require('./db/config');
+var { sequelize } = require('./db/config');
 
 sequelize
   .authenticate()
