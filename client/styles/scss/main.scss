@@ -104,7 +104,7 @@ ul {
   -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
-=======
+
 .login-modal {
   z-index: 100000001;
 }
@@ -146,19 +146,17 @@ a.login-button {
     }
 }
 
-// .modal-dialog {
-//   position: absolute !important;
-//   top: 0;
-//   left: 0;
-//   bottom: 0;
-//   right: 0;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// }
+.modal-dialog {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .modal-dialog {
   width: 440px;
 }
-
->>>>>>> 809eb3556c7fe862e16252cd73227f4d2a916efe
