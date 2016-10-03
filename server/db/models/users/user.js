@@ -8,7 +8,10 @@ module.exports = function(sequelize) {
   var Reflection = require('./../journals/journeys/reflection')(sequelize);
 
   var User = sequelize.define('users', {
-    username: Sequelize.STRING(20),
+    username: {
+      type: Sequelize.STRING(20),
+      unique: true
+    },
     password: Sequelize.STRING(30),
     email: Sequelize.STRING(50),
     phone: Sequelize.STRING(20),

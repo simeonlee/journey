@@ -1,12 +1,25 @@
 $major: 'Cinzel';
 $minor: 'Raleway';
-$haze: #eeeeee;
+$haze: #ECECEC;
+$porcelain: #ECF0F1;
+$silver: #BDC3C7;
+$lynch: #6C7A89;
 
 @import 'nav';
+@import 'dashboard';
+@import 'calendar';
+@import 'timeline';
+@import 'scatterchart';
+@import 'interaction';
+@import 'circles';
 
 * {
   font-family: 'Raleway', sans-serif;
-  font-weight: 300;
+  font-weight: 200;
+  color: $lynch;
+}
+
+body {
 }
 
 a {
@@ -38,22 +51,21 @@ ul {
   opacity: 0.9;
 }
 
+.white-background {
+  background-color: #FFFFFF !important;
+}
+
 .haze-background {
   background-color: $haze !important;
 }
 
-.button {
+.btn {
     border: 1px solid #000;
     border-radius: 5px;
     color: #000;
     cursor: pointer;
     letter-spacing: 1px;
     text-transform: uppercase;
-}
-
-.button:hover {
-    background: #000;
-    color: #fff;
 }
 
 .timeline {
@@ -92,3 +104,61 @@ ul {
   -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
+=======
+.login-modal {
+  z-index: 100000001;
+}
+
+.fade {
+  z-index: 100000000;
+}
+
+.login-modal-title {
+  font-size: 20px;
+}
+.facebook-login-button {
+  color: #3B5998;
+  border-color: #3B5998;
+  background-color: rgba(59,89,152, .04);
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+  &:hover {
+    background-color: #3B5998;
+  }
+}
+
+a.login-button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+
+    color: #3B5998;
+    border-color: #3B5998;
+    display: flex;
+    width: 300px;
+    height: 50px;
+    &:hover {
+      background-color: #3B5998;
+      border-color: #3B5998 !important;
+    }
+}
+
+// .modal-dialog {
+//   position: absolute !important;
+//   top: 0;
+//   left: 0;
+//   bottom: 0;
+//   right: 0;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+.modal-dialog {
+  width: 440px;
+}
+
+>>>>>>> 809eb3556c7fe862e16252cd73227f4d2a916efe

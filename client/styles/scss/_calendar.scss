@@ -1,0 +1,44 @@
+.dashboard-calendar {
+  width: 80%;
+}
+
+.calendar {
+}
+
+.calendar-svg {
+  box-sizing: initial;
+}
+
+text {
+  &.month-name,
+  &.calendar-heatmap-legend-text,
+  &.day-initial {
+    font-size: 10px;
+    fill: #aaaaaa;
+  }
+}
+
+.day-cell {
+  fill-opacity: .7;
+  pointer-events: all;
+  cursor: pointer;
+  &:hover {
+    fill-opacity: 1.0;
+  }
+}
+
+.day-cell-tooltip {
+  position: absolute;
+  z-index: 9999;
+  padding: 5px 9px;
+  color: #bbbbbb;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 3px;
+  text-align: center;
+}
+
+.glyphicon.glyphicon-triangle-bottom {
+  margin-left: 4px;
+  font-size: 10px;
+}
