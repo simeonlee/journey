@@ -1,12 +1,25 @@
 $major: 'Cinzel';
 $minor: 'Raleway';
-$haze: #eeeeee;
+$haze: #ECECEC;
+$porcelain: #ECF0F1;
+$silver: #BDC3C7;
+$lynch: #6C7A89;
 
 @import 'nav';
+@import 'dashboard';
+@import 'calendar';
+@import 'timeline';
+@import 'scatterchart';
+@import 'interaction';
+@import 'circles';
 
 * {
   font-family: 'Raleway', sans-serif;
-  font-weight: 300;
+  font-weight: 200;
+  color: $lynch;
+}
+
+body {
 }
 
 a {
@@ -38,8 +51,16 @@ ul {
   opacity: 0.9;
 }
 
+.white-background {
+  background-color: #FFFFFF !important;
+}
+
 .haze-background {
   background-color: $haze !important;
+}
+
+.porcelain-background {
+  background-color: $porcelain !important;
 }
 
 .btn {

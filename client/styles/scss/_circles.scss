@@ -1,0 +1,67 @@
+.dashboard-circles {
+  width: 80%;
+}
+
+.circles-svg {
+  margin-top: 20px;
+}
+
+text.child {
+  font-size: 9px;
+  pointer-events: none;
+}
+
+text.parent {
+  font-size: 16px;
+  fill: $lynch;
+  font-weight: 400;
+  // text-shadow: 1px 1px #fff;
+}
+
+circle {
+  fill: #ffffff;
+  fill-opacity: .8;
+  pointer-events: all;
+  cursor: pointer;
+  // stroke: #999;
+}
+
+circle.parent {
+  fill: #C0C0C0;
+  fill-opacity: .2;
+}
+
+circle.parent:hover {
+  fill-opacity: .4;
+  // stroke: #73adde;
+  // stroke-width: .5px;
+}
+
+circle.child {
+  pointer-events: none;
+}
+
+.circles-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.dashboard-circles .quote {
+  font-size: 14px;
+  width: 80%;
+  margin: 20px;
+  padding: 20px;
+  background-color: $lynch;
+  opacity: 0.8;
+  border-radius: 5px;
+  > div {
+    color: white;
+  }
+  .quote-attribution {
+    text-align: right;
+    > span {
+      color: white;
+      font-style: italic;
+    }
+  }
+}
