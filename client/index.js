@@ -2,11 +2,15 @@ import React from 'react'
 import { render } from 'react-dom'
 import { App } from './components/App'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 import { Journal } from './components/Journal'
 import { Dashboard } from './components/Dashboard'
 import { Profile } from './components/Profile'
 import { SignIn } from './components/SignIn'
 import { Home } from './components/Home'
+
+
 
 render((
   <Router history={browserHistory}>
