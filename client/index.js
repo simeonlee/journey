@@ -7,16 +7,16 @@ import Dashboard from './components/Dashboard'
 import { Profile } from './components/Profile'
 import { SignIn } from './components/SignIn'
 import { Home } from './components/Home'
-import { authenticateUser } from './utils'
+import { LoginModal } from './components/LoginModal'
+import { authenticateUser, checkIfLoggedIn } from './utils'
 
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Home} onEnter={authenticateUser}/>
+      <IndexRoute component={Home} onEnter={checkIfLoggedIn}/>
       <Route path="/journal" component={Journal} onEnter={authenticateUser}/>
       <Route path="/dashboard" component={Dashboard} onEnter={authenticateUser}/>
       <Route path="/profile" component={Profile} onEnter={authenticateUser}/>
-      <Route path="/login" component={SignIn}/>
     </Route>
   </Router>
 ), document.getElementById('app'))
