@@ -59,10 +59,6 @@ ul {
   background-color: $haze !important;
 }
 
-.porcelain-background {
-  background-color: $porcelain !important;
-}
-
 .btn {
     border: 1px solid #000;
     border-radius: 5px;
@@ -72,9 +68,41 @@ ul {
     text-transform: uppercase;
 }
 
-.btn:hover {
-    background: #000;
-    color: #fff;
+.timeline {
+  height: 50px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.timeline-date {
+  display: inline-block;
+  width: calc(100% / 7);
+  text-align: center;
+}
+
+.which-date {
+  width: 40px;
+  border: 1px solid;
+  position: absolute;
+  left: 5%;
+}
+
+.journal-content {
+  margin-top: 20px;
+}
+
+.journal-section {
+  padding: 20px;
+}
+
+.journal-content {
+  background: transparent;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .login-modal {
@@ -118,18 +146,17 @@ a.login-button {
     }
 }
 
-// .modal-dialog {
-//   position: absolute !important;
-//   top: 0;
-//   left: 0;
-//   bottom: 0;
-//   right: 0;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// }
+.modal-dialog {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .modal-dialog {
   width: 440px;
 }
-

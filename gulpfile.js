@@ -13,7 +13,7 @@ const shell = require('gulp-shell');
 const image = require('gulp-image');
 const webpack = require('gulp-webpack');
 const plumber = require('gulp-plumber'); // Handle gulp.watch errors without throwing / cancelling nodemon
- 
+
 gulp.task('default', []);
 
 const config = {
