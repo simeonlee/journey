@@ -1,12 +1,10 @@
 import axios from 'axios';
 
 var authenticateUser = (nextState, replace, cb) => {
-  console.log('nextState: ', nextState.location.pathname);
   axios.get('/auth')
     .then((res) => {
-      console.log('RESPONSE: ', res.data);
       if (res.data === '') {
-        replace('login');
+        replace('/');
         cb();
       } else {
         cb();
@@ -18,6 +16,18 @@ var authenticateUser = (nextState, replace, cb) => {
     })
 };
 
+var checkIfLoggedIn = (nextState, replace, cb) => {
+  axios.get('/auth')
+    .then((res) => {
+      if (res.data === '') {
+        cb()
+      } else {
+        cb()
+      }
+    })
+}
+
 module.exports = {
-  authenticateUser: authenticateUser
+  authenticateUser: authenticateUser,
+  checkIfLoggedIn: checkIfLoggedIn
 }

@@ -76,3 +76,60 @@ ul {
     background: #000;
     color: #fff;
 }
+
+.login-modal {
+  z-index: 100000001;
+}
+
+.fade {
+  z-index: 100000000;
+}
+
+.login-modal-title {
+  font-size: 20px;
+}
+.facebook-login-button {
+  color: #3B5998;
+  border-color: #3B5998;
+  background-color: rgba(59,89,152, .04);
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+  &:hover {
+    background-color: #3B5998;
+  }
+}
+
+a.login-button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+
+    color: #3B5998;
+    border-color: #3B5998;
+    display: flex;
+    width: 300px;
+    height: 50px;
+    &:hover {
+      background-color: #3B5998;
+      border-color: #3B5998 !important;
+    }
+}
+
+// .modal-dialog {
+//   position: absolute !important;
+//   top: 0;
+//   left: 0;
+//   bottom: 0;
+//   right: 0;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+.modal-dialog {
+  width: 440px;
+}
+
