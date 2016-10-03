@@ -1,0 +1,40 @@
+.interaction-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.basic-interaction {
+  > div {
+    padding: 10px;
+  }
+  margin: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.interaction-symbol {
+  
+}
+
+.interaction-icon {
+  // outline-style: solid;
+  // outline-color: $haze;
+  // outline-width: 3px;
+}
+
+.interaction-type {
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+
+.interaction-summary {
+  font-size: 14px;
+}
+
+.interaction-date {
+  font-size: 12px;
+  font-weight: 400;
+}

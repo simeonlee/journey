@@ -10,7 +10,7 @@ export class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav />
+        <Nav logInOrOut={"Log In"}/>
         {this.props.children}
       </div>
     )

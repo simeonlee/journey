@@ -1,9 +1,6 @@
-$major: 'Cinzel';
-$minor: 'Raleway';
-$silver: #BDC3C7;
-
 nav {
   z-index: 9999999;
+  letter-spacing: 1.2px;
 }
 
 nav button {
@@ -19,10 +16,15 @@ nav button {
   left: 0;
 }
 
+.logo {
+  color: $lynch;
+  font-size: 30px;
+  font-family: $major, serif;
+  letter-spacing: 1.5px !important;
+}
+
 .navbar-brand {
   height: 60px;
-  font-family: $major, serif;
-  font-size: 26px;
   display: flex;
   align-items: center;
 }
@@ -38,7 +40,7 @@ nav button {
   justify-content: center;
 }
 
-/* line height is 20px by default so add 30px top and bottom to equal the new .navbar-brand 80px height */
+/* line height is 16px so add 44px top and bottom to equal the new .navbar-brand 60px height */
 .nav > li > a {
   padding-top: 22px;
   padding-bottom: 22px;
@@ -59,7 +61,7 @@ nav button {
 }
 
 .nav-active {
-  box-shadow: 0 2px 0 0 $silver;
+  box-shadow: 0 2px 0 0 $lynch;
 }
 
 
