@@ -22,33 +22,100 @@ var Affirmation = require('./models/journals/journeys/affirmation')(sequelize);
 var Amazing = require('./models/journals/journeys/amazing')(sequelize);
 var Reflection = require('./models/journals/journeys/reflection')(sequelize);
 
+
 FacebookUser.belongsTo(User, {foreignKey: 'userId'});
 User.hasOne(FacebookUser);
 
 Address.belongsTo(User, {foreignKey: 'userId'});
 Interaction.belongsTo(User, {foreignKey: 'userId'});
 
-Note.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Note);
+var UserController = User.User;
 
-ToDo.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(ToDo);
+// Address.belongsTo(UserController);
+// Interaction.belongsTo(UserController, {foreignKey: 'id'});
 
-Gratitude.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Gratitude);
+UserController.hasMany(Note, {as: 'Notes', onDelete: 'cascade'});
+Note.belongsTo(UserController);
 
-Outlook.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Outlook);
+UserController.hasMany(ToDo, {as: 'ToDos', onDelete: 'cascade'});
+ToDo.belongsTo(UserController);
 
-Affirmation.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Affirmation);
+UserController.hasMany(Gratitude, {as: 'Gratitudes', onDelete: 'cascade'});
+Gratitude.belongsTo(UserController);
 
-Amazing.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Amazing);
+UserController.hasMany(Outlook, {as: 'Outlooks', onDelete: 'cascade'});
+Outlook.belongsTo(UserController);
 
-Reflection.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Reflection);
+UserController.hasMany(Affirmation, {as: 'Affirmations', onDelete: 'cascade'});
+Affirmation.belongsTo(UserController);
 
+UserController.hasMany(Amazing, {as: 'Amazings', onDelete: 'cascade'});
+Amazing.belongsTo(UserController);
+
+UserController.hasMany(Reflection, {as: 'Reflections', onDelete: 'cascade'});
+Reflection.belongsTo(UserController);
+
+
+
+sequelize.sync({force: true})
+.then(function() {
+  UserController.create({
+    username: 'Akai',
+    password: 'yumyum',
+    email: 'fakemail@sofake.com',
+    phone: '8888888888',
+    firstName: 'Akai',
+    lastName: 'Senghor',
+    age: 23,
+    gender: 'male',
+    bio: 'what dis',
+    website: 'http://www.akaidasbest.com',
+    job: 'software engineer',
+    industry: 'software',
+    employer: 'none',
+    wantsEmails: false,
+    wantsTexts: false,
+  })
+  .then(user => {
+    Gratitude.create({
+      entry: 'test gratitude, please ignore',
+      interface: 'que?'
+    }).then(gratitude => {
+      user.setGratitudes(gratitude);
+    })
+    Amazing.create({
+      entry: 'test amazing, please ignore',
+      interface: 'que?'
+    }).then(amazing => {
+      user.setAmazings(amazing);
+    })
+    Affirmation.create({
+      entry: 'test affirmation, please ignore',
+      interface: 'que?'
+    }).then(affirmation => {
+      user.setAffirmations(affirmation);
+    })
+    Outlook.create({
+      entry: 'test outlook, please ignore',
+      interface: 'que?'
+    }).then(outlook => {
+      user.setOutlooks(outlook);
+    })
+    Reflection.create({
+      entry: 'test reflection, please ignore',
+      interface: 'que?'
+    }).then(reflection => {
+      user.setReflections(reflection);
+    })
+  })
+})
+
+
+
+
+module.exports = {
+  sequelize: sequelize,
+=======
 module.exports = {
   sequelize: sequelize,
   User: User,
@@ -56,9 +123,18 @@ module.exports = {
   Address: Note,
   Interaction: Interaction,
   ToDo: ToDo,
+>>>>>>> 809eb3556c7fe862e16252cd73227f4d2a916efe
   Gratitude: Gratitude,
   Outlook: Outlook,
   Affirmation: Affirmation,
   Amazing: Amazing,
+<<<<<<< HEAD
+  Reflection: Reflection,
+  Note: Note,
+  ToDo: ToDo,
+  User: User
+}
+=======
   Reflection: Reflection
 };
+>>>>>>> 809eb3556c7fe862e16252cd73227f4d2a916efe

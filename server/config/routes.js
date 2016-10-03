@@ -2,12 +2,20 @@ var passport = require('passport');
 var path = require('path');
 var { checkForFacebookUser } = require('./utils');
 
-module.exports = (app, express) => {
+module.exports = (app, db) => {
 
   //Serve up static files upon request.
   // app.get('/', (req, res) => {
   //   res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
   // });
+
+  app.get('/api/journal/:userId/:month/:day/:year', (req, res, next) => {
+    db.User.getEntriesOnDate(req, res, next, req.params.userId, req.params.month, req.params.day, req.params.year);
+  });
+
+  app.post('/api/journal', (req, res, next) => {
+    db.User.postEntry(req, res, next);
+  });
 
   app.get('/journal',
     (req, res) => {
@@ -57,4 +65,3 @@ module.exports = (app, express) => {
     })
   );
 }
-
