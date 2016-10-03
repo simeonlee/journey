@@ -13,6 +13,7 @@ export class Nav extends Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.currentModalState = this.currentModalState.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   componentDidMount() {
@@ -27,6 +28,8 @@ export class Nav extends Component {
   }
 
   logout() {
+    console.log('test');
+    this.setState({logInOrOut: 'Log In'});
     axios.get('/logout');
   }
 
