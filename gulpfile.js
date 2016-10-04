@@ -22,7 +22,7 @@ const config = {
     css: './client/styles/scss/*.scss',
     js: ['./client/index.js', './client/**/*.js'],
     json: './client/**/*.json',
-    img: ['./client/images/**', './client/images/**/*', '!./client/images/**/*.sketch']
+    img: ['./client/images/**', './client/images/**/*', '!./client/images/**/*.sketch', '!./client/images/application-photos/*']
   },
   build: {
     html: './dist/',
