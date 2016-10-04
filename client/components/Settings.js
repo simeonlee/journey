@@ -27,10 +27,9 @@ export class Settings extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className="col-md-12 journal-content">
-        <h3>Hello, {this.state.username}</h3>
+        <div>Hello, {this.state.username}</div>
         <div>
           <p>Do you want text message alerts?</p>
           <input onClick={() => this._switch('wantsTexts')} id="text-switch" type="checkbox" name="my-checkbox"/>
