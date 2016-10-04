@@ -48,7 +48,7 @@ module.exports = (app, controllers) => {
   app.get('/auth', checkForFacebookUser);
 
   app.get('/logout', (req, res) => { 
-    console.log('logging out');
+    console.log('logout received!');
     req.logout();
     res.redirect('/');
   });
@@ -60,6 +60,18 @@ module.exports = (app, controllers) => {
   // handle the callback after facebook has authenticated the user
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
+      successRedirect: 'http://localhost:3000/',
+      failureRedirect: 'http://localhost:3000/login'
+    })
+  );
+  
+  app.get('/auth/amazon',
+    passport.authenticate('amazon', { scope: ['profile'] })
+  );
+
+  // handle the callback after facebook has authenticated the user
+  app.get('/auth/amazon/callback',
+    passport.authenticate('amazon', {
       successRedirect: 'http://localhost:3000/',
       failureRedirect: 'http://localhost:3000/login'
     })
