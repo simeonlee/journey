@@ -6,11 +6,6 @@ export class Profile extends Component {
     super(props)
     this.state = {
       section: 'settings',
-      user: {
-        username: 'wakaflackaflame',
-        wantsEmails: false,
-        wantsTexts: true,
-      }
     }
     this._section = this._section.bind(this)
     this._onClick = this._onClick.bind(this)
@@ -23,7 +18,7 @@ export class Profile extends Component {
   _section() {
     switch(this.state.section) {
       case 'settings':
-        return (<Settings user={this.state.user}/>);
+        return (<Settings />);
         break;
       case 'personal':
         return (<div>test</div>);
