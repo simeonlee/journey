@@ -10,6 +10,8 @@ var sequelize = new Sequelize('journey', settings.username, settings.password, {
 
 var User = require('./models/users/user')(sequelize);
 var FacebookUser = require('./models/users/facebookUser')(sequelize);
+var AmazonUser = require('./models/users/amazonUser')(sequelize);
+
 var Address = require('./models/users/address')(sequelize);
 var Interaction = require('./models/users/interaction')(sequelize);
 
@@ -25,6 +27,9 @@ var Reflection = require('./models/journals/journeys/reflection')(sequelize);
 
 User.hasOne(FacebookUser);
 FacebookUser.belongsTo(User, {foreignKey: 'userId'});
+
+User.hasOne(AmazonUser);
+AmazonUser.belongsTo(User, {foreignKey: 'userId'});
 
 User.hasOne(Address);
 Address.belongsTo(User, {foreignKey: 'userId'});
@@ -113,6 +118,7 @@ module.exports = {
   sequelize: sequelize,
   User: User,
   FacebookUser: FacebookUser,
+  AmazonUser: AmazonUser,
   Address: Note,
   Interaction: Interaction,
   ToDo: ToDo,

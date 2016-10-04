@@ -5,10 +5,15 @@ export class LoginModal extends Component {
   constructor(props) {
     super(props);
     this.loginWithFacebook = this.loginWithFacebook.bind(this);
+    this.loginWithAmazon = this.loginWithAmazon.bind(this);
   }
 
   loginWithFacebook() {
     location.href='/auth/facebook';
+  }
+
+  loginWithAmazon() {
+    location.href='/auth/Amazon';
   }
 
   render() {
@@ -37,6 +42,12 @@ export class LoginModal extends Component {
               onClick={this.loginWithFacebook}
             >
               Login with Facebook
+            </Button>
+            <Button
+              className="amazon-login-button"
+              onClick={this.loginWithAmazon}
+            >
+              Login with Amazon
             </Button>
           </Modal.Body>
           <Modal.Footer>

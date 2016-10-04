@@ -16,10 +16,13 @@ export class Nav extends Component {
     this.logout = this.logout.bind(this);
   }
 
+  // When the nav-bar renders, check if logged in.  If logged in,
+  // render "Log Out" button, if not logged in, render ("Log In") button.
   componentDidMount() {
     axios.get('/auth')
       .then((res) => {
-        if (res.data === '') {
+        console.log('RES.DATA: ', res.data)
+        if (!res.data) {
           this.setState({logInOrOut: 'Log In'});
         } else {
           this.setState({logInOrOut: 'Log Out'});
@@ -28,7 +31,7 @@ export class Nav extends Component {
   }
 
   logout() {
-    console.log('test');
+    console.log('logout sent to server')
     this.setState({logInOrOut: 'Log In'});
     axios.get('/logout');
   }
