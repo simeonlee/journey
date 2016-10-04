@@ -22,44 +22,42 @@ var Affirmation = require('./models/journals/journeys/affirmation')(sequelize);
 var Amazing = require('./models/journals/journeys/amazing')(sequelize);
 var Reflection = require('./models/journals/journeys/reflection')(sequelize);
 
-var UserController = User.User;
 
-FacebookUser.belongsTo(UserController, {foreignKey: 'userId'});
-UserController.hasOne(FacebookUser);
+FacebookUser.belongsTo(User, {foreignKey: 'userId'});
+User.hasOne(FacebookUser);
 
-Address.belongsTo(UserController, {foreignKey: 'userId'});
-Interaction.belongsTo(UserController, {foreignKey: 'userId'});
-
+Address.belongsTo(User, {foreignKey: 'userId'});
+Interaction.belongsTo(User, {foreignKey: 'userId'});
 
 // Address.belongsTo(UserController);
 // Interaction.belongsTo(UserController, {foreignKey: 'id'});
 
-UserController.hasMany(Note, {as: 'Notes', onDelete: 'cascade'});
-Note.belongsTo(UserController);
+User.hasMany(Note, {as: 'Notes', onDelete: 'cascade'});
+Note.belongsTo(User);
 
-UserController.hasMany(ToDo, {as: 'ToDos', onDelete: 'cascade'});
-ToDo.belongsTo(UserController);
+User.hasMany(ToDo, {as: 'ToDos', onDelete: 'cascade'});
+ToDo.belongsTo(User);
 
-UserController.hasMany(Gratitude, {as: 'Gratitudes', onDelete: 'cascade'});
-Gratitude.belongsTo(UserController);
+User.hasMany(Gratitude, {as: 'Gratitudes', onDelete: 'cascade'});
+Gratitude.belongsTo(User);
 
-UserController.hasMany(Outlook, {as: 'Outlooks', onDelete: 'cascade'});
-Outlook.belongsTo(UserController);
+User.hasMany(Outlook, {as: 'Outlooks', onDelete: 'cascade'});
+Outlook.belongsTo(User);
 
-UserController.hasMany(Affirmation, {as: 'Affirmations', onDelete: 'cascade'});
-Affirmation.belongsTo(UserController);
+User.hasMany(Affirmation, {as: 'Affirmations', onDelete: 'cascade'});
+Affirmation.belongsTo(User);
 
-UserController.hasMany(Amazing, {as: 'Amazings', onDelete: 'cascade'});
-Amazing.belongsTo(UserController);
+User.hasMany(Amazing, {as: 'Amazings', onDelete: 'cascade'});
+Amazing.belongsTo(User);
 
-UserController.hasMany(Reflection, {as: 'Reflections', onDelete: 'cascade'});
-Reflection.belongsTo(UserController);
+User.hasMany(Reflection, {as: 'Reflections', onDelete: 'cascade'});
+Reflection.belongsTo(User);
 
 
 
 sequelize.sync({force: true})
 .then(function() {
-  UserController.create({
+  User.create({
     username: 'Akai',
     password: 'yumyum',
     email: 'fakemail@sofake.com',
