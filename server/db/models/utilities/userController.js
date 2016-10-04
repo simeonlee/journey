@@ -27,7 +27,6 @@ module.exports = function(sequelize, User) {
       user.getAffirmations(localQuery)
       .then((affirmation) => {
         results.push(affirmation)
-        console.log('made it yo')
         user.getAmazings(localQuery)
         .then((amazing) => {
           results.push(amazing)
