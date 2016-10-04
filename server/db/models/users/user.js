@@ -1,8 +1,6 @@
 var Sequelize = require('sequelize');
 
 module.exports = function(sequelize) {
-
-
   var User = sequelize.define('users', {
     username: {
       type: Sequelize.STRING(20),
@@ -25,6 +23,5 @@ module.exports = function(sequelize) {
     lastLoginDate: Sequelize.DATE,
     createdAt: Sequelize.DATE
   });
-
   return User;
 };
