@@ -20,7 +20,7 @@ render((
       <IndexRoute component={Home} onEnter={checkIfLoggedIn}/>
       <Route path="/journal" component={Journal} onEnter={authenticateUser}/>
       <Route path="/dashboard" component={Dashboard} onEnter={authenticateUser}/>
-      <Route path="/profile" component={Profile} onEnter={authenticateUser}/>
+      <Route path="/profile"/>
     </Route>
   </Router>
 ), document.getElementById('app'))
