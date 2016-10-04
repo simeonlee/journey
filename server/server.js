@@ -11,8 +11,9 @@ require('./config/middleware.js')(app, express, passport);
 // configure server with routing.
 
 /* === connect database to server === */
-var controllers = require('./db/config');
-var sequelize = controllers.sequelize;
+var config = require('./db/config');
+var sequelize = config.sequelize;
+var controllers = require('./db/models/utilities/controllers')(sequelize, config.User);
 
 require('./config/routes.js')(app, controllers);
 
