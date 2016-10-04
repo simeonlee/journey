@@ -8,7 +8,14 @@ module.exports = function(sequelize) {
     city: Sequelize.STRING(50),
     state: Sequelize.STRING(50),
     zip: Sequelize.STRING(20),
-    country: Sequelize.STRING(50)
+    country: Sequelize.STRING(50),
+    userId: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'users', // Can be both a string representing the table name, or a reference to the model
+        key: 'id'
+      }
+    }
   });
 
   return Address;
