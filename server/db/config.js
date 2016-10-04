@@ -23,14 +23,14 @@ var Amazing = require('./models/journals/journeys/amazing')(sequelize);
 var Reflection = require('./models/journals/journeys/reflection')(sequelize);
 
 
-FacebookUser.belongsTo(User, {foreignKey: 'userId'});
 User.hasOne(FacebookUser);
+FacebookUser.belongsTo(User, {foreignKey: 'userId'});
 
+User.hasOne(Address);
 Address.belongsTo(User, {foreignKey: 'userId'});
-Interaction.belongsTo(User, {foreignKey: 'userId'});
 
-// Address.belongsTo(UserController);
-// Interaction.belongsTo(UserController, {foreignKey: 'id'});
+User.hasMany(Interaction, {as: 'Interactions', onDelete: 'cascade'});
+Interaction.belongsTo(User, {foreignKey: 'userId'});
 
 User.hasMany(Note, {as: 'Notes', onDelete: 'cascade'});
 Note.belongsTo(User, {foreignKey: 'userId'});
