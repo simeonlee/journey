@@ -33,13 +33,13 @@ sequelize
 MAKE SURE YOU ADD 'JOURNEY' TO MY SQL DATABASE! THEN UNCOMMENT BELOW CODE TO FORCE
 DATABASE UPDATE! RECOMMENT AFTER YOU USE 'NPM START' ONCE. THEN RESTART YOUR SERVER 
 AFTER RECOMMENTING BELOW CODE. */
-sequelize
-  .sync({ force: true })
-  .then(function(err) {
-    console.log('It worked!');
-  }, function (err) { 
-    console.log('An error occurred while creating the table:', err);
-  });
+// sequelize
+//   .sync({ force: true })
+//   .then(function(err) {
+//     console.log('It worked!');
+//   }, function (err) { 
+//     console.log('An error occurred while creating the table:', err);
+//   });
 
 //start listening to requests on port 3000.
 app.listen(3000, () => {

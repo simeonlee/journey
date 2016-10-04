@@ -13,6 +13,29 @@ module.exports = (passport) => {
     },
     function(accessToken, refreshToken, profile, done) {
 
+      User.findOrCreate({
+        where: {
+          username: 'avocado'
+        },
+        defaults: {
+          password: '12345',
+          email: 'avocado@gmail.com',
+          phone: '716-472-9022',
+          firstName: 'Chris',
+          lastName: 'Avocado',
+          age: 23,
+          gender: 'male',
+          bio: 'male',
+          job: 'fulltime avocado',
+          industry: 'avacadoing',
+          employer: 'lettuce',
+          wantsEmails: 0,
+          wantsTexts: 1,
+          lastLoginDate: Date.now(),
+          createdAt: Date.now()
+        }
+      })
+
       FacebookUser.findOrCreate({
         where: {facebookID: profile.id},
         defaults: {
@@ -64,25 +87,3 @@ EXAMPLE PROFILE:
 // database with avocado dummy data
 //-----------------------------------
 
-// User.findOrCreate({
-//   where: {
-//     username: 'avocado'
-//   },
-//   defaults: {
-//     password: '12345',
-//     email: 'avocado@gmail.com',
-//     phone: '716-472-9022',
-//     firstName: 'Chris',
-//     lastName: 'Avocado',
-//     age: 23,
-//     gender: 'male',
-//     bio: 'male',
-//     job: 'fulltime avocado',
-//     industry: 'avacadoing',
-//     employer: 'lettuce',
-//     wantsEmails: 0,
-//     wantsTexts: 1,
-//     lastLoginDate: Date.now(),
-//     createdAt: Date.now()
-//   }
-// })
