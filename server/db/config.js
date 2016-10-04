@@ -33,80 +33,80 @@ Interaction.belongsTo(User, {foreignKey: 'userId'});
 // Interaction.belongsTo(UserController, {foreignKey: 'id'});
 
 User.hasMany(Note, {as: 'Notes', onDelete: 'cascade'});
-Note.belongsTo(User);
+Note.belongsTo(User, {foreignKey: 'userId'});
 
 User.hasMany(ToDo, {as: 'ToDos', onDelete: 'cascade'});
-ToDo.belongsTo(User);
+ToDo.belongsTo(User, {foreignKey: 'userId'});
 
 User.hasMany(Gratitude, {as: 'Gratitudes', onDelete: 'cascade'});
-Gratitude.belongsTo(User);
+Gratitude.belongsTo(User, {foreignKey: 'userId'});
 
 User.hasMany(Outlook, {as: 'Outlooks', onDelete: 'cascade'});
-Outlook.belongsTo(User);
+Outlook.belongsTo(User, {foreignKey: 'userId'});
 
 User.hasMany(Affirmation, {as: 'Affirmations', onDelete: 'cascade'});
-Affirmation.belongsTo(User);
+Affirmation.belongsTo(User, {foreignKey: 'userId'});
 
 User.hasMany(Amazing, {as: 'Amazings', onDelete: 'cascade'});
-Amazing.belongsTo(User);
+Amazing.belongsTo(User, {foreignKey: 'userId'});
 
 User.hasMany(Reflection, {as: 'Reflections', onDelete: 'cascade'});
-Reflection.belongsTo(User);
+Reflection.belongsTo(User, {foreignKey: 'userId'});
 
 
 
-sequelize.sync({force: true})
-.then(function() {
-  User.create({
-    username: 'Akai',
-    password: 'yumyum',
-    email: 'fakemail@sofake.com',
-    phone: '8888888888',
-    firstName: 'Akai',
-    lastName: 'Senghor',
-    age: 23,
-    gender: 'male',
-    bio: 'what dis',
-    website: 'http://www.akaidasbest.com',
-    job: 'software engineer',
-    industry: 'software',
-    employer: 'none',
-    wantsEmails: false,
-    wantsTexts: false,
-  })
-  .then(user => {
-    Gratitude.create({
-      entry: 'test gratitude, please ignore',
-      interface: 'que?'
-    }).then(gratitude => {
-      user.setGratitudes(gratitude);
-    })
-    Amazing.create({
-      entry: 'test amazing, please ignore',
-      interface: 'que?'
-    }).then(amazing => {
-      user.setAmazings(amazing);
-    })
-    Affirmation.create({
-      entry: 'test affirmation, please ignore',
-      interface: 'que?'
-    }).then(affirmation => {
-      user.setAffirmations(affirmation);
-    })
-    Outlook.create({
-      entry: 'test outlook, please ignore',
-      interface: 'que?'
-    }).then(outlook => {
-      user.setOutlooks(outlook);
-    })
-    Reflection.create({
-      entry: 'test reflection, please ignore',
-      interface: 'que?'
-    }).then(reflection => {
-      user.setReflections(reflection);
-    })
-  })
-})
+// sequelize.sync({force: true})
+// .then(function() {
+//   User.create({
+//     username: 'Akai',
+//     password: 'yumyum',
+//     email: 'fakemail@sofake.com',
+//     phone: '8888888888',
+//     firstName: 'Akai',
+//     lastName: 'Senghor',
+//     age: 23,
+//     gender: 'male',
+//     bio: 'what dis',
+//     website: 'http://www.akaidasbest.com',
+//     job: 'software engineer',
+//     industry: 'software',
+//     employer: 'none',
+//     wantsEmails: false,
+//     wantsTexts: false,
+//   })
+//   .then(user => {
+//     Gratitude.create({
+//       entry: 'test gratitude, please ignore',
+//       interface: 'que?'
+//     }).then(gratitude => {
+//       user.setGratitudes(gratitude);
+//     })
+//     Amazing.create({
+//       entry: 'test amazing, please ignore',
+//       interface: 'que?'
+//     }).then(amazing => {
+//       user.setAmazings(amazing);
+//     })
+//     Affirmation.create({
+//       entry: 'test affirmation, please ignore',
+//       interface: 'que?'
+//     }).then(affirmation => {
+//       user.setAffirmations(affirmation);
+//     })
+//     Outlook.create({
+//       entry: 'test outlook, please ignore',
+//       interface: 'que?'
+//     }).then(outlook => {
+//       user.setOutlooks(outlook);
+//     })
+//     Reflection.create({
+//       entry: 'test reflection, please ignore',
+//       interface: 'que?'
+//     }).then(reflection => {
+//       user.setReflections(reflection);
+//     })
+//   })
+// })
 
 
 module.exports = {
