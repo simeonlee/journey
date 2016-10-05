@@ -10,7 +10,16 @@ module.exports = (app, controllers) => {
   // });
 
   app.get('/api/journal/:userId/:month/:day/:year', (req, res, next) => {
-    controllers.UserController.getEntriesOnDate(req, res, next, req.params.userId, req.params.month, req.params.day, req.params.year);
+    controllers
+      .UserController
+      .getEntriesOnDate(
+        req,
+        res,
+        next,
+        req.params.userId,
+        req.params.month,
+        req.params.day,
+        req.params.year );
   });
 
   app.post('/api/journal', (req, res, next) => {

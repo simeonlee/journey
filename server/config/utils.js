@@ -9,15 +9,15 @@ module.exports = function() {
   var findOrCreateFbUser = (User, FacebookUser, profile, done) => {
     User.findOrCreate({
       where: {
-        username: profile.email
+        email: profile.email
       },
       defaults: {
-        password: '12345',
+        // password: '12345',
         email: profile.email,
         // phone: '716-472-9022',
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
-        age: 23,
+        age: profile.name.age_range,
         gender: profile.gender,
         // bio: ,
         // job: 'fulltime avocado',
