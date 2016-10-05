@@ -48,7 +48,6 @@ module.exports = (app, controllers) => {
   app.get('/auth', checkForFacebookUser);
 
   app.get('/logout', (req, res) => { 
-    console.log('logout received!');
     req.logout();
     res.redirect('/');
   });

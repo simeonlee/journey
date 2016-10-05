@@ -21,7 +21,6 @@ export class Nav extends Component {
   componentDidMount() {
     axios.get('/auth')
       .then((res) => {
-        console.log('RES.DATA: ', res.data)
         if (!res.data) {
           this.setState({logInOrOut: 'Log In'});
         } else {
@@ -31,7 +30,6 @@ export class Nav extends Component {
   }
 
   logout() {
-    console.log('logout sent to server')
     this.setState({logInOrOut: 'Log In'});
     axios.get('/logout');
   }
