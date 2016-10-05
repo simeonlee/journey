@@ -28,7 +28,7 @@ export class PersonalInfo extends Component {
     console.log(current.edit)
     if (current.edit) {
       return (
-        <input type={name} className="form-control" id="edit" placeholder={current.info}/>
+        <input type="text" className="form-control" id={name} placeholder={current.info}/>
       )
     } else {
       return (<p>{current.info}</p>)
@@ -56,7 +56,14 @@ export class PersonalInfo extends Component {
 
   _saveInfo(passed) {
     console.log('saving!')
-    this._edit(passed)
+    var val = document.getElementById(passed).value
+    var obj = {}
+    var item = {
+      edit: false,
+      info: val
+    }
+    obj[passed] = item
+    this.setState(obj)
   }
 
   render() {
