@@ -5,6 +5,7 @@ var db, {User, FacebookUser, AmazonUser} = require('../db/config.js');
 var utils, { findOrCreateFbUser } = require('./utils.js');
 
 module.exports = (passport) => {
+
   //configure passport strategies
   passport.use(new FacebookStrategy({
       clientID: facebook.appID,
@@ -26,6 +27,8 @@ module.exports = (passport) => {
       process.nextTick(() => done(null, profile))
     }
   ));
+
+
 
   passport.serializeUser(function(user, done) {
     if (user.facebookID) {
