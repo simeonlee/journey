@@ -5,7 +5,7 @@ import Circles from './analytics/Circles'
 import Calendar from './analytics/calendar/Calendar'
 import WordCloud from './analytics/wordcloud/WordCloud'
 import ScatterChart from './analytics/scatterchart/ScatterChart'
-import Timeline from './analytics/timeline/Timeline'
+import ActivityFeed from './analytics/activityFeed/ActivityFeed'
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -56,12 +56,12 @@ export default class Dashboard extends Component {
             </div>
           </div>
         </div>
-        <div className="dashboard-element dashboard-timeline">
-          <div className="dashboard-header timeline-header">
+        <div className="dashboard-element dashboard-activity-feed">
+          <div className="dashboard-header activity-feed-header">
             <div className="header-title dashboard-title">Steps taken in your journey</div>
             <div className="header-subtitle dashboard-jump">Time travel to<Glyphicon glyph="triangle-bottom" /></div>
           </div>
-          <Timeline />
+          <ActivityFeed />
         </div>
       </div>
 
