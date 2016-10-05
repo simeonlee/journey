@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Settings } from './Settings'
+import { PersonalInfo } from './PersonalInfo'
 
 export class Profile extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export class Profile extends Component {
         return (<Settings />);
         break;
       case 'personal':
-        return (<div>test</div>);
+        return (<PersonalInfo />);
         break;
       default:
         return null;
@@ -42,8 +43,8 @@ export class Profile extends Component {
         </h2>
         <div>
           <ul className="ul-profile col-md-3">
-            <li onClick={() => {this._onClick('settings')}} className="profile-list">Settings</li>
-            <li onClick={() => {this._onClick('personal')}} className="profile-list">Personal Info</li>
+            <li onClick={() => {this._onClick('settings')}} className="profile-list"><h3>Settings</h3></li>
+            <li onClick={() => {this._onClick('personal')}} className="profile-list"><h3>Personal Info</h3></li>
           </ul>
         </div>
         <div className="col-md-9">
