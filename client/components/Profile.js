@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
 import { Settings } from './Settings'
+import { PersonalInfo } from './PersonalInfo'
 
 export class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {
       section: 'settings',
-      user: {
-        username: 'wakaflackaflame',
-        wantsEmails: false,
-        wantsTexts: true,
-      }
     }
     this._section = this._section.bind(this)
     this._onClick = this._onClick.bind(this)
@@ -23,10 +19,10 @@ export class Profile extends Component {
   _section() {
     switch(this.state.section) {
       case 'settings':
-        return (<Settings user={this.state.user}/>);
+        return (<Settings />);
         break;
       case 'personal':
-        return (<div>test</div>);
+        return (<PersonalInfo />);
         break;
       default:
         return null;
@@ -47,8 +43,8 @@ export class Profile extends Component {
         </h2>
         <div>
           <ul className="ul-profile col-md-3">
-            <li onClick={() => {this._onClick('settings')}} className="profile-list">Settings</li>
-            <li onClick={() => {this._onClick('personal')}} className="profile-list">Personal Info</li>
+            <li onClick={() => {this._onClick('settings')}} className="profile-list"><h3>Settings</h3></li>
+            <li onClick={() => {this._onClick('personal')}} className="profile-list"><h3>Personal Info</h3></li>
           </ul>
         </div>
         <div className="col-md-9">
