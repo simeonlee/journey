@@ -72,7 +72,7 @@ export class PersonalInfo extends Component {
         <h4>Hello, {this.state.username.info}</h4>
         <div className="individual-info col-md-12">
           <h5>Name</h5>
-          {this.state.firstName.info}, {this.state.lastName.info}
+          {this.state.firstName.info} {this.state.lastName.info}
         </div>
         <hr/>
         <div className="individual-info col-md-12">
