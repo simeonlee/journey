@@ -28,10 +28,10 @@ export class PersonalInfo extends Component {
     console.log(current.edit)
     if (current.edit) {
       return (
-        <input type="text" className="form-control" id={name} placeholder={current.info}/>
+        <input type="text" className="col-md-11" id={name} placeholder={current.info}/>
       )
     } else {
-      return (<p>{current.info}</p>)
+      return (<p className="col-md-11">{current.info}</p>)
     }
   }
 
@@ -48,9 +48,9 @@ export class PersonalInfo extends Component {
 
   _editOrSave(passed) {
     if (!this.state[passed].edit) {
-      return (<button onClick={() => this._edit(passed)} type="button" className="btn btn-default btn-sm">Edit</button>)
+      return (<div className="col-md-1"><button onClick={() => this._edit(passed)} type="button" className="btn btn-default btn-sm pull-right">Edit</button></div>)
     } else {
-      return <button onClick={() => this._saveInfo(passed)} type="button" className="btn btn-default btn-sm">Save</button>
+      return <div className="col-md-1"><button onClick={() => this._saveInfo(passed)} type="button" className="btn btn-default btn-sm pull-right">Save</button></div>
     }
   }
 
@@ -70,29 +70,33 @@ export class PersonalInfo extends Component {
     return (
       <div className="col-md-12 journal-content">
         <h4>Hello, {this.state.username.info}</h4>
-        <div className="individual-info">
+        <div className="individual-info col-md-12">
           <h5>Name</h5>
           {this.state.firstName.info}, {this.state.lastName.info}
         </div>
-        <div className="individual-info">
-          <h5>Email</h5>
+        <hr/>
+        <div className="individual-info col-md-12">
+          <h5 className="personal-headers col-md-11">Email</h5>
           {this._beingEditted(this.state.email, 'email')}
           {this._editOrSave('email')}
         </div>
-        <div className="individual-info">
-          <h5>Phone</h5>
-          {this._beingEditted(this.state.phone)}
-          <button onClick={() => this._edit('phone')} type="button" className="btn btn-default btn-sm">Edit</button>
+        <hr/>
+        <div className="individual-info col-md-12">
+          <h5 className="personal-headers col-md-11">Phone</h5>
+          {this._beingEditted(this.state.phone, 'phone')}
+          {this._editOrSave('phone')}
         </div>
-        <div className="individual-info">
-          <h5>Birthday</h5>
-          {this._beingEditted(this.state.birthday)}
-          <button onClick={() => this._edit('birthday')} type="button" className="btn btn-default btn-sm">Edit</button>
+        <hr/>
+        <div className="individual-info col-md-12">
+          <h5 className="personal-headers col-md-11">Birthday</h5>
+          {this._beingEditted(this.state.birthday, 'birthday')}
+          {this._editOrSave('birthday')}
         </div>
-        <div className="individual-info">
-          <h5>Gender</h5>
+        <hr/>
+        <div className="individual-info col-md-12">
+          <h5 className="personal-headers col-md-11">Gender</h5>
           {this._beingEditted(this.state.gender)}
-          <button onClick={() => this._edit('gender')} type="button" className="btn btn-default btn-sm">Edit</button>
+          {this._editOrSave('gender')}
         </div>
         <button type="submit" className="btn btn-primary save-changes">Save Changes</button>
       </div>
