@@ -6,6 +6,7 @@ module.exports = function(sequelize) {
       type: Sequelize.STRING(500),
       unique: true
     },
+    provider: Sequelize.STRING(20),
     userId: {
       type: Sequelize.INTEGER,
       references: {
