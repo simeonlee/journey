@@ -4,11 +4,6 @@ var { checkForFacebookUser } = require('./utils');
 
 module.exports = (app, controllers) => {
 
-  //Serve up static files upon request.
-  // app.get('/', (req, res) => {
-  //   res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
-  // });
-
   app.get('/api/journal/:userId/:month/:day/:year', (req, res, next) => {
     controllers
       .UserController
