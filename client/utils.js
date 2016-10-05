@@ -3,7 +3,6 @@ import axios from 'axios';
 var authenticateUser = (nextState, replace, cb) => {
   axios.get('/auth')
     .then((res) => {
-      console.log('res.data: ', res.data);
       if (res.data) {
         cb();
       } else {
