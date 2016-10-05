@@ -17,10 +17,10 @@ import { authenticateUser, checkIfLoggedIn } from './utils'
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Home} onEnter={checkIfLoggedIn}/>
+      <IndexRoute component={Home}/>
       <Route path="/journal" component={Journal} onEnter={authenticateUser}/>
       <Route path="/dashboard" component={Dashboard} onEnter={authenticateUser}/>
-      <Route path="/profile" component={Profile} onEnter={authenticateUser}/>
+      <Route path="/profile" component={Profile}/>
     </Route>
   </Router>
 ), document.getElementById('app'))
