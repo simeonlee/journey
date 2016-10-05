@@ -1,7 +1,7 @@
 var FacebookStrategy = require('passport-facebook').Strategy;
 var AmazonStrategy = require('passport-amazon').Strategy;
 var { facebook, amazon } = require('../../auth.js');
-var db, {User, FacebookUser} = require('../db/config.js');
+var db, {User, FacebookUser, AmazonUser} = require('../db/config.js');
 var utils, { findOrCreateFbUser } = require('./utils.js');
 
 module.exports = (passport) => {
@@ -23,30 +23,27 @@ module.exports = (passport) => {
       callbackURL: amazon.callbackUrl
     },
     function(accessToken, refreshToken, profile, done) {
-      // User.findOrCreate({ amazonId: profile.id }, function (err, user) {
-      //   return done(err, user);
-      // });
-      // console.log(profile);
       process.nextTick(() => done(null, profile))
     }
   ));
 
   passport.serializeUser(function(user, done) {
-    // console.log("USER =========> ", user);
     if (user.facebookID) {
-      done(null, user.facebookID);
+      done(null, {id: user.facebookID, provider: 'facebook'});
     } else if (user.provider === 'amazon') {
-      console.log('AMAZON PROVIDER', user.id)
-      done(null, user.id)
+      done(null, {id: user.id, provider: 'amazon'});
     }
   });
 
-  passport.deserializeUser(function(id, done) {
-    console.log('ID', id)
-    FacebookUser.findOne({where: {facebookID: id}})
-      .then((user) => {
-        done(null, user);
-      });
+  passport.deserializeUser(function(info, done) {
+    if (info.provider === 'facebook') {
+      FacebookUser.findOne({where: {facebookID: info.id}})
+        .then((user) => {
+          done(null, user);
+        });
+    } else if (info.provider === 'amazon') {
+      done(null, info);
+    }
   });
 }
 
@@ -69,10 +66,4 @@ EXAMPLE PROFILE:
   updated_time: '2016-09-28T17:31:28+0000',
   verified: true }
 */
-
-
-//-----------------------------------
-// Uncomment below to populate the
-// database with avocado dummy data
-//-----------------------------------
 
