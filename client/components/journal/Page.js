@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export class JournalPage extends Component {
+export default class Page extends Component {
   constructor(props) {
     super(props)
     this.grateful = this.grateful.bind(this)
@@ -50,7 +50,6 @@ export class JournalPage extends Component {
       }
     }
   }
-
 
   render() {
     return (
