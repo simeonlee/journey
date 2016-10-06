@@ -1,83 +1,253 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+import moment from 'moment' // useful for calculating and manipulating dates
+import 'moment-range' // adds moment.range(start, end) functionality to moment library
 
 export default class Page extends Component {
   constructor(props) {
     super(props)
-    this.grateful = this.grateful.bind(this)
-    this.outlook = this.outlook.bind(this)
-    this.affirmation = this.affirmation.bind(this)
-    this.amazing = this.amazing.bind(this)
-    this.reflection = this.reflection.bind(this)
+    this.state = {
+      date: props.focusDate,
+      gratitudes: ['', '', ''],
+      outlooks: ['', '', ''],
+      affirmations: '',
+      amazings: ['', '', ''],
+      reflections: ['', '', '']
+    }
+    this.checkDatabaseForEntries();
   }
 
-  grateful() {
-    if (this.props.data.length > 0) {
-      if (this.props.data[2].length > 0) {
-        console.log(this.props.data)
-        return this.props.data[2][0].entry
-      }
+  updateEntry(e) {
+    // TODO: document the below process
+    var ref = e.target.className;
+    var value = e.target.value;
+    if (ref !== 'affirmations') {
+      var refs = ref.split(' ');
+      var stateType = refs[0];
+      var entryNumber = refs[1];
+      var state = this.state[stateType];
+      state[entryNumber] = value;
+      this.setState({ [stateType]: state });
+    } else if (ref === 'affirmations') {
+      var { affirmations } = this.state;
+      affirmations = value;
+      this.setState({ 'affirmations': affirmations });
     }
   }
 
-  outlook() {
-    if (this.props.data.length > 0) {
-      if (this.props.data[3].length > 0) {
-        return this.props.data[3][0].entry
-      }
-    }
+  checkDatabaseForEntries() {
+    // Check database for entries upon mount and update component state if any found
+    axios.get('/entries', {
+        params: {
+          date: this.props.focusDate
+        }
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  affirmation() {
-    if (this.props.data.length > 0) {
-      if (this.props.data[0].length > 0) {
-        return this.props.data[0][0].entry
-      }
-    }
-  }
-
-  amazing() {
-    if (this.props.data.length > 0) {
-      if (this.props.data[1].length > 0) {
-        return this.props.data[1][0].entry
-      }
-    }
-  }
-
-  reflection() {
-    if (this.props.data.length > 0) {
-      if (this.props.data[4].length > 0) {
-        return this.props.data[4][0].entry
-      }
-    }
+  updateEntriesInDatabase() {
+    // Take any entries from user and update state in database
+    axios.post('/entries', {
+        date: this.props.focusDate,
+        gratitudes: this.state.gratitudes,
+        outlooks: this.state.outlooks,
+        affirmations: this.state.affirmations,
+        amazings: this.state.amazings,
+        reflections: this.state.reflections
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
     return (
-      <div className="journal-content">
-        <div className="gratitude journal-section">
-          <h4 className="title">I am grateful for...</h4>
-          <div className="section-entry">{this.grateful()}</div>
+      <div className="page">
+        <div className="page-date">{moment(this.props.focusDate).format('MMMM D[,] YYYY').toString()}</div>
+        <div className="page-section gratitudes">
+          <div className="page-title">Gratitudes</div>
+          <div className="page-subtitle">List up to three things in your recent life that you are grateful for</div>
+          <form className="page-form">
+            <div className="page-input-container">
+              1.
+              {' '}
+              <input
+                type="text"
+                placeholder="Express gratitude..."
+                className="gratitudes 0"
+                value={this.state.gratitudes[0] || ''}
+                onChange={this.updateEntry.bind(this)}
+              />
+            </div>
+            <div className="page-input-container">
+              2.
+              {' '}
+              <input
+                type="text"
+                placeholder="Express gratitude..."
+                className="gratitudes 1"
+                value={this.state.gratitudes[1] || ''}
+                onChange={this.updateEntry.bind(this)}
+              />
+            </div>
+            <div className="page-input-container">
+              3.
+              {' '}
+              <input
+                type="text"
+                placeholder="Express gratitude..."
+                className="gratitudes 2"
+                value={this.state.gratitudes[2] || ''}
+                onChange={this.updateEntry.bind(this)}
+              />
+            </div>
+          </form>
         </div>
         <hr/>
-        <div className="outlook journal-section">
-          <h4 className="title">What would make today great?</h4>
-          <div className="section-entry">{this.outlook()}</div>
+        <div className="page-section outlooks">
+          <div className="page-title">Outlooks</div>
+          <div className="page-subtitle">What occurrences or events would make today great? Try to think of up to three</div>
+          <form className="page-form">
+            <div className="page-input-container">
+              1.
+              {' '}
+              <input
+                type="text"
+                placeholder="Express hopes..."
+                className="outlooks 0"
+                value={this.state.outlooks[0] || ''}
+                onChange={this.updateEntry.bind(this)}
+              />
+            </div>
+            <div className="page-input-container">
+              2.
+              {' '}
+              <input
+                type="text"
+                placeholder="Express hopes..."
+                className="outlooks 1"
+                value={this.state.outlooks[1] || ''}
+                onChange={this.updateEntry.bind(this)}
+              />
+            </div>
+            <div className="page-input-container">
+              3.
+              {' '}
+              <input
+                type="text"
+                placeholder="Express hopes..."
+                className="outlooks 2"
+                value={this.state.outlooks[2] || ''}
+                onChange={this.updateEntry.bind(this)}
+              />
+            </div>
+          </form>
         </div>
         <hr/>
-        <div className="affirmations journal-section">
-          <h4 className="title">Daily affirmations. I was...</h4>
-          <div className="section-entry">{this.affirmation()}</div>
+        <div className="page-section affirmations">
+          <div className="page-title">Affirmations</div>
+          <div className="page-subtitle">What are you? How do you perceive yourself? List as many traits as you can think of (separated by commas)</div>
+          <div className="page-subtext">When doing this exercise, don't worry about how you think others perceive you</div>
+          <form className="page-form">
+            <div className="page-input-container">
+              <input
+                type="text"
+                placeholder="List traits..."
+                className="affirmations"
+                value={this.state.affirmations.length ? this.state.affirmations.split(', ') : ''}
+                onChange={this.updateEntry.bind(this)}
+              />
+            </div>
+          </form>
         </div>
         <hr/>
-        <div className="amazings journal-section">
-          <h4 className="title">Three amazings things about today</h4>
-          <div className="section-entry">{this.amazing()}</div>
-
+        <div className="page-section amazings">
+          <div className="page-title">Amazings</div>
+          <div className="page-subtitle">What happened today that made the day amazing? Try to write down up to three</div>
+          <form className="page-form">
+            <div className="page-input-container">
+              1.
+              {' '}
+              <input
+                type="text"
+                placeholder="Reflect on the positives..."
+                className="amazings 0"
+                value={this.state.amazings[0] || ''}
+                onChange={this.updateEntry.bind(this)}
+              />
+            </div>
+            <div className="page-input-container">
+              2.
+              {' '}
+              <input
+                type="text"
+                placeholder="Reflect on the positives..."
+                className="amazings 1"
+                value={this.state.amazings[1] || ''}
+                onChange={this.updateEntry.bind(this)}
+              />
+            </div>
+            <div className="page-input-container">
+              3.
+              {' '}
+              <input
+                type="text"
+                placeholder="Reflect on the positives..."
+                className="amazings 2"
+                value={this.state.amazings[2] || ''}
+                onChange={this.updateEntry.bind(this)}
+              />
+            </div>
+          </form>
         </div>
         <hr/>
-        <div className="reflections journal-section">
-          <h4 className="title">What could have made today better?</h4>
-          <div className="section-entry">{this.reflection()}</div>
+        <div className="page-section reflections">
+          <div className="page-title">Reflections</div>
+          <div className="page-subtitle">What could you have done to make today better?</div>
+          <div className="page-subtext">Write down only things that you could have controlled. No use thinking about things outside of your control</div>
+          <form className="page-form">
+            <div className="page-input-container">
+              1.
+              {' '}
+              <input
+                type="text"
+                placeholder="Identify growth opportunities..."
+                className="reflections 0"
+                value={this.state.reflections[0] || ''}
+                onChange={this.updateEntry.bind(this)}
+              />
+            </div>
+            <div className="page-input-container">
+              2.
+              {' '}
+              <input
+                type="text"
+                placeholder="Identify growth opportunities..."
+                className="reflections 1"
+                value={this.state.reflections[1] || ''}
+                onChange={this.updateEntry.bind(this)}
+              />
+            </div>
+            <div className="page-input-container">
+              3.
+              {' '}
+              <input
+                type="text"
+                placeholder="Identify growth opportunities..."
+                className="reflections 2"
+                value={this.state.reflections[2] || ''}
+                onChange={this.updateEntry.bind(this)}
+              />
+            </div>
+          </form>
         </div>
       </div>
     )
