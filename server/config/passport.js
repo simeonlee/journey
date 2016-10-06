@@ -2,9 +2,10 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var AmazonStrategy = require('passport-amazon').Strategy;
 var { facebook, amazon } = require('../../auth.js');
 var db, {User, FacebookUser, AmazonUser} = require('../db/config.js');
-var utils, { findOrCreateFbUser } = require('./utils.js');
+var utils, { findOrCreateFbUser, findOrCreateAmazonUser } = require('./utils.js');
 
 module.exports = (passport) => {
+
   //configure passport strategies
   passport.use(new FacebookStrategy({
       clientID: facebook.appID,
@@ -23,9 +24,12 @@ module.exports = (passport) => {
       callbackURL: amazon.callbackUrl
     },
     function(accessToken, refreshToken, profile, done) {
-      process.nextTick(() => done(null, profile))
+      // process.nextTick(() => done(null, profile))
+      return findOrCreateAmazonUser(User, AmazonUser, profile, done);
     }
   ));
+
+
 
   passport.serializeUser(function(user, done) {
     if (user.facebookID) {
