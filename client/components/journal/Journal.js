@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Glyphicon } from 'react-bootstrap';
-import { getWeek } from '../../utilities/utilities'
+// import { getWeek } from '../../utilities/utilities'
 import Page from './Page'
 import Timeline from './Timeline'
-import axios from 'axios'
 import moment from 'moment' // useful for calculating and manipulating dates
 import 'moment-range' // adds moment.range(start, end) functionality to moment library
 
@@ -13,7 +12,7 @@ export default class Journal extends Component {
     this.state = {
       startDate: moment().startOf('day').subtract(1, 'week'),
       endDate: moment().startOf('day'),
-      focusDate: moment().startOf('day'),
+      focusDate: moment().startOf('day').toISOString(),
     }
 
     // this.updateDateRange();
@@ -30,49 +29,57 @@ export default class Journal extends Component {
     var start = moment().startOf('day').subtract(1, 'week').toDate();
     var end = moment().startOf('day').toDate();
     var range = moment.range(start, end);
-    console.log(range);
-    // this.setState('dateRange', range);
 
   }
 
-  dayEntry() {
-
+  onDateClick(e) {
+    var date = e.target.className.split(' ')[1];
+    this.setState({ focusDate: moment(date).startOf('day').toISOString() });
+    console.log('state\'s focus date', this.state.focusDate);
   }
 
-  onClick(date) {
-
-  }
-
-  currentDay() {
-
+  onGlyphClick(e) {
+    var classes = e.target.className;
+    if (classes.indexOf('glyphicon-chevron-left') > -1) {
+      var { startDate, endDate } = this.state;
+      startDate = startDate.subtract(8, 'day');
+      endDate = endDate.subtract(8, 'day');
+      this.setState({ startDate, endDate });
+    } else if (classes.indexOf('glyphicon-chevron-right') > -1) {
+      var { startDate, endDate } = this.state;
+      startDate = startDate.add(8, 'day');
+      endDate = endDate.add(8, 'day');
+      this.setState({ startDate, endDate });
+    }
   }
 
   render() {
     return (
-      <div>
+      <div className="journal-container">
         <div className="journal-timeline">
-          <Glyphicon glyph="chevron-left" />
+          <Glyphicon
+            className="timeline-glyph"
+            glyph="chevron-left"
+            onClick={this.onGlyphClick.bind(this)}
+          />
           <Timeline
             startDate={this.state.startDate}
             endDate={this.state.endDate}
             focusDate={this.state.focusDate}
+            onDateClick={this.onDateClick.bind(this)}
           />
-          <Glyphicon glyph="chevron-right" />
+          <Glyphicon
+            className="timeline-glyph"
+            glyph="chevron-right"
+            onClick={this.onGlyphClick.bind(this)}
+          />
+        </div>
+        <div className="journal-page">
+          <Page
+            focusDate={this.state.focusDate}
+          />
         </div>
       </div>
     )
   }
 }
-
-// <div className="col-md-offset-2 col-md-8 main-content">
-//   <ul className="timeline">
-//     <li className="timeline-date" onClick={() => {this.onClick(this.state.week[0])}}>{this.state.week[0]}</li>
-//     <li className="timeline-date" onClick={() => {this.onClick(this.state.week[1])}}>{this.state.week[1]}</li>
-//     <li className="timeline-date" onClick={() => {this.onClick(this.state.week[2])}}>{this.state.week[2]}</li>
-//     <li className="timeline-date" onClick={() => {this.onClick(this.state.week[3])}}>{this.state.week[3]}</li>
-//     <li className="timeline-date" onClick={() => {this.onClick(this.state.week[4])}}>{this.state.week[4]}</li>
-//     <li className="timeline-date" onClick={() => {this.onClick(this.state.week[5])}}>{this.state.week[5]}</li>
-//     <li className="timeline-date" onClick={() => {this.onClick(this.state.week[6])}}>{this.state.week[6]}</li>
-//   </ul>
-//   <Page data={this.state.data}/>
-// </div>

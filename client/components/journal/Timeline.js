@@ -17,7 +17,11 @@ const Timeline = (props) => {
   return (
     <div className="timeline">
       {days.map((day) => (
-        <div className="date-range" key={day.toDate().toString()}>{day.format('M[/]D').toString()}</div>
+        <div
+          className={'timeline-day ' + day.toISOString()}
+          key={day.toISOString()}
+          onClick={props.onDateClick}
+        >{day.format('M[/]D').toString()}</div>
       ))}
     </div>
   )
