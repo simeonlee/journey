@@ -14,7 +14,17 @@ export default class Page extends Component {
       amazings: ['', '', ''],
       reflections: ['', '', '']
     }
-    this.checkDatabaseForEntries();
+    this.checkDatabaseForEntries(props.focusDate);
+    this.entrySaveTimer;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.checkDatabaseForEntries(nextProps.focusDate);
+  }
+
+  componentWillUnmount() {
+    this.updateEntriesInDatabase();
+    clearTimeout(this.entrySaveTimer);
   }
 
   updateEntry(e) {
@@ -33,17 +43,37 @@ export default class Page extends Component {
       affirmations = value;
       this.setState({ 'affirmations': affirmations });
     }
+    clearTimeout(this.entrySaveTimer);
+    this.entrySaveTimer = setTimeout(() => {
+      // console.log('Timeout cleared and saving entries to database');
+      this.updateEntriesInDatabase();
+    }, 500);
   }
 
-  checkDatabaseForEntries() {
+  checkDatabaseForEntries(date) {
     // Check database for entries upon mount and update component state if any found
-    axios.get('/entries', {
+    axios.get('/api/journal', {
         params: {
-          date: this.props.focusDate
+          date: date
         }
       })
       .then((response) => {
-        console.log(response);
+        var data = response.data;
+        // console.log(data);
+
+        var gratitudes = data.gratitudes ? data.gratitudes.split(',') : ['', '', ''];
+        var outlooks = data.outlooks ? data.outlooks.split(',') : ['', '', ''];
+        var affirmations = data.affirmations ? data.affirmations : '';
+        var amazings = data.amazings ? data.amazings.split(',') : ['', '', ''];
+        var reflections = data.reflections ? data.reflections.split(',') : ['', '', ''];
+
+        this.setState({
+          gratitudes,
+          outlooks,
+          affirmations,
+          amazings,
+          reflections
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -52,16 +82,17 @@ export default class Page extends Component {
 
   updateEntriesInDatabase() {
     // Take any entries from user and update state in database
-    axios.post('/entries', {
+    axios.post('/api/journal', {
         date: this.props.focusDate,
-        gratitudes: this.state.gratitudes,
-        outlooks: this.state.outlooks,
+        interface: 'web',
+        gratitudes: this.state.gratitudes.join(),
+        outlooks: this.state.outlooks.join(),
         affirmations: this.state.affirmations,
-        amazings: this.state.amazings,
-        reflections: this.state.reflections
+        amazings: this.state.amazings.join(),
+        reflections: this.state.reflections.join()
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -162,7 +193,7 @@ export default class Page extends Component {
                 type="text"
                 placeholder="List traits..."
                 className="affirmations"
-                value={this.state.affirmations.length ? this.state.affirmations.split(', ') : ''}
+                value={this.state.affirmations.length ? this.state.affirmations : ''}
                 onChange={this.updateEntry.bind(this)}
               />
             </div>

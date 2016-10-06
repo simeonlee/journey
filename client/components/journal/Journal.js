@@ -14,28 +14,12 @@ export default class Journal extends Component {
       endDate: moment().startOf('day'),
       focusDate: moment().startOf('day').toISOString(),
     }
-
-    // this.updateDateRange();
-  }
-
-  updateDateRange(newFocusDate) {
-
-    // update our dateRange state if our current dateRange does not contain the new focused date
-    // if (!this.state.dateRange.contains(newFocusDate)) {
-
-    // }
-
-    // Display a week's worth of dates in journal navigation
-    var start = moment().startOf('day').subtract(1, 'week').toDate();
-    var end = moment().startOf('day').toDate();
-    var range = moment.range(start, end);
-
   }
 
   onDateClick(e) {
     var date = e.target.className.split(' ')[1];
     this.setState({ focusDate: moment(date).startOf('day').toISOString() });
-    console.log('state\'s focus date', this.state.focusDate);
+    // console.log('state\'s focus date', this.state.focusDate);
   }
 
   onGlyphClick(e) {

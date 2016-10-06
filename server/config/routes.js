@@ -9,12 +9,12 @@ module.exports = (app, controllers) => {
   //   res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
   // });
 
-  app.get('/api/journal/:userId/:month/:day/:year', (req, res, next) => {
-    controllers.UserController.getEntriesOnDate(req, res, next, req.params.userId, req.params.month, req.params.day, req.params.year);
+  app.get('/api/journal', (req, res) => {
+    controllers.UserController.getJournalEntries(req, res);
   });
 
-  app.post('/api/journal', (req, res, next) => {
-    controllers.UserController.postEntry(req, res, next);
+  app.post('/api/journal', (req, res) => {
+    controllers.UserController.postJournalEntries(req, res);
   });
 
   app.get('/journal',
