@@ -6,6 +6,7 @@ module.exports = function(sequelize) {
       type: Sequelize.STRING(20),
       unique: true
     },
+    provider: Sequelize.STRING(20),
     age_range: Sequelize.INTEGER(3),
     link: Sequelize.STRING(80),
     picture: Sequelize.STRING(200),
