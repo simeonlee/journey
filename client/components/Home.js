@@ -6,10 +6,21 @@ export class Home extends Component {
   }
   render() {
     return (
-      <div className="col-md-offset-2 col-md-8">
-        <h1>
-          Home
-        </h1>
+      <div className="homepage-background">
+        <div className="home-top-content-container col-md-10 col-md-offset-1">
+          <div>
+            <div className="col-md-6">
+              <h1>
+                Home
+              </h1>
+            </div>
+            <div className="col-md-6">
+              <h1>
+                Test
+              </h1>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

@@ -8,6 +8,7 @@ module.exports = (app, controllers) => {
   app.get('/api/journal/:userId/:month/:day/:year', (req, res, next) => {
     controllers
       .UserController
+<<<<<<< 57e5d84557e6603c6b0ef666040d74410832e02b
       .getEntriesOnDate(
         req,
         res,
@@ -25,6 +26,7 @@ module.exports = (app, controllers) => {
 
   app.get('/api/journal', (req, res) => {
     controllers.UserController.getJournalEntries(req, res);
+      .getEntriesOnDate( req, res, next, req.params.userId, req.params.month, req.params.day, req.params.year);
   });
 
   app.post('/api/journal', (req, res) => {
