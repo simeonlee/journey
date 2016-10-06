@@ -7,6 +7,10 @@ module.exports = function(sequelize, User) {
 
   var getJournalEntries = (req, res) => {
 
+    console.log(req.user);
+
+    var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
+
     var data = {
       'date': req.query.date
     };
@@ -14,7 +18,7 @@ module.exports = function(sequelize, User) {
     // TODO: find better promise chain to avoid callback hell below
     Gratitude.find({
         where: {
-          userId: req.user.dataValues.id,
+          userId: userId,
           datetime: req.query.date
         }
       })
@@ -22,7 +26,7 @@ module.exports = function(sequelize, User) {
         gratitudes && (data.gratitudes = gratitudes.dataValues.entry);
         Outlook.find({
             where: {
-              userId: req.user.dataValues.id,
+              userId: userId,
               datetime: req.query.date
             }
           })
@@ -30,7 +34,7 @@ module.exports = function(sequelize, User) {
             outlooks && (data.outlooks = outlooks.dataValues.entry);
             Affirmation.find({
                 where: {
-                  userId: req.user.dataValues.id,
+                  userId: userId,
                   datetime: req.query.date
                 }
               })
@@ -38,7 +42,7 @@ module.exports = function(sequelize, User) {
                 affirmations && (data.affirmations = (affirmations ? affirmations.dataValues.entry : ''));
                 Amazing.find({
                     where: {
-                      userId: req.user.dataValues.id,
+                      userId: userId,
                       datetime: req.query.date
                     }
                   })
@@ -46,7 +50,7 @@ module.exports = function(sequelize, User) {
                     amazings && (data.amazings = amazings.dataValues.entry);
                     Reflection.find({
                         where: {
-                          userId: req.user.dataValues.id,
+                          userId: userId,
                           datetime: req.query.date
                         }
                       })
@@ -61,6 +65,9 @@ module.exports = function(sequelize, User) {
   };
 
   var postJournalEntries = (req, res) => {
+
+    var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
+
     Gratitude.findOrCreate({
         where: {
           datetime: req.body.date
@@ -69,7 +76,7 @@ module.exports = function(sequelize, User) {
           datetime: req.body.date,
           entry: req.body.gratitudes,
           interface: req.body.interface,
-          userId: req.user.dataValues.id
+          userId: userId
         }
       })
       .spread((instance, created) => {
@@ -96,7 +103,7 @@ module.exports = function(sequelize, User) {
           datetime: req.body.date,
           entry: req.body.outlooks,
           interface: req.body.interface,
-          userId: req.user.dataValues.id
+          userId: userId
         }
       })
       .spread((instance, created) => {
@@ -123,7 +130,7 @@ module.exports = function(sequelize, User) {
           datetime: req.body.date,
           entry: req.body.affirmations,
           interface: req.body.interface,
-          userId: req.user.dataValues.id
+          userId: userId
         }
       })
       .spread((instance, created) => {
@@ -150,7 +157,7 @@ module.exports = function(sequelize, User) {
           datetime: req.body.date,
           entry: req.body.amazings,
           interface: req.body.interface,
-          userId: req.user.dataValues.id
+          userId: userId
         }
       })
       .spread((instance, created) => {
@@ -177,7 +184,7 @@ module.exports = function(sequelize, User) {
           datetime: req.body.date,
           entry: req.body.reflections,
           interface: req.body.interface,
-          userId: req.user.dataValues.id
+          userId: userId
         }
       })
       .spread((instance, created) => {
