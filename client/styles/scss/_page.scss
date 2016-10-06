@@ -1,0 +1,45 @@
+.page {
+  width: 100%;
+  // display: flex;
+  // align-items: center;
+  // flex-direction: column;
+  // justify-content: space-around;
+}
+
+.page-section {
+  width: 100%;
+}
+
+.page-date {
+  font-family: $major;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.page-subtitle {
+  font-size: 14px;
+}
+
+.page-subtext {
+  font-size: 10px;
+}
+
+.page-form {
+  width: 100%;
+}
+
+.page-input-container {
+  width: 100%;
+  margin: 5px;
+  font-size: 14px;
+  input {
+    width: 95%;
+    border: 0px solid white;
+    border-radius: 5px;
+  }
+}
