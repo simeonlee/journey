@@ -11,6 +11,7 @@ const runSequence = require('run-sequence');
 const ngAnnotate = require('gulp-ng-annotate');
 const shell = require('gulp-shell');
 const image = require('gulp-image');
+const imagemin = require('gulp-imagemin');
 const webpack = require('gulp-webpack');
 const plumber = require('gulp-plumber'); // Handle gulp.watch errors without throwing / cancelling nodemon
 
@@ -86,9 +87,12 @@ gulp.task('copy-html-files', function () {
     .pipe(gulp.dest(config.build.html));
 });
 
-gulp.task('image', function () {
-  gulp.src(config.src.img)
-    .pipe(image())
+
+
+gulp.task('images', ['clean'], function() {
+  return gulp.src(config.src.img)
+    // Pass in options to the task
+    .pipe(imagemin({optimizationLevel: 5}))
     .pipe(gulp.dest(config.build.img));
 });
 
@@ -111,7 +115,7 @@ gulp.task('stop', shell.task([
 gulp.task('build', function() {
   runSequence(
     'clean',
-    ['build-css', 'webpack', 'copy-json-files', 'copy-html-files', 'image']
+    ['build-css', 'webpack', 'copy-json-files', 'copy-html-files', 'images']
   );
 });
 
@@ -120,7 +124,7 @@ gulp.task('watch', function() {
   gulp.watch(config.src.js, ['webpack']);
   gulp.watch(config.src.json, ['copy-json-files']);
   gulp.watch(config.src.html, ['copy-html-files']);
-  gulp.watch(config.src.img, ['image']);
+  gulp.watch(config.src.img, ['images']);
 });
 
 gulp.task('default', function() {
