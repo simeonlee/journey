@@ -46,7 +46,7 @@
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "react": "^15.3.2",
-    "react-bootstrap": "^0.30.3",
+    "react-bootstrap": "^0.30.5",
     "react-bootstrap-switch": "^15.0.0",
     "react-dom": "^15.3.2",
     "react-facebook-login-component": "^0.6.0",
