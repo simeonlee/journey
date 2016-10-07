@@ -171,6 +171,10 @@ a.login-button {
   margin-top: 10%;
 }
 
+.home-main-image {
+  box-shadow: inset 0 0 10em 20em rgba(255,255,255,.2);
+}
+
 .home-top-content-container {
   background-color: lightgray;
 }
@@ -178,6 +182,9 @@ a.login-button {
 div.home-jumbotron.jumbotron {
   padding-top: 48px;
   padding-bottom: 48px;
+  &:nth-child(odd) {
+    background-color: $darkLynch
+  }
 }
 
 .home-banner {
@@ -219,8 +226,9 @@ div.home-jumbotron.jumbotron {
   max-width: 350px;
   margin: 0 auto;
   padding: 10px 25px;
-  border: 1px solid $haze;
+  // border: 1px solid $haze;
   border-radius: 10px;
+  box-shadow: inset 0 0 10em 5em rgba(0,0,0,.2);
 }
 
 .home-section-title {
@@ -235,7 +243,7 @@ div.home-jumbotron.jumbotron {
 
 .home-jumbotron {
   margin: 1px 0 !important;
-  color: white;
+  color: $dark;
 }
 
 .jumbo-right-text {
@@ -251,4 +259,8 @@ div.home-jumbotron.jumbotron {
 
 .jumbo-first {
   margin-top: -20px !important;
+}
+
+.remember-me-checkbox {
+  color: $silver;
 }

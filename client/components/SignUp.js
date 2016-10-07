@@ -31,7 +31,7 @@ export class SignUp extends Component {
 
         <FormGroup>
           <Col sm={10}>
-            <Checkbox>Remember me</Checkbox>
+            <Checkbox className="remember-me-checkbox">Remember me</Checkbox>
           </Col>
         </FormGroup>
 
