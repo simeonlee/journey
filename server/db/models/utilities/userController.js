@@ -101,28 +101,33 @@ module.exports = function(sequelize, User) {
     })  
   }
 
-  // var editEntry = (req, res, next, id, year, month, day) => {
-  //   User.find({
-  //     where: {
-  //       id: req.body.id
-  //     }
-  //   })
-  //   .then(user => {
-  //     if (req.body.affirmation) {
-        
-  //     }
-  //     if (req.body.amazing)
-  //     if (req.body.gratitude)
-  //     if (req.body.outlook)
-  //     if (req.body.reflection)
-  //   })
-  // }
+  var getUser = (req, res, next, userId) => {
+    User.find({
+      where: {
+        id: userId
+      }
+    })
+    .then(user => {
+      res.send(user)
+    })
+  }
+
+  var updateUserInfo = (req, res, next) => {
+    User.find({
+      id: req.body.userId
+    })
+    .then(user => {
+      user.updateAttributes(JSON.parse(req.body.updated))
+      .then(user => res.send(user))
+    })
+  }
 
 
 
   return {
     getEntriesOnDate: getEntriesOnDate,
     postEntry: postEntry,
-    //editEntry: editEntry
+    getUser: getUser,
+    updateUserInfo: updateUserInfo
   }
 }

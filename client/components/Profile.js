@@ -1,28 +1,38 @@
 import React, { Component } from 'react'
 import { Settings } from './Settings'
 import { PersonalInfo } from './PersonalInfo'
+import axios from 'axios'
 
 export class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {
       section: 'settings',
+      id: 1
     }
     this._section = this._section.bind(this)
     this._onClick = this._onClick.bind(this)
+    this.saveParent = this.saveParent.bind(this)
   }
 
   componentWillMount() {
-    // user query
+    var context = this
+    axios.get('/api/profile/' + this.state.id,)
+    .then(res => {
+      var newState = Object.assign({}, this.state, res.data);
+      context.setState(newState)
+      console.log(context.state)
+    })
+    .catch(res => console.log(res))
   }
 
   _section() {
     switch(this.state.section) {
       case 'settings':
-        return (<Settings />);
+        return (<Settings info={Object.assign({}, this.state)} saveParent={this.saveParent} />);
         break;
       case 'personal':
-        return (<PersonalInfo />);
+        return (<PersonalInfo info={Object.assign({}, this.state)} saveParent={this.saveParent}/>);
         break;
       default:
         return null;
@@ -33,6 +43,10 @@ export class Profile extends Component {
     this.setState({
       section: section
     })
+  }
+
+  saveParent(obj) {
+    this.setState(obj)
   }
 
   render() {

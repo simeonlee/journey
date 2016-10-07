@@ -1,27 +1,35 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 export class PersonalInfo extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: {edit: false, info: 'wakaflackaflame'},
-      password: {edit: false, info: 'yumyum'},
-      email: {edit: false, info: 'fakemail@sofake.com'},
-      phone: {edit: false, info: '8888888888'},
-      firstName: {edit: false, info: 'Akai'},
-      lastName: {edit: false, info: 'Senghor'},
-      birthday: {edit: false, info: '3/7/1993'},
-      gender: {edit: false, info: 'male'},
-      bio: 'what dis',
-      website: 'http://www.akaidasbest.com',
-      job: {edit: false, info: 'software engineer'},
-      industry: 'software',
-      employer: 'none',
+      username: {edit: false, info: ''},
+      password: {edit: false, info: ''},
+      email: {edit: false, info: ''},
+      phone: {edit: false, info: ''},
+      firstName: {edit: false, info: ''},
+      lastName: {edit: false, info: ''},
+      birthday: {edit: false, info: ''},
+      gender: {edit: false, info: ''},
     }
     this._beingEditted = this._beingEditted.bind(this)
     this._edit = this._edit.bind(this)
     this._editOrSave = this._editOrSave.bind(this)
     this._saveInfo = this._saveInfo.bind(this)
+  }
+
+  componentDidMount() {
+    for (var key in this.props.info) {
+      if (key in this.state) {
+        var item = {}
+        var obj = Object.assign({}, this.state[key])
+        obj.info = this.props.info[key]
+        item[key] = obj
+        this.setState(item)
+      }
+    }
   }
 
   _beingEditted(current, name) {
@@ -64,6 +72,13 @@ export class PersonalInfo extends Component {
     }
     obj[passed] = item
     this.setState(obj)
+    var sendObj = {}
+    sendObj[passed] = val
+    this.props.saveParent(sendObj)
+    axios.post('/api/profile', {
+      updated: JSON.stringify(sendObj)
+    })
+    .then(user => console.log(user))
   }
 
   render() {
@@ -98,7 +113,6 @@ export class PersonalInfo extends Component {
           {this._beingEditted(this.state.gender)}
           {this._editOrSave('gender')}
         </div>
-        <button type="submit" className="btn btn-primary save-changes">Save Changes</button>
       </div>
     )
   }
