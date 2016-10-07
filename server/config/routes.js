@@ -4,6 +4,7 @@ var { checkForFacebookUser } = require('./utils');
 
 module.exports = (app, controllers) => {
 
+/* Deprecated method for entries retrieval - will be deleted in next pull request
   app.get('/api/journal/:userId/:month/:day/:year', (req, res, next) => {
     controllers
       .UserController
@@ -15,10 +16,19 @@ module.exports = (app, controllers) => {
         req.params.month,
         req.params.day,
         req.params.year );
+  */
+
+  //Serve up static files upon request.
+  // app.get('/', (req, res) => {
+  //   res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+  // });
+
+  app.get('/api/journal', (req, res) => {
+    controllers.UserController.getJournalEntries(req, res);
   });
 
-  app.post('/api/journal', (req, res, next) => {
-    controllers.UserController.postEntry(req, res, next);
+  app.post('/api/journal', (req, res) => {
+    controllers.UserController.postJournalEntries(req, res);
   });
 
   app.get('/journal',

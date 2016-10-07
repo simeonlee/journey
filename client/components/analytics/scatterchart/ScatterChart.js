@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, Legend, CartesianGrid, Bar } from 'recharts'
+import moment from 'moment'
 
 export default class Chart extends Component {
   constructor(props) {
