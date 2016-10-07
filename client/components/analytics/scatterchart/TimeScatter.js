@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import moment from 'moment'
 
 export default class TimeScatter extends Component {
   constructor(props) {

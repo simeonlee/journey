@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import BasicInteraction from './BasicInteraction'
 
-export default class Timeline extends Component {
+export default class ActivityFeed extends Component {
   constructor(props) {
     super(props);
   }
   render() {
     return (
-      <div className="timeline">
+      <div className="activity-feed">
         <BasicInteraction />
         <BasicInteraction />
         <BasicInteraction />
