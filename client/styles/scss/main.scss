@@ -167,26 +167,67 @@ a.login-button {
   margin-top: 10%;
 }
 
-// .home-top-content-container {
-//   background-color: lightgray;
-// }
+.home-top-content-container {
+  background-color: lightgray;
+}
 
-// div.home-jumbotron.jumbotron {
-//   padding-top: 48px;
-//   padding-bottom: 48px;
-// }
+div.home-jumbotron.jumbotron {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
 
-// .home-jumbotron {
-//   margin: 1px 0 !important;
-// }
+.home-banner {
+  height: 100vh;
+  min-height: 500px;
+  background-image: url("../../images/home/paris-background.jpg");
+  background-size: cover;
+  background-position: center;
+}
 
-// .jumbo-right-text {
-//   text-align: right;
-//   margin-right: 8.33333333%;
-// }
+.home-login-button {
+  float: right !important;
+  margin-top: 10px;
+  margin-right: 10px;
+}
 
-// .jumbo-left-text {
-//   display: block !important;
-//   margin-top: 0;
-//   height: 150px;
-// }
+.home-title {
+  margin-top: 0;
+  margin-bottom: 40px;
+  padding-top: 40px;
+  justify-content: center;
+  text-align: center;
+  color: azure;
+  font-size: 70px;
+  font-family: $major, serif;
+  letter-spacing: 1.5px !important;
+}
+
+.jumbo-banner {
+  background-color: transparent !important;
+}
+
+.home-jumbotron {
+  margin: 1px 0 !important;
+  color: white;
+}
+
+.jumbo-right-text {
+  text-align: right;
+  margin-right: 8.33333333%;
+}
+
+.jumbo-left-text {
+  display: block !important;
+  margin-top: 0;
+  height: 150px;
+}
+
+.jumbo-first {
+  margin-top: -20px !important;
+}
+
+.home-signup-form {
+  // justify-content: center;
+  max-width: 300px;
+  margin: 0 auto;
+}

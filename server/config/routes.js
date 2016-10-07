@@ -33,33 +33,21 @@ module.exports = (app, controllers) => {
     controllers.UserController.postJournalEntries(req, res);
   });
 
-  app.get('/journal',
-    (req, res) => {
-      res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
-    }
-  );
+  app.get('/journal', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+  });
 
-  app.get('/dashboard',
-    (req, res) => {
-      res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
-    }
-  );
+  app.get('/dashboard', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+  });
 
-  app.get('/login',
-    (req, res) => {
-      res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
-    }
-  );
+  app.get('/login', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+  });
 
-  app.get('/profile',
-    (req, res) => {
-      res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
-    }
-  );
-
-  // app.get('*', (req, res) => {
-  //   res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
-  // });
+  app.get('/profile', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+  });
 
   app.get('/auth', checkForFacebookUser);
 
@@ -75,7 +63,7 @@ module.exports = (app, controllers) => {
   // handle the callback after facebook has authenticated the user
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect: 'http://localhost:3000/',
+      successRedirect: 'http://localhost:3000/journal',
       failureRedirect: 'http://localhost:3000/login'
     })
   );
@@ -87,7 +75,7 @@ module.exports = (app, controllers) => {
   // handle the callback after facebook has authenticated the user
   app.get('/auth/amazon/callback',
     passport.authenticate('amazon', {
-      successRedirect: 'http://localhost:3000/',
+      successRedirect: 'http://localhost:3000/journal',
       failureRedirect: 'http://localhost:3000/login'
     })
   );

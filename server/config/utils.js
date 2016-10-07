@@ -7,6 +7,7 @@ module.exports = function() {
   }
 
   var findOrCreateFbUser = (User, FacebookUser, profile, done) => {
+    console.log('PROFILE: ', profile);
     User.findOrCreate({
       where: {
         email: profile.emails[0].value
