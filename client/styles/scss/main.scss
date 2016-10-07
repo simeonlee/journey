@@ -2,8 +2,12 @@ $major: 'Cinzel';
 $minor: 'Raleway';
 $haze: #ECECEC;
 $porcelain: #ECF0F1;
+$darkLynch: #30363D;
+$midLynch: #56626E;
+$lightLynch: #A5BAD1;
 $silver: #BDC3C7;
 $lynch: #6C7A89;
+$azure: azure;
 
 @import 'nav';
 @import 'dashboard';
@@ -179,7 +183,7 @@ div.home-jumbotron.jumbotron {
 .home-banner {
   height: 100vh;
   min-height: 500px;
-  background-image: url("../../images/home/paris-background.jpg");
+  background-image: url("../../images/home/homepage1.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -192,14 +196,37 @@ div.home-jumbotron.jumbotron {
 
 .home-title {
   margin-top: 0;
-  margin-bottom: 40px;
+  margin-bottom: 5px;
   padding-top: 40px;
-  justify-content: center;
   text-align: center;
-  color: azure;
+  color: $darkLynch;
   font-size: 70px;
   font-family: $major, serif;
   letter-spacing: 1.5px !important;
+  // text-shadow: 0 0 100px black;
+}
+
+.home-slogan {
+  margin-bottom: 40px;
+  font-size: 25px;
+  font-family: $minor, serif;
+  color: $midLynch;
+  text-align: center;
+}
+
+.home-signup-form {
+  // justify-content: center;
+  max-width: 350px;
+  margin: 0 auto;
+  padding: 10px 25px;
+  border: 1px solid $haze;
+  border-radius: 10px;
+}
+
+.home-section-title {
+  font-family: $minor, serif;
+  color: $porcelain;
+  margin-bottom: 17px;
 }
 
 .jumbo-banner {
@@ -224,10 +251,4 @@ div.home-jumbotron.jumbotron {
 
 .jumbo-first {
   margin-top: -20px !important;
-}
-
-.home-signup-form {
-  // justify-content: center;
-  max-width: 300px;
-  margin: 0 auto;
 }

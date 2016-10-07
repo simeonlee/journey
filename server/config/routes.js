@@ -26,7 +26,6 @@ module.exports = (app, controllers) => {
 
   app.get('/api/journal', (req, res) => {
     controllers.UserController.getJournalEntries(req, res);
-      .getEntriesOnDate( req, res, next, req.params.userId, req.params.month, req.params.day, req.params.year);
   });
 
   app.post('/api/journal', (req, res) => {
