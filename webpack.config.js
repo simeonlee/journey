@@ -1,31 +1,80 @@
 const path = require('path');
 const webpack = require('webpack');
-const clientDirectory = path.resolve(__dirname, 'client');
+const merge = require('webpack-merge');
+const validate = require('webpack-validator');
 
-module.exports = {
+const common = {
   devtool: 'eval', // http://webpack.github.io/docs/configuration.html#devtool
-  entry: [
-    'webpack-hot-middleware/client',
-    'webpack/hot/dev-server',
-    clientDirectory + '/index.js'
-  ],
+  entry: path.resolve(__dirname, 'client/index'),
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/assets/'
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
   module: {
     loaders: [
       {
-        test: /\.js$/,
-        loaders: ['babel'],
-        include: clientDirectory
+        test: /\.js?$/,
+        loader: 'babel-loader',
+        include: path.resolve(__dirname, 'client'),
+        exclude: /node_modules/,
+      },
+      // {
+      //   test: /\.(scss|css)$/,
+      //   loader: 'style!css!sass?sourceMap',
+      //   exclude: /node_modules/,
+      // },
+      {
+        test: /\.(jpg|png)$/,
+        loader: 'file',
+        include: path.resolve(__dirname, 'client/images'),
+        exclude: /node_modules/,
       }
     ]
-  }
+  },
+  resolve: {
+    root: path.resolve(__dirname, 'client'),
+    extensions: [
+      '',
+      '.js',
+      '.jsx',
+      // '.sass',
+      // '.css',
+    ],
+  },
+}
+
+var config; // Will be our final webpack config
+
+if (process.env.NODE_ENV === 'development') {
+  config = merge(common, {
+    entry: [
+      'react-hot-loader/patch',
+      'webpack-hot-middleware/client',
+      path.resolve(__dirname, 'client/index')
+    ],
+    plugins: [
+      new webpack.optimize.OccurrenceOrderPlugin(),
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin(),
+    ],
+  })
+} else {
+  config = common;
+}
+
+module.exports = validate(config);
+
+// 'webpack/hot/dev-server',
+
+// module.exports = {
+//   module: {
+//     loaders: [
+//       {
+//         test: /\.js$/,
+//         loaders: ['babel'],
+//       }
+//     ]
+//   }
   // debug: true,
   // devtool: "#eval-source-map", // Put this back if react-dev-tools not working properly
-}

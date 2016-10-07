@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Glyphicon } from 'react-bootstrap';
-import Circles from './analytics/Circles'
-import Calendar from './analytics/calendar/Calendar'
-import WordCloud from './analytics/wordcloud/WordCloud'
-import ScatterChart from './analytics/scatterchart/ScatterChart'
-import ActivityFeed from './analytics/activityFeed/ActivityFeed'
+import Circles from './circles/Circles'
+import Calendar from './calendar/Calendar'
+import WordCloud from './wordcloud/WordCloud'
+import ScatterChart from './scatterchart/ScatterChart'
+import ActivityFeed from './activityFeed/ActivityFeed'
 
 export default class Dashboard extends Component {
   constructor(props) {

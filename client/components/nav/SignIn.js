@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FacebookLogin } from 'react-facebook-login-component';
 import axios from 'axios';
 
-export class SignIn extends Component {
+export default class SignIn extends Component {
   constructor(props, context) {
     super(props, context);
   }

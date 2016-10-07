@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Popover, Tooltip, Modal, OverlayTrigger } from 'react-bootstrap'
 
-export class LoginModal extends Component {
+export default class LoginModal extends Component {
   constructor(props) {
     super(props);
     this.loginWithFacebook = this.loginWithFacebook.bind(this);
