@@ -22,6 +22,12 @@ export class SignUp extends Component {
           </Col>
         </FormGroup>
 
+        <FormGroup controlId="formHorizontalUsername">
+          <Col sm={12}>
+            <FormControl type="text" placeholder="Username" />
+          </Col>
+        </FormGroup>
+
         <FormGroup controlId="formHorizontalPassword">
           <Col sm={12}>
             <FormControl type="password" placeholder="Password" />
