@@ -1,5 +1,6 @@
 var FacebookStrategy = require('passport-facebook').Strategy;
 var AmazonStrategy = require('passport-amazon').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 var { facebook, amazon } = require('../../auth.js');
 var db, {User, FacebookUser, AmazonUser} = require('../db/config.js');
 var utils, { findOrCreateFbUser, findOrCreateAmazonUser } = require('./utils.js');
@@ -29,6 +30,21 @@ module.exports = (passport) => {
     }
   ));
 
+  passport.use(new LocalStrategy(
+    function(username, password, done) {
+      User.findOne({ username: username }, function (err, user) {
+        if (err) { return done(err); }
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+        if (!user.validPassword(password)) {
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+        return done(null, user);
+      });
+    }
+  ));
+  
   passport.serializeUser(function(user, done) {
     if (user.facebookID) {
       done(null, {id: user.facebookID, provider: 'facebook'});
