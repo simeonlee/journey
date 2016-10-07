@@ -29,8 +29,6 @@ module.exports = (passport) => {
     }
   ));
 
-
-
   passport.serializeUser(function(user, done) {
     if (user.facebookID) {
       done(null, {id: user.facebookID, provider: 'facebook'});
