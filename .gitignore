@@ -40,11 +40,13 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
+#DS STORE
+.DS_Store
+
 # floobits
 .floo
 .flooignore
 
-<<<<<<< 71c2f741d435fa4187f806bbc7ebcb00b57bbc4c
 # build
 dist
 
