@@ -14,7 +14,6 @@ module.exports = (passport) => {
       profileFields: facebook.profileFields
     },
     function(accessToken, refreshToken, profile, done) {
-      console.log(profile);
       findOrCreateFbUser(User, FacebookUser, profile, done);
     }
   ));

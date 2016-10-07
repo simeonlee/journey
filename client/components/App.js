@@ -23,8 +23,6 @@ export class App extends React.Component {
 
   render() {
     var renderNav = this.state.loggedIn ? <Nav logInOrOut={'Log In'}/> : null;
-    console.log('logged in: ', this.state.loggedIn)
-    console.log(this.props.children);
 
     return (
       <div>
