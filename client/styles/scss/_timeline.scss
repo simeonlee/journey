@@ -1,7 +1,34 @@
-.dashboard-timeline {
+.journal-timeline { // in Journal.js component
   width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 20px;
 }
 
-.timeline {
-  // border-left: 1px solid $silver;
+.timeline-glyph { // in Journal.js component
+  font-size: 14px;
+  line-height: 14px;
+  height: 14px;
+}
+
+.timeline { // in Timeline.js component
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  div.timeline-day {
+    font-size: 14px;
+    line-height: 14px;
+    height: 14px;
+    font-family: $major;
+  }
+}
+
+.timeline-glyph { // in Journal.js file
+  cursor: pointer;
+}
+
+.timeline-day { // in Timeline.js file
+  cursor: pointer;
 }

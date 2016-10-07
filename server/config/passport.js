@@ -1,63 +1,51 @@
 var FacebookStrategy = require('passport-facebook').Strategy;
-var configAuth = require('../../auth.js');
-var db, {User, FacebookUser} = require('../db/config.js');
-var utils = require('../db/utils.js');
+var AmazonStrategy = require('passport-amazon').Strategy;
+var { facebook, amazon } = require('../../auth.js');
+var db, {User, FacebookUser, AmazonUser} = require('../db/config.js');
+var utils, { findOrCreateFbUser, findOrCreateAmazonUser } = require('./utils.js');
 
 module.exports = (passport) => {
+
   //configure passport strategies
   passport.use(new FacebookStrategy({
-      clientID: configAuth.facebook.appID,
-      clientSecret: configAuth.facebook.appSecret,
-      callbackURL: configAuth.facebook.callbackUrl,
-      profileFields: configAuth.facebook.profileFields
+      clientID: facebook.appID,
+      clientSecret: facebook.appSecret,
+      callbackURL: facebook.callbackUrl,
+      profileFields: facebook.profileFields
     },
     function(accessToken, refreshToken, profile, done) {
+      findOrCreateFbUser(User, FacebookUser, profile, done);
+    }
+  ));
 
-      User.findOrCreate({
-        where: {
-          username: 'avocado'
-        },
-        defaults: {
-          password: '12345',
-          email: 'avocado@gmail.com',
-          phone: '716-472-9022',
-          firstName: 'Chris',
-          lastName: 'Avocado',
-          age: 23,
-          gender: 'male',
-          bio: 'male',
-          job: 'fulltime avocado',
-          industry: 'avacadoing',
-          employer: 'lettuce',
-          wantsEmails: 0,
-          wantsTexts: 1,
-          lastLoginDate: Date.now(),
-          createdAt: Date.now()
-        }
-      })
-
-      FacebookUser.findOrCreate({
-        where: {facebookID: profile.id},
-        defaults: {
-          facebookID: profile.id,
-          userId: 1
-        }
-      }).spread((user, wasCreated) => {
-        return done(null, user);
-      });
-      
+  passport.use(new AmazonStrategy({
+      clientID: amazon.appID,
+      clientSecret: amazon.appSecret,
+      callbackURL: amazon.callbackUrl
+    },
+    function(accessToken, refreshToken, profile, done) {
+      // process.nextTick(() => done(null, profile))
+      return findOrCreateAmazonUser(User, AmazonUser, profile, done);
     }
   ));
 
   passport.serializeUser(function(user, done) {
-    done(null, user.facebookID);
+    if (user.facebookID) {
+      done(null, {id: user.facebookID, provider: 'facebook'});
+    } else if (user.provider === 'amazon') {
+      done(null, {id: user.id, provider: 'amazon'});
+    }
   });
 
-  passport.deserializeUser(function(id, done) {
-    FacebookUser.findOne({where: {facebookID: id}})
-      .then((user) => {
-        done(null, user);
-      });
+  passport.deserializeUser(function(info, done) {
+    if (info.provider === 'facebook') {
+      FacebookUser.findOne({where: {facebookID: info.id}})
+        .then((user) => {
+          done(null, user);
+        });
+    } else if (info.provider === 'amazon') {
+      done(null, info);
+    }
   });
 }
 
@@ -80,10 +68,4 @@ EXAMPLE PROFILE:
   updated_time: '2016-09-28T17:31:28+0000',
   verified: true }
 */
-
-
-//-----------------------------------
-// Uncomment below to populate the
-// database with avocado dummy data
-//-----------------------------------
 

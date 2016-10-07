@@ -2,13 +2,20 @@ $major: 'Cinzel';
 $minor: 'Raleway';
 $haze: #ECECEC;
 $porcelain: #ECF0F1;
+$darkLynch: #30363D;
+$midLynch: #56626E;
+$lightLynch: #A5BAD1;
 $silver: #BDC3C7;
 $lynch: #6C7A89;
+$azure: azure;
 
 @import 'nav';
 @import 'dashboard';
 @import 'calendar';
+@import 'journal';
 @import 'timeline';
+@import 'page';
+@import 'activityfeed';
 @import 'scatterchart';
 @import 'interaction';
 @import 'circles';
@@ -69,42 +76,42 @@ ul {
     text-transform: uppercase;
 }
 
-.timeline {
-  height: 50px;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  white-space: nowrap;
-  padding: 0;
-  margin-top: 10px;
-}
+// .timeline {
+//   height: 50px;
+//   overflow-x: scroll;
+//   overflow-y: hidden;
+//   white-space: nowrap;
+//   padding: 0;
+//   margin-top: 10px;
+// }
 
-.timeline-date {
-  display: inline-block;
-  width: calc(100% / 7);
-  text-align: center;
-}
+// .timeline-date {
+//   display: inline-block;
+//   width: calc(100% / 7);
+//   text-align: center;
+// }
 
-.which-date {
-  width: 40px;
-  border: 1px solid;
-  position: absolute;
-  left: 5%;
-}
+// .which-date {
+//   width: 40px;
+//   border: 1px solid;
+//   position: absolute;
+//   left: 5%;
+// }
 
-.journal-content {
-  margin-top: 20px;
-}
+// .journal-content {
+//   margin-top: 20px;
+// }
 
-.journal-section {
-  padding: 20px;
-}
+// .journal-section {
+//   padding: 20px;
+// }
 
-.journal-content {
-  background: transparent;
-  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-}
+// .journal-content {
+//   background: transparent;
+//   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+//   -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+//   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+// }
 
 .login-modal {
   z-index: 100000001;
@@ -129,6 +136,18 @@ ul {
   }
 }
 
+.amazon-login-button {
+  color: #232F3E;
+  border-color: #232F3E;
+  background-color: rgba(35,47,62, .04);
+  display: block;
+  width: 300px;
+  margin: 10px auto 0 auto;
+  &:hover {
+    background-color: #3B5998;
+  }
+}
+
 a.login-button {
     -webkit-appearance: button;
     -moz-appearance: button;
@@ -148,16 +167,97 @@ a.login-button {
 }
 
 .modal-dialog {
-  position: absolute !important;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 440px;
+  margin-top: 10%;
 }
 
-.modal-dialog {
-  width: 440px;
+.home-main-image {
+  box-shadow: inset 0 0 10em 20em rgba(255,255,255,.1);
+}
+
+.home-top-content-container {
+  background-color: lightgray;
+}
+
+div.home-jumbotron.jumbotron {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  &:nth-child(odd) {
+    background-color: $midLynch
+  }
+}
+
+.home-banner {
+  height: 100vh;
+  min-height: 500px;
+  background-image: url("../../images/home/homepage1.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.home-login-button {
+  float: right !important;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.home-title {
+  margin-top: 0;
+  margin-bottom: 5px;
+  padding-top: 40px;
+  text-align: center;
+  color: $darkLynch;
+  font-size: 70px;
+  font-family: $major, serif;
+  letter-spacing: 1.5px !important;
+}
+
+.home-slogan {
+  margin-bottom: 40px;
+  font-size: 25px;
+  font-family: $minor, serif;
+  color: $midLynch;
+  text-align: center;
+}
+
+.home-signup-form {
+  max-width: 350px;
+  margin: 0 auto;
+  padding: 10px 25px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 10em 5em rgba(0,0,0,.2);
+}
+
+.home-section-title {
+  font-family: $minor, serif;
+  color: $porcelain;
+  margin-bottom: 17px;
+}
+
+.jumbo-banner {
+  background-color: transparent !important;
+}
+
+.home-jumbotron {
+  margin: 1px 0 !important;
+  color: $silver;
+}
+
+.jumbo-right-text {
+  text-align: right;
+  margin-right: 8.33333333%;
+}
+
+.jumbo-left-text {
+  display: block !important;
+  margin-top: 0;
+  height: 150px;
+}
+
+.jumbo-first {
+  margin-top: -20px !important;
+}
+
+.remember-me-checkbox {
+  color: $silver;
 }

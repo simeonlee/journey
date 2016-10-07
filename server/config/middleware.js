@@ -23,7 +23,7 @@ module.exports = (app, express, passport) => {
 
   app.use(cookieParser());
   app.use(session({
-    secret: 'thisIsMySecretKey',
+    secret: 'thisIsMySuperSecretKey',
     resave: true,
     saveUninitialized: true,
   }));
