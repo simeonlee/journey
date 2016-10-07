@@ -36,6 +36,14 @@ module.exports = (app, controllers) => {
     res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
   });
 
+  app.get('/api/profile/:userId', (req, res, next) => {
+    controllers.UserController.getUser(req, res, next, req.params.userId);
+  });
+
+  app.post('/api/profile', (req, res, next) => {
+    controllers.UserController.updateUserInfo(req, res, next);
+  });
+
   app.get('/dashboard', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
   });
