@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Settings } from './Settings'
-import { PersonalInfo } from './PersonalInfo'
+import Settings from './Settings'
+import PersonalInfo from './PersonalInfo'
 import axios from 'axios'
 
-export class Profile extends Component {
+export default class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {

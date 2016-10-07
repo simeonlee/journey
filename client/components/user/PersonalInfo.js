@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-export class PersonalInfo extends Component {
+export default class PersonalInfo extends Component {
   constructor(props) {
     super(props)
     this.state = {

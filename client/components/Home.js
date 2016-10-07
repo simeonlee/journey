@@ -5,7 +5,7 @@ import Jumbotron from 'react-bootstrap/lib/Jumbotron'
 import { LoginModal } from './LoginModal'
 import { SignUp } from './SignUp'
 
-export class Home extends Component {
+export default class Home extends Component {
   constructor(props) {
     super(props)
     this.state = {

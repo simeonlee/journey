@@ -3,7 +3,7 @@ import { Button, Popover, Tooltip, Modal, OverlayTrigger } from 'react-bootstrap
 import { LoginForm } from './LoginForm.js'
 import axios from 'axios'
 
-export class LoginModal extends Component {
+export default class LoginModal extends Component {
   constructor(props) {
     super(props);
     this.loginWithFacebook = this.loginWithFacebook.bind(this);
