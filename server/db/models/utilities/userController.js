@@ -1,13 +1,3 @@
-var query = (year, month, day) => {
-  return {
-    where: {
-      createdAt: {
-        between: [year + '-' + month + '-' + day + ' 00:00:00', year + '-' + month + '-' + day + ' 23:59:59']
-      }
-    }
-  }
-}
-
 module.exports = function(sequelize, User) {
   var Gratitude = require('./../journals/journeys/gratitude')(sequelize);
   var Outlook = require('./../journals/journeys/outlook')(sequelize);
@@ -15,90 +5,226 @@ module.exports = function(sequelize, User) {
   var Amazing = require('./../journals/journeys/amazing')(sequelize);
   var Reflection = require('./../journals/journeys/reflection')(sequelize);
 
-  var getEntriesOnDate = (req, res, next, userId, month, day, year) => {
-    var localQuery = query(year, month, day);
-    var results = []
+  var getJournalEntries = (req, res) => {
+
+    console.log(req.user);
+
+    var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
+
+    var data = {
+      'date': req.query.date
+    };
+
+    // TODO: find better promise chain to avoid callback hell below
+    Gratitude.find({
+        where: {
+          userId: userId,
+          datetime: req.query.date
+        }
+      })
+      .then(gratitudes => {
+        gratitudes && (data.gratitudes = gratitudes.dataValues.entry);
+        Outlook.find({
+            where: {
+              userId: userId,
+              datetime: req.query.date
+            }
+          })
+          .then(outlooks => {
+            outlooks && (data.outlooks = outlooks.dataValues.entry);
+            Affirmation.find({
+                where: {
+                  userId: userId,
+                  datetime: req.query.date
+                }
+              })
+              .then(affirmations => {
+                affirmations && (data.affirmations = (affirmations ? affirmations.dataValues.entry : ''));
+                Amazing.find({
+                    where: {
+                      userId: userId,
+                      datetime: req.query.date
+                    }
+                  })
+                  .then(amazings => {
+                    amazings && (data.amazings = amazings.dataValues.entry);
+                    Reflection.find({
+                        where: {
+                          userId: userId,
+                          datetime: req.query.date
+                        }
+                      })
+                      .then(reflections => {
+                        reflections && (data.reflections = reflections.dataValues.entry);
+                        res.send(data);
+                      })
+                  })
+              })
+          })
+      })
+  };
+
+  var postJournalEntries = (req, res) => {
+
+    var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
+
+    Gratitude.findOrCreate({
+        where: {
+          datetime: req.body.date
+        }, 
+        defaults: {
+          datetime: req.body.date,
+          entry: req.body.gratitudes,
+          interface: req.body.interface,
+          userId: userId
+        }
+      })
+      .spread((instance, created) => {
+        if (!created) {
+          instance.update({
+              entry: req.body.gratitudes,
+              interface: req.body.interface,
+            })
+            .then(() => {
+              // console.log('Updated gratitudes in database!');
+            })
+            .catch(error => {
+              // console.log(error);
+            })
+        } else {
+          // console.log('Created and saved gratitudes to database!');
+        }
+      })
+    Outlook.findOrCreate({
+        where: {
+          datetime: req.body.date
+        }, 
+        defaults: {
+          datetime: req.body.date,
+          entry: req.body.outlooks,
+          interface: req.body.interface,
+          userId: userId
+        }
+      })
+      .spread((instance, created) => {
+        if (!created) {
+          instance.update({
+              entry: req.body.outlooks,
+              interface: req.body.interface,
+            })
+            .then(() => {
+              // console.log('Updated outlooks in database!');
+            })
+            .catch(error => {
+              // console.log(error);
+            })
+        } else {
+          // console.log('Created and saved outlooks to database!');
+        }
+      })
+    Affirmation.findOrCreate({
+        where: {
+          datetime: req.body.date
+        }, 
+        defaults: {
+          datetime: req.body.date,
+          entry: req.body.affirmations,
+          interface: req.body.interface,
+          userId: userId
+        }
+      })
+      .spread((instance, created) => {
+        if (!created) {
+          instance.update({
+              entry: req.body.affirmations,
+              interface: req.body.interface,
+            })
+            .then(() => {
+              // console.log('Updated affirmations in database!');
+            })
+            .catch(error => {
+              // console.log(error);
+            })
+        } else {
+          // console.log('Created and saved affirmations to database!');
+        }
+      })
+    Amazing.findOrCreate({
+        where: {
+          datetime: req.body.date
+        }, 
+        defaults: {
+          datetime: req.body.date,
+          entry: req.body.amazings,
+          interface: req.body.interface,
+          userId: userId
+        }
+      })
+      .spread((instance, created) => {
+        if (!created) {
+          instance.update({
+              entry: req.body.amazings,
+              interface: req.body.interface,
+            })
+            .then(() => {
+              // console.log('Updated amazings in database!');
+            })
+            .catch(error => {
+              // console.log(error);
+            })
+        } else {
+          // console.log('Created and saved amazings to database!');
+        }
+      })
+    Reflection.findOrCreate({
+        where: {
+          datetime: req.body.date
+        }, 
+        defaults: {
+          datetime: req.body.date,
+          entry: req.body.reflections,
+          interface: req.body.interface,
+          userId: userId
+        }
+      })
+      .spread((instance, created) => {
+        if (!created) {
+          instance.update({
+              entry: req.body.reflections,
+              interface: req.body.interface,
+            })
+            .then(() => {
+              // console.log('Updated reflections in database!');
+            })
+            .catch(error => {
+              // console.log(error);
+            })
+        } else {
+          // console.log('Created and saved reflections to database!');
+        }
+      })
+      res.send('Posted entries to database!');
+  }  
+
+  var getUser = (req, res, next, userId) => {
     User.find({
       where: {
         id: userId
       }
     })
     .then(user => {
-      user.getAffirmations(localQuery)
-      .then((affirmation) => {
-        results.push(affirmation)
-        user.getAmazings(localQuery)
-        .then((amazing) => {
-          results.push(amazing)
-          user.getGratitudes(localQuery)
-          .then((gratitude) => {
-            results.push(gratitude)
-            user.getOutlooks(localQuery)
-            .then((outlook) => {
-              results.push(outlook)
-              user.getReflections(localQuery)
-              .then(reflection => {
-                results.push(reflection)
-                res.send(results);
-              })
-            })
-          })
-        })
-      })
+      res.send(user)
     })
   }
 
-  var postEntry = (req, res, next) => {
-    console.log(req.body)
+  var updateUserInfo = (req, res, next) => {
     User.find({
-      where: {
-        id: req.body.id
-      }
+      id: req.body.userId
     })
     .then(user => {
-      if (req.body.affirmation) {
-        Affirmation.create({
-          entry: req.body.affirmation,
-          interface: req.body.interface
-        })
-        .then(affirmation => {
-          user.setAffirmations(affirmation)
-        })
-      }
-      if (req.body.amazing) {
-        Amazing.create({
-          entry: req.body.amazing,
-          interface: req.body.interface
-        })
-        .then(amazing => {
-          user.setAmazings(amazing)
-        })
-      }
-      if (req.body.gratitude) {
-        Gratitude.create({
-          entry: req.body.gratitude,
-          interface: req.body.interface
-        })
-        .then(gratitude => {
-          user.setGratitudes(gratitude)
-        })
-      }
-      Outlook.create({
-        entry: req.body.outlook,
-        interface: req.body.interface
-      })
-      .then(outlook => {
-        user.setOutlooks(outlook)
-      })
-      Reflection.create({
-        entry: req.body.reflection,
-        interface: req.body.interface
-      })
-      .then(reflection => {
-        user.setReflections(reflection)
-      })
-      res.send(user);
-    })  
+      user.updateAttributes(JSON.parse(req.body.updated))
+      .then(user => res.send(user))
+    })
   }
 
   var getUser = (req, res, next, userId) => {
@@ -122,11 +248,9 @@ module.exports = function(sequelize, User) {
     })
   }
 
-
-
   return {
-    getEntriesOnDate: getEntriesOnDate,
-    postEntry: postEntry,
+    getJournalEntries: getJournalEntries,
+    postJournalEntries: postJournalEntries,
     getUser: getUser,
     updateUserInfo: updateUserInfo
   }

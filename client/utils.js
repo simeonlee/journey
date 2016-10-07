@@ -3,10 +3,10 @@ import axios from 'axios';
 var authenticateUser = (nextState, replace, cb) => {
   axios.get('/auth')
     .then((res) => {
-      if (res.data === '') {
-        replace('/');
+      if (res.data) {
         cb();
       } else {
+        replace('/');
         cb();
       }
     })
@@ -19,7 +19,7 @@ var authenticateUser = (nextState, replace, cb) => {
 var checkIfLoggedIn = (nextState, replace, cb) => {
   axios.get('/auth')
     .then((res) => {
-      if (res.data === '') {
+      if (res.data) {
         cb()
       } else {
         cb()

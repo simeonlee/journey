@@ -64,7 +64,24 @@ nav button {
   box-shadow: 0 2px 0 0 $lynch;
 }
 
-
 .navbar-nav > li > .dropdown-menu {
   z-index: 9999999;
 }
+
+/*
+  HOMEPAGE NAV:
+*/
+
+.brand-left {
+  display: flex;
+  justify-content: left;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 20px;
+}
+
+li.home-login-button {
+  float: right;
+}
+

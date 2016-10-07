@@ -16,10 +16,12 @@ export class Nav extends Component {
     this.logout = this.logout.bind(this);
   }
 
+  // When the nav-bar renders, check if logged in.  If logged in,
+  // render "Log Out" button, if not logged in, render ("Log In") button.
   componentDidMount() {
     axios.get('/auth')
       .then((res) => {
-        if (res.data === '') {
+        if (!res.data) {
           this.setState({logInOrOut: 'Log In'});
         } else {
           this.setState({logInOrOut: 'Log Out'});
@@ -28,7 +30,6 @@ export class Nav extends Component {
   }
 
   logout() {
-    console.log('test');
     this.setState({logInOrOut: 'Log In'});
     axios.get('/logout');
   }
@@ -54,36 +55,57 @@ export class Nav extends Component {
     } else {
       cb = this.openModal;
     }
+    if (this.state.logInOrOut === 'Log Out') {
 
-    return (
-      <div>
-        <nav className="transparent white-background wrap navbar navbar-default" role="navigation">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <button type="button" className="white-background navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
-                <span className="sr-only">Toggle navigation</span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-                <span className="icon-bar"></span>
-              </button>
+      return (
+        <div>
+          <nav className="transparent white-background wrap navbar navbar-default" role="navigation">
+            <div className="container-fluid">
+              <div className="navbar-header">
+                <button type="button" className="white-background navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
+                  <span className="sr-only">Toggle navigation</span>
+                  <span className="icon-bar"></span>
+                  <span className="icon-bar"></span>
+                  <span className="icon-bar"></span>
+                </button>
+              </div>
+              <div className="brand-centered">
+                <IndexLink to="/" className="navbar-brand"><span className="logo">Journey</span></IndexLink>
+              </div>
+              <div className="navbar-collapse collapse" id="navigation">
+                <ul className="nav navbar-nav navbar-left">
+                  <li><Link activeClassName="nav-active" to="/journal">Journal</Link></li>
+                  <li><Link activeClassName="nav-active" to="/dashboard">Dashboard</Link></li>
+                </ul>
+                <ul className="nav navbar-nav navbar-right">
+                  <li><Link activeClassName="nav-active" to="/profile">Profile</Link></li>
+                  <li onClick={cb}><Link to="/">{this.state.logInOrOut}</Link></li>
+                </ul>
+              </div>
             </div>
-            <div className="brand-centered">
-              <IndexLink to="/" className="navbar-brand"><span className="logo">Journey</span></IndexLink>
-            </div>
-            <div className="navbar-collapse collapse" id="navigation">
-              <ul className="nav navbar-nav navbar-left">
-                <li><Link activeClassName="nav-active" to="/journal">Journal</Link></li>
-                <li><Link activeClassName="nav-active" to="/dashboard">Dashboard</Link></li>
-              </ul>
-              <ul className="nav navbar-nav navbar-right">
-                <li><Link activeClassName="nav-active" to="/profile">Profile</Link></li>
-                <li onClick={cb}><Link to="/">{this.state.logInOrOut}</Link></li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-        <LoginModal open={this.openModal} close={this.closeModal} currentState={this.currentModalState}/>
-      </div>
-    )
+          </nav>
+          <LoginModal open={this.openModal} close={this.closeModal} currentState={this.currentModalState}/>
+        </div>
+      )
+
+    } else {
+      return null;
+
+      // return (
+      //   <div>
+      //     <nav className="transparent white-background wrap navbar navbar-default" role="navigation">
+      //       <div className="brand-left col-md-1">
+      //           <IndexLink to="/" className="navbar-brand"><span className="logo">Journey</span></IndexLink>
+      //       </div>
+      //       <ul className="nav navbar-nav navbar-right">
+      //         <li className="home-login-button" onClick={cb}><Link to="/">{this.state.logInOrOut}</Link></li>
+      //       </ul>
+      //     </nav>
+      //     <LoginModal open={this.openModal} close={this.closeModal} currentState={this.currentModalState}/>
+      //   </div>
+      // )
+      
+
+    }
   }
 }
