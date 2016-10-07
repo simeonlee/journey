@@ -1,16 +1,44 @@
 import React, { Component } from 'react'
-import { Col, Grid, Row, Button, FieldGroup } from 'react-bootstrap'
+import { Link } from 'react-router'
+import { Col, Grid, Row, Button, FieldGroup, Image } from 'react-bootstrap'
 import Jumbotron from 'react-bootstrap/lib/Jumbotron'
+import { LoginModal } from './LoginModal'
+import { SignUp } from './SignUp'
 
 export class Home extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      showLoginModal: false
+    }
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.currentModalState = this.currentModalState.bind(this);
   }
+
+  openModal() {
+    this.setState({ showLoginModal: true });
+  }
+
+  closeModal() {
+    this.setState({ showLoginModal: false });
+  }
+
+  currentModalState() {
+    return this.state.showLoginModal;
+  }
+
   render() {
     return (
       <div>
-        
-        <Jumbotron className="home-jumbotron">
+        <div className="home-main-image home-banner">
+          <Button onClick={this.openModal} className="home-login-button" bsSize="small">Log In</Button>
+          <h1 className="home-title">Journey</h1>
+          <div className="home-signup-form">
+            <SignUp className="col-md-4 col-md-offset-3"/>
+          </div>
+        </div>
+        <Jumbotron className="home-jumbotron jumbo-first">
           <h2 className="col-md-offset-1 col-md-4 jumbo-left-text">Your journey starts here.</h2>
           <p className="col-md-offset-1">Release your thoughts and </p>
           <p>lakjsdlfj;sdlkjal</p>
@@ -28,6 +56,7 @@ export class Home extends Component {
           <p className="col-md-offset-1 col-md-7">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
           <h1 className="col-md-offset-1 jumbo-right-text">Journey</h1>
         </Jumbotron>
+        <LoginModal open={this.openModal} close={this.closeModal} currentState={this.currentModalState}/>
       </div>
     )
 
