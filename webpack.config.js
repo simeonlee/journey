@@ -19,6 +19,7 @@ const common = {
         include: path.resolve(__dirname, 'client'),
         exclude: /node_modules/,
       },
+      // Disabling SCSS thru webpack for now (still gulping)
       // {
       //   test: /\.(scss|css)$/,
       //   loader: 'style!css!sass?sourceMap',
@@ -64,3 +65,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 module.exports = validate(config);
+
+/**
+ * Put these back if react-dev-tools not working properly:
+ * debug: true,
+ * devtool: "#eval-source-map",
+ */
