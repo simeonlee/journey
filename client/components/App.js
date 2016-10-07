@@ -8,13 +8,11 @@ import Profile from './user/Profile'
 import { authenticateUser, checkIfLoggedIn } from '../utils'
 
 export default class App extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
+  constructor(props) {
+    super(props)
+  }
 
   render() {
-    var renderNav = this.state.loggedIn ? <Nav logInOrOut={'Log In'}/> : null;
-
     return (
       <div>
         <Router history={browserHistory}>

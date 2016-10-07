@@ -7,28 +7,6 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 
 module.exports = (app, express, passport) => {
-  
-  // Enable React-Hot-Loader in development using webpack middleware
-  if (process.env.NODE_ENV = 'development') {
-
-    // Packages required for React-Hot-Loader as follows:
-    const webpack = require('webpack');
-    const webpackConfig = require('../../webpack.config.js');
-    const webpackCompiler = webpack(webpackConfig);
-    const webpackDevMiddleware = require('webpack-dev-middleware');
-    const webpackHotMiddleware = require('webpack-hot-middleware');
-
-    app.use(webpackDevMiddleware(webpackCompiler, {
-      publicPath: webpackConfig.output.publicPath,
-      stats: {
-        'colors': true,
-        'chunks': false, // Reduces junk seen in terminal;
-        'errors-only': true
-      }
-    }));
-    app.use(webpackHotMiddleware(webpackCompiler, {}));
-
-  }
 
   app.use(morgan('dev'));
 
