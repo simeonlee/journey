@@ -1,20 +1,30 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 export class Settings extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: 'wakaflackaflame',
+      username: '',
       wantsEmails: false,
       wantsTexts: false,
-      hour: 12
     }
     this._changeHour = this._changeHour.bind(this)
     this._changeMinute = this._changeMinute.bind(this)
     this._canEditTime = this._canEditTime.bind(this)
+    this._save = this._save.bind(this)
   }
 
   componentDidMount() {
+    for (var key in this.props.info) {
+      if (key in this.state) {
+        var obj = {}
+        obj[key] = this.props.info[key]
+        console.log(obj)
+        this.setState(obj)
+      }
+    }
+    console.log(this.state)
     $("#text-switch").bootstrapSwitch('state', this.state.wantsTexts);
     $('#text-switch').on('switchChange.bootstrapSwitch', (event, state) => {
       this.setState({
@@ -51,7 +61,15 @@ export class Settings extends Component {
     return !(this.state.wantsTexts || this.state.wantsEmails)
   }
 
+  _save() {
+    axios.post('/api/profile', {
+      updated: JSON.stringify(this.state)
+    })
+    this.props.saveParent(this.state)
+  }
+
   render() {
+    console.log(this.state)
     return (
       <div className="col-md-12 journal-content">
         <h4>Hello, {this.state.username}</h4>
@@ -73,7 +91,7 @@ export class Settings extends Component {
             <option value="pm">PM</option>
           </select>
         </div>
-        <button type="submit" className="btn btn-primary save-changes">Save Changes</button>
+        <button onClick={this._save} type="submit" className="btn btn-primary save-changes">Save Changes</button>
       </div>
     )
   }
