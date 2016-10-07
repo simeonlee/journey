@@ -17,6 +17,14 @@ module.exports = (app, controllers) => {
     controllers.UserController.postEntry(req, res, next);
   });
 
+  app.get('/api/profile/:userId', (req, res, next) => {
+    controllers.UserController.getUser(req, res, next, req.params.userId);
+  });
+
+  app.post('/api/profile', (req, res, next) => {
+    controllers.UserController.updateUserInfo(req, res, next);
+  });
+
   app.get('/journal',
     (req, res) => {
       res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
