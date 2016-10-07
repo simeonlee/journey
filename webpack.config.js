@@ -1,18 +1,31 @@
+const path = require('path');
+const webpack = require('webpack');
+const clientDirectory = path.resolve(__dirname, 'client');
+
 module.exports = {
-  entry: './client/index.js',
+  devtool: 'eval', // http://webpack.github.io/docs/configuration.html#devtool
+  entry: [
+    'webpack-hot-middleware/client',
+    'webpack/hot/dev-server',
+    clientDirectory + '/index.js'
+  ],
   output: {
-    path: __dirname + '/dist/',
-    filename: 'bundle.js'
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/assets/'
   },
-  debug: true,
-  devtool: "#eval-source-map",
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
   module: {
     loaders: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader?presets[]=es2015&presets[]=react'
+        loaders: ['babel'],
+        include: clientDirectory
       }
     ]
   }
+  // debug: true,
+  // devtool: "#eval-source-map", // Put this back if react-dev-tools not working properly
 }

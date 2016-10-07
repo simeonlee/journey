@@ -8,7 +8,7 @@ export class Home extends Component {
     return (
       <div className="col-md-offset-2 col-md-8">
         <h1>
-          Home
+          Welcome to Journey!
         </h1>
       </div>
     )
