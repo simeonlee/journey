@@ -13,6 +13,7 @@ export class Settings extends Component {
     this._changeMinute = this._changeMinute.bind(this)
     this._canEditTime = this._canEditTime.bind(this)
     this._save = this._save.bind(this)
+    this._initializeSwitches = this._initializeSwitches.bind(this)
   }
 
   componentDidMount() {
@@ -24,14 +25,12 @@ export class Settings extends Component {
         this.setState(obj)
       }
     }
-    console.log(this.state)
-    $("#text-switch").bootstrapSwitch('state', this.state.wantsTexts);
+    this._initializeSwitches()
     $('#text-switch').on('switchChange.bootstrapSwitch', (event, state) => {
       this.setState({
         wantsTexts: state
       })
     })
-    $("#email-switch").bootstrapSwitch('state', this.state.wantsEmails);
     $('#email-switch').on('switchChange.bootstrapSwitch', (event, state) => {
       this.setState({
         wantsEmails: state
@@ -68,8 +67,13 @@ export class Settings extends Component {
     this.props.saveParent(this.state)
   }
 
+  _initializeSwitches () {
+    $("#text-switch").bootstrapSwitch('state', this.state.wantsTexts);
+    $("#email-switch").bootstrapSwitch('state', this.state.wantsEmails);
+  }
+
   render() {
-    console.log(this.state)
+    this._initializeSwitches()
     return (
       <div className="col-md-12 journal-content">
         <h4>Hello, {this.state.username}</h4>

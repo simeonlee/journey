@@ -7,6 +7,7 @@ export class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      loaded: false,
       section: 'settings',
       id: 1
     }
@@ -21,21 +22,26 @@ export class Profile extends Component {
     .then(res => {
       var newState = Object.assign({}, this.state, res.data);
       context.setState(newState)
+      context.setState({loaded: true})
       console.log(context.state)
     })
     .catch(res => console.log(res))
   }
 
   _section() {
-    switch(this.state.section) {
-      case 'settings':
-        return (<Settings info={Object.assign({}, this.state)} saveParent={this.saveParent} />);
-        break;
-      case 'personal':
-        return (<PersonalInfo info={Object.assign({}, this.state)} saveParent={this.saveParent}/>);
-        break;
-      default:
-        return null;
+    if (this.state.loaded) {
+      switch(this.state.section) {
+        case 'settings':
+          return (<Settings info={Object.assign({}, this.state)} saveParent={this.saveParent} />);
+          break;
+        case 'personal':
+          return (<PersonalInfo info={Object.assign({}, this.state)} saveParent={this.saveParent}/>);
+          break;
+        default:
+          return null;
+      }
+    } else {
+      return <div>Retrieving your information</div>
     }
   }
 
