@@ -27,7 +27,6 @@ module.exports = (passport) => {
       callbackURL: amazon.callbackUrl
     },
     function(accessToken, refreshToken, profile, done) {
-
       return createOrConnectAmazon(profile, done);
     }
   ));

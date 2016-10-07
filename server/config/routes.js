@@ -56,25 +56,26 @@ module.exports = (app) => {
     res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
   });
 
-  app.get('/api/profile/:userId', (req, res, next) => {
-    controllers.UserController.getUser(req, res, next, req.params.userId);
-  });
-
   app.get('/dashboard', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
   });
+
 
   app.get('/profile', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
   });
 
-  app.get('/auth', checkForFacebookUser);
+  app.get('/login', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+  });
 
   app.post('/login',
     passport.authenticate('local', { successRedirect: '/journal',
                                      failureRedirect: '/',
                                      failureFlash: true})
   );
+
+  app.get('/auth', checkForFacebookUser);
 
   app.get('/linkToAmazon', (req, res) => {
     logoutAndRememberUser(req, res);
@@ -115,6 +116,14 @@ module.exports = (app) => {
     function(req, res) {
       res.redirect('/profile');
     }
+  );
+
+  // handle the callback after facebook has authenticated the user
+  app.get('/auth/amazon/callback',
+    passport.authenticate('amazon', {
+      successRedirect: 'http://localhost:3000/journal',
+      failureRedirect: 'http://localhost:3000/login'
+    })
   );
   
   app.post('/token', (req, res) => {

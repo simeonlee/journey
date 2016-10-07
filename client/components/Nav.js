@@ -89,20 +89,21 @@ export default class Nav extends Component {
       )
 
     } else {
+      return null;
 
-      return (
-        <div>
-          <nav className="transparent white-background wrap navbar navbar-default" role="navigation">
-            <div className="brand-left col-md-1">
-                <IndexLink to="/" className="navbar-brand"><span className="logo">Journey</span></IndexLink>
-            </div>
-            <ul className="nav navbar-nav navbar-right">
-              <li className="home-login-button" onClick={cb}><Link to="/">{this.state.logInOrOut}</Link></li>
-            </ul>
-          </nav>
-          <LoginModal open={this.openModal} close={this.closeModal} currentState={this.currentModalState}/>
-        </div>
-      )
+      // return (
+      //   <div>
+      //     <nav className="transparent white-background wrap navbar navbar-default" role="navigation">
+      //       <div className="brand-left col-md-1">
+      //           <IndexLink to="/" className="navbar-brand"><span className="logo">Journey</span></IndexLink>
+      //       </div>
+      //       <ul className="nav navbar-nav navbar-right">
+      //         <li className="home-login-button" onClick={cb}><Link to="/">{this.state.logInOrOut}</Link></li>
+      //       </ul>
+      //     </nav>
+      //     <LoginModal open={this.openModal} close={this.closeModal} currentState={this.currentModalState}/>
+      //   </div>
+      // )
       
 
     }
