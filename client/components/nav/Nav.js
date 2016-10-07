@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Link, IndexLink } from 'react-router'
-import { LoginModal } from './LoginModal'
+import LoginModal from './LoginModal'
 import axios from 'axios'
 
-export class Nav extends Component {
+export default class Nav extends Component {
   constructor(props) {
     super(props)
     this.state = {

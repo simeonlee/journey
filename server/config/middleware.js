@@ -6,28 +6,6 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
 module.exports = (app, express, passport) => {
-  
-  // Enable React-Hot-Loader in development using webpack middleware
-  if (process.env.NODE_ENV = 'development') {
-
-    // Packages required for React-Hot-Loader as follows:
-    const webpack = require('webpack');
-    const webpackConfig = require('../../webpack.config.js');
-    const webpackCompiler = webpack(webpackConfig);
-    const webpackDevMiddleware = require('webpack-dev-middleware');
-    const webpackHotMiddleware = require('webpack-hot-middleware');
-
-    app.use(webpackDevMiddleware(webpackCompiler, {
-      publicPath: webpackConfig.output.publicPath,
-      stats: {
-        'colors': true,
-        'chunks': false, // Reduces junk seen in terminal;
-        'errors-only': true
-      }
-    }));
-    app.use(webpackHotMiddleware(webpackCompiler, {}));
-
-  }
 
   app.use(morgan('dev'));
 
@@ -58,4 +36,29 @@ module.exports = (app, express, passport) => {
   // See article:
   // http://stackoverflow.com/questions/27464168/how-to-include-scripts-located-inside-the-node-modules-folder
   app.use('/scripts', express.static(__dirname + '/../../node_modules'));
+
+
+
+  // Enable React-Hot-Loader in development using webpack middleware
+  if (process.env.NODE_ENV === 'development') {
+
+    // Packages required for React-Hot-Loader as follows:
+    const webpack = require('webpack');
+    const config = require('../../webpack.config.js');
+    const compiler = webpack(config);
+
+    app.use(require('webpack-dev-middleware')(compiler, {
+      noInfo: true,
+      hot: true,
+      publicPath: config.output.publicPath,
+      stats: {
+        'colors': true,
+        'chunks': false, // Reduces junk seen in terminal;
+        'errors-only': true
+      }
+    }));
+    app.use(require('webpack-hot-middleware')(compiler));
+
+  }
+
 }
