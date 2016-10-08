@@ -1,9 +1,8 @@
 {
   "db": {
     "username": "root",
-    "password": "password"
+    "password": "password" // this password should probably be different now that it is deployed
   }
 }
-
 
 

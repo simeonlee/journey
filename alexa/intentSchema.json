@@ -1,0 +1,22 @@
+{
+  "intents": [
+    {
+      "intent": "MorningIntent"
+    },
+    {
+      "intent": "EveningIntent"
+    },
+    {
+      "intent": "JournalIntent",
+      "slots": [
+        {
+          "name": "entry",
+          "type": "AMAZON.LITERAL"
+        }
+      ]
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    }
+  ]
+}

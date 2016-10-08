@@ -1,0 +1,22 @@
+MorningIntent take my morning entry
+EveningIntent take my evening entry
+JournalIntent {a|entry}
+JournalIntent {a a|entry}
+JournalIntent {a a a|entry}
+JournalIntent {a a a a|entry}
+JournalIntent {a a a a a|entry}
+JournalIntent {a a a a a a|entry}
+JournalIntent {a a a a a a a|entry}
+JournalIntent {a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a a a a a a a|entry}
