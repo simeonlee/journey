@@ -24,7 +24,6 @@ var Affirmation = require('./models/journals/journeys/affirmation')(sequelize);
 var Amazing = require('./models/journals/journeys/amazing')(sequelize);
 var Reflection = require('./models/journals/journeys/reflection')(sequelize);
 
-
 User.hasOne(FacebookUser);
 FacebookUser.belongsTo(User, {foreignKey: 'userId'});
 
@@ -57,62 +56,6 @@ Amazing.belongsTo(User, {foreignKey: 'userId'});
 
 User.hasMany(Reflection, {as: 'Reflections', onDelete: 'cascade'});
 Reflection.belongsTo(User, {foreignKey: 'userId'});
-
-
-
-// sequelize.sync({force: true})
-// .then(function() {
-//   User.create({
-//     username: 'Akai',
-//     password: 'yumyum',
-//     email: 'fakemail@sofake.com',
-//     phone: '8888888888',
-//     firstName: 'Akai',
-//     lastName: 'Senghor',
-//     age: 23,
-//     gender: 'male',
-//     bio: 'what dis',
-//     website: 'http://www.akaidasbest.com',
-//     job: 'software engineer',
-//     industry: 'software',
-//     employer: 'none',
-//     wantsEmails: false,
-//     wantsTexts: false,
-//   })
-//   .then(user => {
-//     Gratitude.create({
-//       entry: 'test gratitude, please ignore',
-//       interface: 'que?'
-//     }).then(gratitude => {
-//       user.setGratitudes(gratitude);
-//     })
-//     Amazing.create({
-//       entry: 'test amazing, please ignore',
-//       interface: 'que?'
-//     }).then(amazing => {
-//       user.setAmazings(amazing);
-//     })
-//     Affirmation.create({
-//       entry: 'test affirmation, please ignore',
-//       interface: 'que?'
-//     }).then(affirmation => {
-//       user.setAffirmations(affirmation);
-//     })
-//     Outlook.create({
-//       entry: 'test outlook, please ignore',
-//       interface: 'que?'
-//     }).then(outlook => {
-//       user.setOutlooks(outlook);
-//     })
-//     Reflection.create({
-//       entry: 'test reflection, please ignore',
-//       interface: 'que?'
-//     }).then(reflection => {
-//       user.setReflections(reflection);
-//     })
-//   })
-// })
-
 
 module.exports = {
   sequelize: sequelize,
