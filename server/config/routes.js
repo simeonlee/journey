@@ -60,7 +60,7 @@ module.exports = (app, controllers) => {
   app.post('/login',
     passport.authenticate('local', { successRedirect: '/journal',
                                      failureRedirect: '/',
-                                     failureFlash: true })
+                                     failureFlash: true})
   );
 
   app.post('/signup', (req, res) => {

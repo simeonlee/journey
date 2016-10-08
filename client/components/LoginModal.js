@@ -52,7 +52,7 @@ export class LoginModal extends Component {
               Login with Amazon
             </Button>
           </Modal.Body>
-          <hr/>
+          <hr className="login-last-break"/>
         </Modal>
       </div>
     );

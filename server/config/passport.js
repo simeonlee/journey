@@ -42,7 +42,7 @@ module.exports = (passport) => {
     } else if (user.provider === 'amazon') {
       done(null, {id: user.id, provider: 'amazon'});
     } else {
-      done(null, {id: info.id, provider: 'local'});
+      done(null, {id: user.id, provider: 'local'});
     }
   });
 

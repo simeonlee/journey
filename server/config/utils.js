@@ -116,26 +116,24 @@ module.exports = function() {
           return res.redirect('/journal');
         });
       } else {
-        // SEND BACK RESPONSE THAT THE USERNAME HAS BEEN TAKEN
-        req.send();
+        res.redirect('/');
       }
     });
   }
 
   var loginUser = (username, password, done) => {
-    console.log('yooooooo', username, password);
     User.findOne({where: { username: username }})
       .then((user) => {
+        console.log('USER: ',user);
         if (!user) {
-          console.log('no user');
-          // return done(null, false, { message: 'Incorrect username.' });
-          return done(null, false);
-
+          console.log('No user exists.');
+          return done(null, false, { message: 'Incorrect username.' });
+          // return done(null, false);
         }
-        if (!user.validPassword(password)) {
-          console.log('invalid password');
-          // return done(null, false, { message: 'Incorrect password.' });
-          return done(null, false);
+        if (user.password !== password) {
+          console.log('Invalid password.');
+          return done(null, false, { message: 'Incorrect password.' });
+          // return done(null, false);
         }
         console.log('user found!')
         return done(null, user);
