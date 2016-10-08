@@ -43,6 +43,9 @@ AFTER RECOMMENTING BELOW CODE. */
 //     console.log('An error occurred while creating the table:', err);
 //   });
 
+// Runs Google Cloud NLP code to analyze user journal
+require('./analytics/analytics')();
+
 //start listening to requests on port 3000.
 
 
