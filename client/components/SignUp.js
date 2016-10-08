@@ -8,29 +8,29 @@ export class SignUp extends Component {
 
   render() {
     return (
-      <Form horizontal>
+      <Form horizontal action="/signup" method="post">
 
         <FormGroup controlId="formHorizontalFullName">
           <Col sm={12}>
-            <FormControl type="text" placeholder="Full Name" />
+            <FormControl type="text" name="fullName" placeholder="Full Name" />
           </Col>
         </FormGroup>
 
         <FormGroup controlId="formHorizontalEmail">
           <Col sm={12}>
-            <FormControl type="email" placeholder="Email" />
+            <FormControl type="email" name="email" placeholder="Email" />
           </Col>
         </FormGroup>
 
         <FormGroup controlId="formHorizontalUsername">
           <Col sm={12}>
-            <FormControl type="text" placeholder="Username" />
+            <FormControl type="text" name="username" placeholder="Username" />
           </Col>
         </FormGroup>
 
         <FormGroup controlId="formHorizontalPassword">
           <Col sm={12}>
-            <FormControl type="password" placeholder="Password" />
+            <FormControl type="password" name="password" placeholder="Password" />
           </Col>
         </FormGroup>
 
@@ -44,7 +44,7 @@ export class SignUp extends Component {
         <FormGroup>
           <Col sm={10}>
             <Button type="submit">
-              Sign in
+              Sign up
             </Button>
           </Col>
         </FormGroup>

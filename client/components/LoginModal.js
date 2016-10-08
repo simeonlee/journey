@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Popover, Tooltip, Modal, OverlayTrigger } from 'react-bootstrap'
+import { LoginForm } from './LoginForm.js'
 
 export class LoginModal extends Component {
   constructor(props) {
@@ -31,12 +32,13 @@ export class LoginModal extends Component {
 
     return (
       <div>
-
         <Modal className="login-modal" show={showModal} onHide={this.props.close}>
           <Modal.Header closeButton>
             <Modal.Title className="login-modal-title">Login</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            <LoginForm/>
+            <hr/>
             <Button
               className="facebook-login-button"
               onClick={this.loginWithFacebook}
@@ -50,9 +52,7 @@ export class LoginModal extends Component {
               Login with Amazon
             </Button>
           </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.props.close}>Close</Button>
-          </Modal.Footer>
+          <hr/>
         </Modal>
       </div>
     );

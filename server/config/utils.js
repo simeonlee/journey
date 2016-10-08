@@ -1,4 +1,6 @@
 var passport = require('passport');
+var { User, FacebookUser, AmazonUser } = require('../db/config.js');
+var util = require('util');
 
 module.exports = function() {
 
@@ -6,7 +8,7 @@ module.exports = function() {
     res.send(req.isAuthenticated());
   }
 
-  var findOrCreateFbUser = (User, FacebookUser, profile, done) => {
+  var findOrCreateFbUser = (profile, done) => {
     User.findOrCreate({
       where: {
         email: profile.emails[0].value
@@ -47,7 +49,7 @@ module.exports = function() {
 */
 
 
-  var findOrCreateAmazonUser = (User, AmazonUser, profile, done) => {
+  var findOrCreateAmazonUser = (profile, done) => {
     var fullName = profile.displayName.split(' ');
     User.findOrCreate({
       where: {
@@ -86,9 +88,65 @@ module.exports = function() {
     });
   }
 
+  var signUpLocalUser = (req, res) => {
+    console.log('REQUEST =========>');
+    console.log(req.body);
+    // User.findOne({where: })
+    var fullName = req.body.fullName.split(' ');
+    var firstName = fullName[0];
+    var lastName = fullName[fullName.length-1];
+    var username = req.body.username;
+    var password = req.body.password;
+    var email = req.body.email;
+    User.findOrCreate({
+      where: {
+        username: username
+      },
+      defaults: {
+        username: username,
+        password: password,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+      }
+    }).spread((user, created) => {
+      if (created) {
+        //login and send to journal page
+        req.login(user, (err) => {
+          return res.redirect('/journal');
+        });
+      } else {
+        // SEND BACK RESPONSE THAT THE USERNAME HAS BEEN TAKEN
+        req.send();
+      }
+    });
+  }
+
+  var loginUser = (username, password, done) => {
+    console.log('yooooooo', username, password);
+    User.findOne({where: { username: username }})
+      .then((user) => {
+        if (!user) {
+          console.log('no user');
+          // return done(null, false, { message: 'Incorrect username.' });
+          return done(null, false);
+
+        }
+        if (!user.validPassword(password)) {
+          console.log('invalid password');
+          // return done(null, false, { message: 'Incorrect password.' });
+          return done(null, false);
+        }
+        console.log('user found!')
+        return done(null, user);
+      });
+  }
+
   return {
     checkForFacebookUser: checkForFacebookUser,
     findOrCreateFbUser: findOrCreateFbUser,
-    findOrCreateAmazonUser: findOrCreateAmazonUser
+    findOrCreateAmazonUser: findOrCreateAmazonUser,
+    signUpLocalUser: signUpLocalUser,
+    loginUser: loginUser,
   }
 }()

@@ -2,8 +2,8 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var AmazonStrategy = require('passport-amazon').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
 var { facebook, amazon } = require('../../auth.js');
-var db, {User, FacebookUser, AmazonUser} = require('../db/config.js');
-var utils, { findOrCreateFbUser, findOrCreateAmazonUser } = require('./utils.js');
+var { FacebookUser } = require('../db/config.js');
+var utils, { findOrCreateFbUser, findOrCreateAmazonUser, loginUser } = require('./utils.js');
 
 module.exports = (passport) => {
 
@@ -15,7 +15,7 @@ module.exports = (passport) => {
       profileFields: facebook.profileFields
     },
     function(accessToken, refreshToken, profile, done) {
-      findOrCreateFbUser(User, FacebookUser, profile, done);
+      findOrCreateFbUser(profile, done);
     }
   ));
 
@@ -25,35 +25,29 @@ module.exports = (passport) => {
       callbackURL: amazon.callbackUrl
     },
     function(accessToken, refreshToken, profile, done) {
-      // process.nextTick(() => done(null, profile))
-      return findOrCreateAmazonUser(User, AmazonUser, profile, done);
+      return findOrCreateAmazonUser(profile, done);
     }
   ));
 
   passport.use(new LocalStrategy(
     function(username, password, done) {
-      User.findOne({ username: username }, function (err, user) {
-        if (err) { return done(err); }
-        if (!user) {
-          return done(null, false, { message: 'Incorrect username.' });
-        }
-        if (!user.validPassword(password)) {
-          return done(null, false, { message: 'Incorrect password.' });
-        }
-        return done(null, user);
-      });
+      console.log('AUTHENTICATING USER');
+      loginUser(username, password, done)
     }
   ));
-  
+
   passport.serializeUser(function(user, done) {
     if (user.facebookID) {
       done(null, {id: user.facebookID, provider: 'facebook'});
     } else if (user.provider === 'amazon') {
       done(null, {id: user.id, provider: 'amazon'});
+    } else {
+      done(null, {id: info.id, provider: 'local'});
     }
   });
 
   passport.deserializeUser(function(info, done) {
+    console.log('INFO =========> ', info);
     if (info.provider === 'facebook') {
       FacebookUser.findOne({where: {facebookID: info.id}})
         .then((user) => {
@@ -61,6 +55,8 @@ module.exports = (passport) => {
         });
     } else if (info.provider === 'amazon') {
       done(null, info);
+    } else {
+      done(null, info)
     }
   });
 }

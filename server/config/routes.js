@@ -1,6 +1,6 @@
 var passport = require('passport');
 var path = require('path');
-var { checkForFacebookUser } = require('./utils');
+var { checkForFacebookUser, signUpLocalUser } = require('./utils');
 
 module.exports = (app, controllers) => {
 
@@ -51,15 +51,21 @@ module.exports = (app, controllers) => {
     res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
   });
 
-  app.get('/login', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
-  });
-
   app.get('/profile', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
   });
 
   app.get('/auth', checkForFacebookUser);
+
+  app.post('/login',
+    passport.authenticate('local', { successRedirect: '/journal',
+                                     failureRedirect: '/',
+                                     failureFlash: true })
+  );
+
+  app.post('/signup', (req, res) => {
+    signUpLocalUser(req, res);
+  });
 
   app.get('/logout', (req, res) => { 
     req.logout();
@@ -74,7 +80,7 @@ module.exports = (app, controllers) => {
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
       successRedirect: 'http://localhost:3000/journal',
-      failureRedirect: 'http://localhost:3000/login'
+      failureRedirect: 'http://localhost:3000/'
     })
   );
   
@@ -86,7 +92,7 @@ module.exports = (app, controllers) => {
   app.get('/auth/amazon/callback',
     passport.authenticate('amazon', {
       successRedirect: 'http://localhost:3000/journal',
-      failureRedirect: 'http://localhost:3000/login'
+      failureRedirect: 'http://localhost:3000/'
     })
   );
 }
