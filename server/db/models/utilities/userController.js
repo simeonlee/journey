@@ -203,12 +203,55 @@ module.exports = function(sequelize, User) {
           // console.log('Created and saved reflections to database!');
         }
       })
+      res.send('Posted entries to database!');
+  }  
 
-    res.send('Posted entries to database!');
-  };
+  var getUser = (req, res, next, userId) => {
+    User.find({
+      where: {
+        id: userId
+      }
+    })
+    .then(user => {
+      res.send(user)
+    })
+  }
+
+  var updateUserInfo = (req, res, next) => {
+    User.find({
+      id: req.body.userId
+    })
+    .then(user => {
+      user.updateAttributes(JSON.parse(req.body.updated))
+      .then(user => res.send(user))
+    })
+  }
+
+  var getUser = (req, res, next, userId) => {
+    User.find({
+      where: {
+        id: userId
+      }
+    })
+    .then(user => {
+      res.send(user)
+    })
+  }
+
+  var updateUserInfo = (req, res, next) => {
+    User.find({
+      id: req.body.userId
+    })
+    .then(user => {
+      user.updateAttributes(JSON.parse(req.body.updated))
+      .then(user => res.send(user))
+    })
+  }
 
   return {
     getJournalEntries: getJournalEntries,
     postJournalEntries: postJournalEntries,
+    getUser: getUser,
+    updateUserInfo: updateUserInfo
   }
 }

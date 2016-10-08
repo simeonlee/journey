@@ -8,7 +8,6 @@ module.exports = (app, controllers) => {
   app.get('/api/journal/:userId/:month/:day/:year', (req, res, next) => {
     controllers
       .UserController
-<<<<<<< 57e5d84557e6603c6b0ef666040d74410832e02b
       .getEntriesOnDate(
         req,
         res,
@@ -32,8 +31,20 @@ module.exports = (app, controllers) => {
     controllers.UserController.postJournalEntries(req, res);
   });
 
+  app.get('/api/profile/:userId', (req, res, next) => {
+    controllers.UserController.getUser(req, res, next, req.params.userId);
+  });
+
+  app.post('/api/profile', (req, res, next) => {
+    controllers.UserController.updateUserInfo(req, res, next);
+  });
+
   app.get('/journal', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+  });
+
+  app.get('/api/profile/:userId', (req, res, next) => {
+    controllers.UserController.getUser(req, res, next, req.params.userId);
   });
 
   app.get('/dashboard', (req, res) => {
