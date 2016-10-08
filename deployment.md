@@ -16,7 +16,7 @@ curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo apt-get npm
 git clone https://github.com/scrumptiousAmpersand/journey.git
-
+ 
 Elastic Ip?
 Redirect to port 3000 with (http)
 sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
