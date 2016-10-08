@@ -47,19 +47,15 @@ function journal (intent, session, callback) {
   var sessionAttributes = session.attributes;
   var speechOutput;
   
-  if (intent.name === 'JournalIntent') {
-    console.log('USER SAID ' + intent.slots.entry.value);
-  }
   let shouldEndSession = false;
   var userId = session.user.userId.slice(-207);
-  
 
   var amznProfileURL = 'https://api.amazon.com/user/profile?access_token=';
 
   amznProfileURL += session.user.accessToken;
 
 
-  if (session.new || !sessionAttributes.step && sessionAttributes.reprompt) {
+  if (!sessionAttributes.step && sessionAttributes.reprompt) {
     if (intent.name === 'MorningIntent') {
       sessionAttributes = {type: 'morning', step: 1};
       speechOutput = 'Let\'s record three things you\'re grateful for. What\'s the first thing?';
@@ -73,6 +69,7 @@ function journal (intent, session, callback) {
     console.log(sessionAttributes);
     callback(sessionAttributes, buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
   } else {
+    console.log('USER SAID ' + intent.slots.entry.value);
     if (sessionAttributes.type === 'morning') {
       if (sessionAttributes.step === 1) {
         speechOutput = 'Great! And the second?';
@@ -111,26 +108,27 @@ function journal (intent, session, callback) {
         speechOutput = 'Your evening entry is complete. Goodnight!';
         shouldEndSession = true;
       }
-    }
-    sessionAttributes.step++;
     
-    var payload = {
-      userId: userId,
-      entryType: sessionAttributes.type,
-      prompt: sessionAttributes.step,
-      text: intent.slots.entry.value
+      var payload = {
+        userId: userId,
+        entryType: sessionAttributes.type,
+        prompt: sessionAttributes.step,
+        text: intent.slots.entry.value
+      };
+      
+      sessionAttributes.step++;
+      
+      request.post('10.0.0.109/alexaPost', payload, function (err, res, body) {
+        console.log('entry post response',res);
+        if (err) {
+          console.log('error posting entry', err);
+          callback(null, buildResponse({}, buildSpeechletResponse('I\'m sorry, we\'re having connection issues right now. Please try again later.', 'I\'m sorry, we\'re having connection issues right now. Please try again later.', '', true)));
+        } else {
+          console.log(sessionAttributes);
+          callback(sessionAttributes, buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession)); 
+        }
+      });
     }
-    
-    request.post('10.0.0.109/alexaPost', payload, function (err, res, body) {
-      console.log('entry post response',res);
-      if (err) {
-        console.log('error posting entry', err);
-        callback(null, buildResponse({}, buildSpeechletResponse('I\'m sorry, we\'re having connection issues right now. Please try again later.', 'I\'m sorry, we\'re having connection issues right now. Please try again later.', '', true));
-      } else {
-        console.log(sessionAttributes);
-        callback(sessionAttributes, buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession)); 
-      }
-    });
   }
 
 }
@@ -205,20 +203,15 @@ exports.handler = (event, context, callback) => {
     if (event.session.new) {
       onSessionStarted({ requestId: event.request.requestId }, event.session);
       
-      if (session.user.token) {
-        request.post('10.0.0.109/token', session.user, function (err, res, body) {
+      if (event.session.user.accessToken) {
+        request.post('http://10.0.0.109/token', event.session.user, function (err, res, body) {
           console.log('token post response', res);
           if (err) {
             console.log('error sending token', err);
-            callback(null, buildResponse({}, buildSpeechletResponse('I\'m sorry, we\'re having connection issues right now. Please try again later.', 'I\'m sorry, we\'re having connection issues right now. Please try again later.', '', true));
+            callback(null, buildResponse({}, buildSpeechletResponse('I\'m sorry, we\'re having connection issues right now. Please try again later.', 'I\'m sorry, we\'re having connection issues right now. Please try again later.', '', true)));
           }
             if (event.request.type === 'LaunchRequest') {
-              onLaunch(event.request,
-                event.session,
-                (sessionAttributes, speechletResponse) => {
-                  callback(null, buildResponse(sessionAttributes, speechletResponse)
-                );
-              });
+              onLaunch(event.request, event.session, (sessionAttributes, speechletResponse) => { callback(null, buildResponse(sessionAttributes, speechletResponse)) });
             } else if (event.request.type === 'IntentRequest') {
               onIntent(event.request,
                 event.session,
@@ -230,9 +223,9 @@ exports.handler = (event, context, callback) => {
               callback();
             }
           }
-        });
+        );
       } else {
-        callback(null, buildResponse({}, buildSpeechletResponse('Please connect Journey to your amazon account in the Alexa web portal.', 'Please connect Journey to your amazon account in the Alexa web portal.', '', true));
+        callback(null, buildResponse({}, buildSpeechletResponse('Please connect Journey to your amazon account in the Alexa web portal.', 'Please connect Journey to your amazon account in the Alexa web portal.', '', true)));
       }
       
     } else if (event.request.type === 'LaunchRequest') {
