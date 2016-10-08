@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, FormGroup, Col, FormControl, Checkbox, Button, ControlLabel } from 'react-bootstrap'
 
-export class SignUp extends Component {
+export default class SignUp extends Component {
   constructor(props) {
     super(props);
   }

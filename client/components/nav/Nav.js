@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link, IndexLink } from 'react-router'
-import LoginModal from './LoginModal'
+import LoginModal from '../access/LoginModal'
 import axios from 'axios'
 
 export default class Nav extends Component {
