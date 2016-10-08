@@ -6,7 +6,7 @@ module.exports = function(sequelize) {
       type: Sequelize.STRING(20),
       unique: true
     },
-    password: Sequelize.STRING(30),
+    password: Sequelize.STRING(100),
     email: Sequelize.STRING(50),
     phone: Sequelize.STRING(20),
     firstName: Sequelize.STRING(30),

@@ -88,7 +88,7 @@ module.exports = (app, controllers) => {
     passport.authenticate('amazon', { scope: ['profile'] })
   );
 
-  // handle the callback after facebook has authenticated the user
+  // handle the callback after amazon has authenticated the user
   app.get('/auth/amazon/callback',
     passport.authenticate('amazon', {
       successRedirect: 'http://localhost:3000/journal',

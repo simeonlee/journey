@@ -23,6 +23,7 @@
   "dependencies": {
     "axios": "^0.14.0",
     "babel-loader": "^6.2.5",
+    "bcrypt": "^0.8.7",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
