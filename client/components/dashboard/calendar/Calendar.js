@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
+import 'moment-range'
+import axios from 'axios'
 
 export default class Calendar extends Component {
   constructor(props) {
@@ -208,6 +210,7 @@ export default class Calendar extends Component {
     });
   }
 
+  // Generate fake data for testing
   generateTestData(dateRange) {
     var data = {};
     for (var i = Math.floor(dateRange.length / 5); i < dateRange.length; i++) {
@@ -218,6 +221,37 @@ export default class Calendar extends Component {
       }
     }
     return data;
+  }
+
+  // Retrieve real data from database
+  retrieveData() { 
+    
+    axios.get('/api/journal', {
+        params: {
+          date: date
+        }
+      })
+      .then((response) => {
+        var data = response.data;
+        // console.log(data);
+
+        var gratitudes = data.gratitudes ? data.gratitudes.split(',') : ['', '', ''];
+        var outlooks = data.outlooks ? data.outlooks.split(',') : ['', '', ''];
+        var affirmations = data.affirmations ? data.affirmations : '';
+        var amazings = data.amazings ? data.amazings.split(',') : ['', '', ''];
+        var reflections = data.reflections ? data.reflections.split(',') : ['', '', ''];
+
+        this.setState({
+          gratitudes,
+          outlooks,
+          affirmations,
+          amazings,
+          reflections
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
 }
