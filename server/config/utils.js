@@ -1,6 +1,6 @@
 var passport = require('passport');
 
-module.exports = function() {
+module.exports = (() => {
 
   var checkForFacebookUser = (req, res) => {
     res.send(req.isAuthenticated());
@@ -95,4 +95,4 @@ module.exports = function() {
     findOrCreateFbUser: findOrCreateFbUser,
     findOrCreateAmazonUser: findOrCreateAmazonUser
   }
-}()
+})();

@@ -1,23 +1,6 @@
 var express = require('express');
 var app = express();
 var passport = require('passport');
-
-// configure passport.
-require('./config/passport.js')(passport);
-
-// configure server with middleware.
-require('./config/middleware.js')(app, express, passport);
-
-// configure server with routing.
-
-/* === connect database to server === */
-var config = require('./db/config');
-var sequelize = config.sequelize;
-var controllers = require('./db/models/utilities/controllers')(sequelize, config.User);
-
-require('./config/routes.js')(app, controllers);
-
-/* === connect database to server === */
 var { sequelize } = require('./db/config');
 
 sequelize
@@ -41,10 +24,14 @@ AFTER RECOMMENTING BELOW CODE. */
 //     console.log('An error occurred while creating the table:', err);
 //   });
 
+require('./config/passport.js')(passport); // Authentication
+require('./config/middleware.js')(app, express, passport); // Middleware
+require('./config/routes.js')(app); // Routes
+
 // Runs Google Cloud NLP code to analyze user journal
 require('./analytics/analytics')();
 
-//start listening to requests on port 3000.
+// Start server
 app.listen(3000, () => {
   console.log('Listening on Port: 3000');
   sequelize.sync().then(function() {
