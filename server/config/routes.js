@@ -1,34 +1,16 @@
 var passport = require('passport');
 var path = require('path');
 var { checkForFacebookUser, signUpLocalUser, logoutAndRememberUser, linkAlexa, storeAlexaData} = require('./utils');
+var journal = require('../db/controllers/journal'); // Controller to save and retrieve journal entries
 
-module.exports = (app, controllers) => {
-
-/* Deprecated method for entries retrieval - will be deleted in next pull request
-  app.get('/api/journal/:userId/:month/:day/:year', (req, res, next) => {
-    controllers
-      .UserController
-      .getEntriesOnDate(
-        req,
-        res,
-        next,
-        req.params.userId,
-        req.params.month,
-        req.params.day,
-        req.params.year );
-  */
-
-  //Serve up static files upon request.
-  // app.get('/', (req, res) => {
-  //   res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
-  // });
+module.exports = (app) => {
 
   app.get('/api/journal', (req, res) => {
-    controllers.UserController.getJournalEntries(req, res);
+    journal.getJournalEntries(req, res); // get journal entries for a particular date
   });
 
   app.post('/api/journal', (req, res) => {
-    controllers.UserController.postJournalEntries(req, res);
+    journal.postJournalEntries(req, res); // post journal entries for a particular date
   });
 
   app.get('/api/profile/:userId', (req, res, next) => {

@@ -1,9 +1,10 @@
-module.exports = function(sequelize, User) {
-  var Gratitude = require('./../journals/journeys/gratitude')(sequelize);
-  var Outlook = require('./../journals/journeys/outlook')(sequelize);
-  var Affirmation = require('./../journals/journeys/affirmation')(sequelize);
-  var Amazing = require('./../journals/journeys/amazing')(sequelize);
-  var Reflection = require('./../journals/journeys/reflection')(sequelize);
+module.exports = (() => {
+  var config = require('../config');
+  var Gratitude = config.Gratitude;
+  var Outlook = config.Outlook;
+  var Affirmation = config.Affirmation;
+  var Amazing = config.Amazing;
+  var Reflection = config.Reflection;
 
   var getJournalEntries = (req, res) => {
 
@@ -252,4 +253,4 @@ module.exports = function(sequelize, User) {
     getUser: getUser,
     updateUserInfo: updateUserInfo
   }
-}
+})();
