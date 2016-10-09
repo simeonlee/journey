@@ -2,7 +2,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var AmazonStrategy = require('passport-amazon').Strategy;
 var { facebook, amazon } = require('../../auth.js');
 var db, {User, FacebookUser, AmazonUser} = require('../db/config.js');
-var utils, { findOrCreateFbUser, findOrCreateAmazonUser } = require('./utils.js');
+var { findOrCreateFbUser, findOrCreateAmazonUser } = require('../db/controllers/auth');
 
 module.exports = (passport) => {
 

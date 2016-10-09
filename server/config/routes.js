@@ -1,6 +1,6 @@
 var passport = require('passport');
 var path = require('path');
-var { checkForFacebookUser } = require('./utils');
+var { checkForFacebookUser } = require('../db/controllers/auth');
 var journal = require('../db/controllers/journal'); // Controller to save and retrieve journal entries
 
 module.exports = (app) => {
