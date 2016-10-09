@@ -6,11 +6,11 @@ var journal = require('../db/controllers/journal'); // Controller to save and re
 module.exports = (app) => {
 
   app.get('/api/journal', (req, res) => {
-    journal.getJournalEntries(req, res); // get journal entries for a particular date
+    journal.getJournalEntriesForDate(req, res); // get journal entries for a particular date
   });
 
   app.post('/api/journal', (req, res) => {
-    journal.postJournalEntries(req, res); // post journal entries for a particular date
+    journal.postJournalEntriesForDate(req, res); // post journal entries for a particular date
   });
 
   app.get('/api/profile/:userId', (req, res, next) => {

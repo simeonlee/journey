@@ -6,7 +6,7 @@ module.exports = (() => {
   var Amazing = config.Amazing;
   var Reflection = config.Reflection;
 
-  var getJournalEntries = (req, res) => {
+  var getJournalEntriesForDate = (req, res) => {
 
     var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
 
@@ -63,7 +63,7 @@ module.exports = (() => {
       })
   };
 
-  var postJournalEntries = (req, res) => {
+  var postJournalEntriesForDate = (req, res) => {
 
     var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
 
@@ -248,8 +248,8 @@ module.exports = (() => {
   }
 
   return {
-    getJournalEntries: getJournalEntries,
-    postJournalEntries: postJournalEntries,
+    getJournalEntriesForDate: getJournalEntriesForDate,
+    postJournalEntriesForDate: postJournalEntriesForDate,
     getUser: getUser,
     updateUserInfo: updateUserInfo
   }
