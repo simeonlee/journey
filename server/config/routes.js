@@ -3,11 +3,13 @@ var path = require('path');
 var { checkForFacebookUser, signUpLocalUser, logoutAndRememberUser, linkAlexa, storeAlexaData} = require('./utils');
 // var { checkForFacebookUser } = require('../db/controllers/auth'); // TODO: MOVE AUTH CONTROLLERS TO CONTROLLERS DIRECTORY, NOT GENERIC UTILS
 var journal = require('../db/controllers/journal'); // Controller to save and retrieve journal entries
+var analytics = require('../db/controllers/analytics');
 
 module.exports = (app) => {
 
   app.get('/api/journal', (req, res) => {
     journal.getJournalEntriesForDate(req, res); // get journal entries for a particular date
+    analytics.getAllUserJournalEntries(req, res);
   });
 
   app.post('/api/journal', (req, res) => {
