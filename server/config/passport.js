@@ -4,6 +4,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var { facebook, amazon } = require('../../auth.js');
 var { FacebookUser } = require('../db/config.js');
 var { findOrCreateFbUser, findOrCreateAmazonUser, loginUser, createOrConnectAmazon, createOrConnectFacebook } = require('./utils.js');
+// var db, {User, FacebookUser, AmazonUser} = require('../db/config.js'); 
+// var { findOrCreateFbUser, findOrCreateAmazonUser } = require('../db/controllers/auth'); // TODO: MOVE THE ABOVE WAY TO CONTROLLERS
 
 module.exports = (passport) => {
 

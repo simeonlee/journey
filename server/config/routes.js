@@ -1,6 +1,7 @@
 var passport = require('passport');
 var path = require('path');
 var { checkForFacebookUser, signUpLocalUser, logoutAndRememberUser, linkAlexa, storeAlexaData} = require('./utils');
+// var { checkForFacebookUser } = require('../db/controllers/auth'); // TODO: MOVE AUTH CONTROLLERS TO CONTROLLERS DIRECTORY, NOT GENERIC UTILS
 var journal = require('../db/controllers/journal'); // Controller to save and retrieve journal entries
 
 module.exports = (app) => {
