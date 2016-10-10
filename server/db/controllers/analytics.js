@@ -37,8 +37,6 @@ module.exports = (() => {
           // at certain intervals, we'll check that list of days to be analyzed and run analysis over them
           var days = JSON.parse(user.dataValues.daysToBeAnalyzed.toString()); // converted from buffer format to object of date:true key value pairs
 
-          console.log(days);
-
           Object.keys(days).forEach(day => {
             var datetime = moment(day).startOf('day');
             delete days[day]; // delete the day to be updated from the dates object for storage back in user table
@@ -100,11 +98,7 @@ module.exports = (() => {
               }, err => {
                 console.log(err); // Error: "It broke"
               });
-
-
-
           })
-
 
           config.User.update({
             timeOfLastAnalysis: moment(), // update time of last analysis for this moment
@@ -113,13 +107,14 @@ module.exports = (() => {
             where: {
               id: userId
             }
-          })
+          });
+
+          res.send('Analyzed text and saved analysis to database');
         } else {
           res.send('It has not yet been more than 12 hours since we last analyzed your data! Please wait a little bit longer')
         }
       })
 
-    res.send('Analyzed text and saved analysis to database');
   }
 
   var saveTextAnalysis = (req, res, datetime, dictionary) => {
