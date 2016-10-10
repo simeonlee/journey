@@ -11,7 +11,7 @@ var language = require('@google-cloud/language')({
 var USE_API = true; // Set to true or false to control API usage (since it costs money after 5k+ calls per month)
 var dictionary = {};
 
-var prepare = (data) => {
+var analyze = (req, res, data) => {
 
   // Collect all cumulative text of journal for science
   var cumulative = ' ';
@@ -42,27 +42,25 @@ var prepare = (data) => {
     // Add the section text to the array of section texts
     return section;
   });
-  console.log('===> sections:', sections);
+  // console.log('===> sections:', sections);
 
   // Clean up beginning and multiple spaces
   cumulative = cumulative.replace(/  +/g, ' ');
   if (cumulative[0] === ' ') { cumulative = cumulative.slice(1); }
-  console.log('===> cumulative:', cumulative);
+  // console.log('===> cumulative:', cumulative);
 
   cumArr = cumulative.split(' ');
-  console.log('===> cumulative:', cumArr);
+  // console.log('===> cumulative:', cumArr);
   cumArr.forEach(word => {
     dictionary[word] = dictionary[word] || {};
     dictionary[word]['count'] = dictionary[word]['count'] || 0;
     dictionary[word]['count']++;
   });
 
-  USE_API && analyze(cumulative);
-}
+  // USE_API && analyze(cumulative);
 
-var analyze = (text) => {
   // Create document to run multiple detections
-  var document = language.document(text);
+  var document = language.document(cumulative);
 
   // Find nouns
   // document.detectEntities((err, entities) => {
@@ -77,22 +75,36 @@ var analyze = (text) => {
   // });
 
   // Parse syntax for 'tokens' (nouns, verbs, etc.) (also returns sentiment and entities)
-  document.annotate((err, annotations) => {
+  USE_API && document.annotate((err, annotations) => {
     err && console.log(err);
     var tokens = annotations.tokens;
-    console.log(tokens);
+    // console.log(tokens);
 
     for (var word in dictionary) {
-      console.log('word', word);
+      // console.log('word', word);
       annotations.tokens.forEach(token => {
         if (word === token.text) {
-          console.log('text', token.text);
+          // console.log('text', token.text);
           Object.assign(dictionary[word], token);
         }
       });
     }
-    console.log(dictionary);
+
+    dictionary['#TYPES#'] = {};
+
+    for (var word in dictionary) {
+      if (dictionary[word].partOfSpeechTag) {
+        var POST = dictionary[word].partOfSpeechTag;
+        // console.log('===> POST', POST)
+        dictionary['#TYPES#'][POST] = dictionary['#TYPES#'][POST] || {};
+        dictionary['#TYPES#'][POST][word] = dictionary[word];
+      }
+    }
+
+    // console.log(dictionary);
+    require('../db/controllers/analytics').saveAnalyzedTextResults(req, res, dictionary);
+    // return dictionary;
   });
 }
 
-module.exports = prepare;
+module.exports = analyze;

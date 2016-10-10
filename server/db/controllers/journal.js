@@ -8,7 +8,7 @@ module.exports = (() => {
 
   var getJournalEntriesForDate = (req, res) => {
 
-    console.log(req.user);
+    // console.log(req.user);
 
     var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
 
