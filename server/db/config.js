@@ -24,6 +24,8 @@ var Affirmation = require('./models/journals/journeys/affirmation')(sequelize);
 var Amazing = require('./models/journals/journeys/amazing')(sequelize);
 var Reflection = require('./models/journals/journeys/reflection')(sequelize);
 
+var Analysis = require('./models/analytics/analysis')(sequelize);
+
 User.hasOne(FacebookUser);
 FacebookUser.belongsTo(User, {foreignKey: 'userId'});
 
@@ -57,6 +59,9 @@ Amazing.belongsTo(User, {foreignKey: 'userId'});
 User.hasMany(Reflection, {as: 'Reflections', onDelete: 'cascade'});
 Reflection.belongsTo(User, {foreignKey: 'userId'});
 
+User.hasMany(Analysis, {as: 'Analyses', onDelete: 'cascade'});
+Analysis.belongsTo(User, {foreignKey: 'userId'});
+
 module.exports = {
   sequelize: sequelize,
   User: User,
@@ -71,4 +76,5 @@ module.exports = {
   Amazing: Amazing,
   Reflection: Reflection,
   Note: Note,
+  Analysis: Analysis,
 }

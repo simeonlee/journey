@@ -17,6 +17,7 @@ module.exports = (() => {
     var data = {};
     var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
 
+
     // Get an iterable array of promises
     // http://bluebirdjs.com/docs/api/promise.all.html
     var findDataPromises = models.map(model => {
@@ -42,14 +43,63 @@ module.exports = (() => {
     });
 
     // When all promises are fulfilled, then we know our data object is full
-    Promise.all(findDataPromises).then(function() {
-      // console.log('===> data', data);
-      // Run Google Cloud NLP code to analyze user journal
-      require('../../analytics/analytics')(data);
-    });
+    Promise.all(findDataPromises)
+      .then(() => {
+        // console.log('===> data', data);
+        // Run Google Cloud NLP code to analyze user journal
+        require('../../analytics/analytics')(req, res, data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  var saveAnalyzedTextResults = (req, res, dictionary) => {
+    var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
+
+
+
+    var json = JSON.stringify(dictionary);
+    console.log('=====> dictionary');
+    console.log(dictionary);
+    // var blob = new Blob([json], {type: 'application/json'});
+    let buffer = Buffer.from(json);
+    console.log('=====> buffer');
+    console.log(buffer);
+    let arrayBuffer = Uint8Array.from(buffer).buffer;
+    console.log('=====> arrayBuffer');
+    console.log(arrayBuffer);
+
+
+
+    config.Analysis.create({
+        analysis: buffer,
+        userId: userId
+      })
+      .then(analysis => {
+        console.log('Analysis saved to database!');
+        console.log(analysis);
+      })
+
+    config.Analysis.findAll({
+        where: {
+          userId: userId
+        }
+      })
+      .then(analyses => {
+        console.log('Found analyses in database!');
+        console.log(analyses);
+      })
+
+
+    var newjson = JSON.parse(buffer.toString());
+    // var newjson = JSON.parse(JSON.stringify(buffer.toString()).replace(/\\/g, ''));
+    console.log('=====> converted back to json');
+    console.log(newjson);
   }
 
   return {
-    getAllUserJournalEntries: getAllUserJournalEntries
+    getAllUserJournalEntries: getAllUserJournalEntries,
+    saveAnalyzedTextResults: saveAnalyzedTextResults
   }
 })();
