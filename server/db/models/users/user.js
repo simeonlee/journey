@@ -21,7 +21,9 @@ module.exports = function(sequelize) {
     wantsEmails: Sequelize.BOOLEAN,
     wantsTexts: Sequelize.BOOLEAN,
     lastLoginDate: Sequelize.DATE,
-    createdAt: Sequelize.DATE
+    createdAt: Sequelize.DATE,
+    daysToBeAnalyzed: Sequelize.BLOB,
+    timeOfLastAnalysis: Sequelize.DATE
   });
   return User;
 };

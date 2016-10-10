@@ -1,5 +1,13 @@
 module.exports = (() => {
   var config = require('../config');
+  var models = [
+    config.Gratitude,
+    config.Outlook,
+    config.Affirmation,
+    config.Amazing,
+    config.Reflection
+  ];
+  var User = config.User;
   var Gratitude = config.Gratitude;
   var Outlook = config.Outlook;
   var Affirmation = config.Affirmation;
@@ -71,7 +79,8 @@ module.exports = (() => {
 
     Gratitude.findOrCreate({
         where: {
-          datetime: req.body.date
+          datetime: req.body.date,
+          userId: userId
         }, 
         defaults: {
           datetime: req.body.date,
@@ -98,7 +107,8 @@ module.exports = (() => {
       })
     Outlook.findOrCreate({
         where: {
-          datetime: req.body.date
+          datetime: req.body.date,
+          userId: userId
         }, 
         defaults: {
           datetime: req.body.date,
@@ -125,7 +135,8 @@ module.exports = (() => {
       })
     Affirmation.findOrCreate({
         where: {
-          datetime: req.body.date
+          datetime: req.body.date,
+          userId: userId
         }, 
         defaults: {
           datetime: req.body.date,
@@ -152,7 +163,8 @@ module.exports = (() => {
       })
     Amazing.findOrCreate({
         where: {
-          datetime: req.body.date
+          datetime: req.body.date,
+          userId: userId
         }, 
         defaults: {
           datetime: req.body.date,
@@ -179,7 +191,8 @@ module.exports = (() => {
       })
     Reflection.findOrCreate({
         where: {
-          datetime: req.body.date
+          datetime: req.body.date,
+          userId: userId
         }, 
         defaults: {
           datetime: req.body.date,
@@ -204,6 +217,31 @@ module.exports = (() => {
           // console.log('Created and saved reflections to database!');
         }
       })
+
+      User.find({
+          where: {
+            id: userId
+          }
+        })
+        .then(user => {
+          // update the days to be analyzed with this day's entries
+          var daysToBeAnalyzed = user.dataValues.daysToBeAnalyzed || null;
+          if (!daysToBeAnalyzed) {
+            var array = []
+          } else {
+            var array = JSON.parse(daysToBeAnalyzed.toString()); // converted from buffer format to array
+          }
+
+          array.push(req.body.date);
+          var buffer = Buffer.from(JSON.stringify(array));
+          User.update({
+            daysToBeAnalyzed: buffer,
+          }, {
+            where: {
+              id: userId
+            }
+          });
+        })
 
     res.send('Posted entries to database!');
   };

@@ -2,16 +2,14 @@
  * Journal entry language data crunched via Google Cloud NLP (beta)
  * https://github.com/GoogleCloudPlatform/google-cloud-node
  */
-
-var auth = require('../../auth').google;
-var language = require('@google-cloud/language')({
-  projectId: auth.project_id,
-  credentials: auth
-});
-var USE_API = true; // Set to true or false to control API usage (since it costs money after 5k+ calls per month)
-var dictionary = {};
-
-var analyze = (req, res, data) => {
+module.exports = (resolve, reject, data) => {
+  var auth = require('../../auth').google;
+  var language = require('@google-cloud/language')({
+    projectId: auth.project_id,
+    credentials: auth
+  });
+  var USE_API = true; // Set to true or false to control API usage (since it costs money after 5k+ calls per month)
+  var dictionary = {};
 
   // Collect all cumulative text of journal for science
   var cumulative = ' ';
@@ -102,9 +100,9 @@ var analyze = (req, res, data) => {
     }
 
     // console.log(dictionary);
-    require('../db/controllers/analytics').saveAnalyzedTextResults(req, res, dictionary);
+    resolve(dictionary);
+    // require('../db/controllers/analytics').saveAnalyzedTextResults(req, res, dictionary);
     // return dictionary;
   });
 }
 
-module.exports = analyze;

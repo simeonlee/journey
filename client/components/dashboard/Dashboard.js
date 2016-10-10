@@ -6,6 +6,7 @@ import Calendar from './calendar/Calendar'
 import WordCloud from './wordcloud/WordCloud'
 import ScatterChart from './scatterchart/ScatterChart'
 import ActivityFeed from './activityFeed/ActivityFeed'
+import axios from 'axios'
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -18,6 +19,15 @@ export default class Dashboard extends Component {
       },
       startDelay: 20
     };
+
+    // Send request to server to run some analytics on user's journal for later retrieval
+    axios.post('/api/analytics')
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
   render() {
     return (
