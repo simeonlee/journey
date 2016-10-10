@@ -19,7 +19,18 @@ module.exports = (app) => {
   });
 
   app.post('/api/analytics', (req, res) => {
-    analytics.analyzeDays(req, res);
+    // POST request to '/api/analytics/' tells server to run analytics
+    // on journal entries for days that we have not run analytics
+    // yet (or for days where user has updated the journal entry)
+
+    // We keep track of this by saving the day to analyze
+    // in the 'daysToBeAnalyzed' object saved in the user table
+
+    // We also throttle the api calls to once every 12 hours
+    // by making sure we are at least 12 hours ahead of the
+    // 'timeOfLastAnalysis' datetime saved in the user table
+
+    analytics.analyzeDays(req, res); 
   });
 
   app.get('/journal', (req, res) => {
