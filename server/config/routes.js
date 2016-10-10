@@ -9,7 +9,6 @@ module.exports = (app) => {
 
   app.get('/api/journal', (req, res) => {
     journal.getJournalEntriesForDate(req, res); // get journal entries for a particular date
-    analytics.getAllUserJournalEntries(req, res);
   });
 
   app.post('/api/journal', (req, res) => {
@@ -22,6 +21,14 @@ module.exports = (app) => {
 
   app.post('/api/profile', (req, res, next) => {
     controllers.UserController.updateUserInfo(req, res, next);
+  });
+  
+  app.get('/api/analytics', (req, res) => {
+    analytics.retrieveTextAnalysis(req, res);
+  });
+
+  app.post('/api/analytics', (req, res) => {
+    analytics.analyzeDays(req, res);
   });
 
   app.get('/journal', (req, res) => {
