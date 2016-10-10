@@ -216,22 +216,22 @@ module.exports = (() => {
         }
       })
     
+    // Update the days to be analyzed for this day's entries
     User.find({
         where: {
           id: userId
         }
       })
       .then(user => {
-        // update the days to be analyzed with this day's entries
         var daysToBeAnalyzed = user.dataValues.daysToBeAnalyzed || null;
         if (!daysToBeAnalyzed) {
-          var array = []
+          var days = {}
         } else {
-          var array = JSON.parse(daysToBeAnalyzed.toString()); // converted from buffer format to array
+          var days = JSON.parse(daysToBeAnalyzed.toString()); // converted from buffer format to object
         }
 
-        array.push(req.body.date);
-        var buffer = Buffer.from(JSON.stringify(array));
+        days[req.body.date] = true; // update the date in days object to true to signify that a date needs to be updated here
+        var buffer = Buffer.from(JSON.stringify(days));
         User.update({
           daysToBeAnalyzed: buffer,
         }, {
