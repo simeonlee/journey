@@ -3,7 +3,7 @@ var AmazonStrategy = require('passport-amazon').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
 var { facebook, amazon } = require('../../auth.js');
 var { FacebookUser } = require('../db/config.js');
-var utils, { findOrCreateFbUser, findOrCreateAmazonUser, loginUser } = require('./utils.js');
+var { findOrCreateFbUser, findOrCreateAmazonUser, loginUser, createOrConnectAmazon, createOrConnectFacebook } = require('./utils.js');
 
 module.exports = (passport) => {
 
@@ -15,7 +15,7 @@ module.exports = (passport) => {
       profileFields: facebook.profileFields
     },
     function(accessToken, refreshToken, profile, done) {
-      findOrCreateFbUser(profile, done);
+      return createOrConnectFacebook(profile, done);
     }
   ));
 
@@ -25,13 +25,12 @@ module.exports = (passport) => {
       callbackURL: amazon.callbackUrl
     },
     function(accessToken, refreshToken, profile, done) {
-      return findOrCreateAmazonUser(profile, done);
+      return createOrConnectAmazon(profile, done);
     }
   ));
 
   passport.use(new LocalStrategy(
     function(username, password, done) {
-      console.log('AUTHENTICATING USER');
       loginUser(username, password, done)
     }
   ));
@@ -47,7 +46,6 @@ module.exports = (passport) => {
   });
 
   passport.deserializeUser(function(info, done) {
-    console.log('INFO =========> ', info);
     if (info.provider === 'facebook') {
       FacebookUser.findOne({where: {facebookID: info.id}})
         .then((user) => {

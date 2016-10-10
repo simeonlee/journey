@@ -7,8 +7,6 @@ module.exports = function(sequelize, User) {
 
   var getJournalEntries = (req, res) => {
 
-    console.log(req.user);
-
     var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
 
     var data = {

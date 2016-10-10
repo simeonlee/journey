@@ -12,25 +12,25 @@ export class SignUp extends Component {
 
         <FormGroup controlId="formHorizontalFullName">
           <Col sm={12}>
-            <FormControl type="text" name="fullName" placeholder="Full Name" />
+            <FormControl type="text" name="fullName" placeholder="Full Name" required="true" />
           </Col>
         </FormGroup>
 
         <FormGroup controlId="formHorizontalEmail">
           <Col sm={12}>
-            <FormControl type="email" name="email" placeholder="Email" />
+            <FormControl type="email" name="email" placeholder="Email" required="true" />
           </Col>
         </FormGroup>
 
         <FormGroup controlId="formHorizontalUsername">
           <Col sm={12}>
-            <FormControl type="text" name="username" placeholder="Username" />
+            <FormControl type="text" name="username" placeholder="Username" required="true" />
           </Col>
         </FormGroup>
 
         <FormGroup controlId="formHorizontalPassword">
           <Col sm={12}>
-            <FormControl type="password" name="password" placeholder="Password" />
+            <FormControl type="password" name="password" placeholder="Password" required="true" />
           </Col>
         </FormGroup>
 

@@ -6,18 +6,21 @@ var saltRounds = 10;
 
 module.exports = function() {
 
+  var currentUserID = null;
+
   var checkForFacebookUser = (req, res) => {
     res.send(req.isAuthenticated());
   }
 
   var findOrCreateFbUser = (profile, done) => {
+    email = profile.emails ? profile.emails[0].value : null;
     User.findOrCreate({
       where: {
-        email: profile.emails[0].value
+        facebookID: profile.id
       },
       defaults: {
         // password: '12345',
-        email: profile.emails[0].value,
+        email: email,
         // phone: '716-472-9022',
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
@@ -48,12 +51,13 @@ module.exports = function() {
     var fullName = profile.displayName.split(' ');
     User.findOrCreate({
       where: {
-        email: profile.emails[0].value
+        amazonID: profile.id
       },
       defaults: {
         email: profile.emails[0].value,
         firstName: fullName[0],
         lastName: fullName[fullName.length-1],
+        amazonID: profile.id,
         wantsEmails: 1,
         wantsTexts: 0,
         lastLoginDate: Date.now(),
@@ -113,20 +117,99 @@ module.exports = function() {
     User.findOne({where: { username: username }})
       .then((user) => {
         if (!user) {
-          console.log('No user exists.');
           return done(null, false, { message: 'Incorrect username.' });
         }
-        console.log(user.password);
         bcrypt.compare(password, user.password, function(err, res) {
           if (!res) {
-            console.log('Invalid password.');
             return done(null, false, { message: 'Incorrect password.' });
           }
-          console.log('user found!')
           return done(null, user);
         });
       });
   }
+
+
+  var logoutAndRememberUser = (req, res) => {
+    currentUserID = req.user.id;
+    req.logout();
+    res.send();
+  }
+
+  var createOrConnectAmazon = (profile, done) => {
+    // decide whether to create a new amazon user (or use existing one),
+    // or to link amazon profile to existing user.
+    if (!currentUserID) {
+      findOrCreateAmazonUser(profile, done);
+    } else {
+      connectAmazonToExisting(profile, done)
+    }
+  }
+
+  var connectAmazonToExisting = (profile, done) => {
+    User.findOne({where: { id: currentUserID }})
+      .then((user) => {
+        if (!user) {
+          return done(null, false);
+        } else {
+          currentUserID = null;
+          user.update({
+            amazonID: profile.id
+          }).then(() => {
+            AmazonUser.findOrCreate({
+              where: {
+                amazonID: profile.id
+              },
+              defaults: {
+                amazonID: profile.id,
+                provider: 'amazon',
+                userId: user.id
+              }
+            }).spread((user, created) => {
+              return done(null, user);
+            });
+          })
+        }
+      });
+  }
+
+  // decide whether to create a new Facebook user (or use existing one),
+  // or to link Facebook profile to existing user.
+  var createOrConnectFacebook = (profile, done) => {
+    if (!currentUserID) {
+      findOrCreateFbUser(profile, done);
+    } else {
+      connectFacebookToExisting(profile, done);
+    }
+  }
+
+  var connectFacebookToExisting = (profile, done) => {
+    User.findOne({where: { id: currentUserID }})
+      .then((user) => {
+        if (!user) {
+          return done(null, false);
+        } else {
+          currentUserID = null;
+          user.update({
+            facebookID: profile.id
+          }).then(() => {
+            FacebookUser.findOrCreate({
+              where: {
+                facebookID: profile.id
+              },
+              defaults: {
+                facebookID: profile.id,
+                provider: 'facebook',
+                userId: user.id
+              }
+            }).spread((user, created) => {
+              return done(null, user);
+            });
+          })
+        }
+      });
+  }
+
+
 
   return {
     checkForFacebookUser: checkForFacebookUser,
@@ -134,5 +217,10 @@ module.exports = function() {
     findOrCreateAmazonUser: findOrCreateAmazonUser,
     signUpLocalUser: signUpLocalUser,
     loginUser: loginUser,
+    logoutAndRememberUser: logoutAndRememberUser,
+    connectAmazonToExisting: connectAmazonToExisting,
+    createOrConnectAmazon: createOrConnectAmazon,
+    connectFacebookToExisting: connectFacebookToExisting,
+    createOrConnectFacebook: createOrConnectFacebook,
   }
 }()

@@ -1,6 +1,6 @@
 var passport = require('passport');
 var path = require('path');
-var { checkForFacebookUser, signUpLocalUser } = require('./utils');
+var { checkForFacebookUser, signUpLocalUser, logoutAndRememberUser } = require('./utils');
 
 module.exports = (app, controllers) => {
 
@@ -63,6 +63,14 @@ module.exports = (app, controllers) => {
                                      failureFlash: true})
   );
 
+  app.get('/linkToAmazon', (req, res) => {
+    logoutAndRememberUser(req, res);
+  });
+  
+  app.get('/linkToFacebook', (req, res) => {
+    logoutAndRememberUser(req, res);
+  });
+
   app.post('/signup', (req, res) => {
     signUpLocalUser(req, res);
   });
@@ -89,10 +97,10 @@ module.exports = (app, controllers) => {
   );
 
   // handle the callback after amazon has authenticated the user
-  app.get('/auth/amazon/callback',
-    passport.authenticate('amazon', {
-      successRedirect: 'http://localhost:3000/journal',
-      failureRedirect: 'http://localhost:3000/'
-    })
+  app.get('/auth/amazon/callback', 
+    passport.authenticate('amazon', { failureRedirect: '/' }),
+    function(req, res) {
+      res.redirect('/profile');
+    }
   );
 }

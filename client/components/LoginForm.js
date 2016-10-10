@@ -12,13 +12,13 @@ export class LoginForm extends Component {
 
         <FormGroup controlId="formHorizontalUsername">
           <Col sm={10} className="col-sm-offset-1 login-field">
-            <FormControl type="text" name="username" placeholder="Username" />
+            <FormControl type="text" name="username" placeholder="Username" required />
           </Col>
         </FormGroup>
 
         <FormGroup controlId="formHorizontalPassword">
           <Col sm={10} className="col-sm-offset-1 login-field">
-            <FormControl type="password" name="password" placeholder="Password" />
+            <FormControl type="password" name="password" placeholder="Password" required />
           </Col>
         </FormGroup>
 
