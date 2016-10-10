@@ -28,9 +28,6 @@ require('./config/passport.js')(passport); // Authentication
 require('./config/middleware.js')(app, express, passport); // Middleware
 require('./config/routes.js')(app); // Routes
 
-// Runs Google Cloud NLP code to analyze user journal
-require('./analytics/analytics')();
-
 // Start server
 app.listen(3000, () => {
   console.log('Listening on Port: 3000');
