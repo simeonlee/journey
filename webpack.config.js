@@ -4,7 +4,8 @@ const merge = require('webpack-merge');
 const validate = require('webpack-validator');
 
 const common = {
-  devtool: 'eval', // http://webpack.github.io/docs/configuration.html#devtool
+  debug: true,
+  devtool: "#eval-source-map",
   entry: path.resolve(__dirname, 'client/index'),
   output: {
     path: path.join(__dirname, 'dist'),
@@ -72,7 +73,5 @@ if (process.env.NODE_ENV === 'development') {
 module.exports = validate(config);
 
 /**
- * Put these back if react-dev-tools not working properly:
- * debug: true,
- * devtool: "#eval-source-map",
+ * devtool: 'eval', // http://webpack.github.io/docs/configuration.html#devtool
  */
