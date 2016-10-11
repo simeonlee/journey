@@ -9,7 +9,7 @@ export default class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: (window.innerWidth * 3 / 4),
+      width: (window.innerWidth / 2),
       height: 120,
       data: [],
       dayDictionary: {}
@@ -179,15 +179,18 @@ export default class Calendar extends Component {
             this.tooltip
               .style('width', width + 'px')
               .style('height', height + 'px')
-              .style('left', (event.pageX - width / 2) + 'px')
-              .style('top', () => {
+              .style('left', () => {
+                return (parseInt(event.pageX - document.getElementsByClassName('calendar-svg')[0].getBoundingClientRect().left)) + 'px';
+              })
+              .style('top', () => { // TODO: re-calibrate for svg moving around on-screen
                 // if cut off by top of screen, show tooltip below cursor
                 // else show tooltip above cursor
                 // multiplication by 1.1 adds padding to space from cursor
-                if ((event.pageY - height * 1.1) < 0) {
+                var optimal = event.pageY - document.getElementsByClassName('calendar-svg')[0].getBoundingClientRect().top;
+                if (optimal < 0) {
                   return (event.pageY * 1.1) + 'px';
                 } else {
-                  return (event.pageY - height * 1.1) + 'px'
+                  return optimal + 'px'
                 }
               })
               .html(() => {

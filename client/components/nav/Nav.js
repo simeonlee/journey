@@ -58,7 +58,7 @@ export default class Nav extends Component {
 
     return (
       <div>
-        <nav className="transparent white-background wrap navbar navbar-default" role="navigation">
+        <nav className="white-background wrap navbar navbar-default" role="navigation">
           <div className="container-fluid">
             <div className="navbar-header">
               <button type="button" className="white-background navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
