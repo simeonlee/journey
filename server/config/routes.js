@@ -105,7 +105,7 @@ module.exports = (app, controllers) => {
   );
   
   app.post('/token', (req, res) => {
-    console.log('REQUEST BODY =======>', req.url);
+    // console.log('REQUEST BODY =======>', req.body);
     linkAlexa(req, res);
   });
   

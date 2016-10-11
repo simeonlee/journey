@@ -212,23 +212,29 @@ module.exports = function() {
   }
 
   var linkAlexa = (req, res) => {
+    // console.log(req.body);
     User.findOne({where: { alexaID: req.body.userId }})
       .then((user) => {
+
         if (!user) {
-          request('https://api.amazon.com/user/profile?access_token=' + req.body.accessToken, (err, res, body) => {
+          request('https://api.amazon.com/user/profile?access_token=' + req.body.accessToken, (err, response, body) => {
             if (err) {
               console.log('error is', err)
             }
             // find amazonId in db and associate alexaId
-            User.findOne({where: {id: body.userId}})
+            body = JSON.parse(body);
+            
+            User.findOne({where: {amazonID: body.user_id}})
               .then((user) => {
                 user.update({
                   alexaID: req.body.userId
                 })
                 res.status(201).send();
-              })
+              });
           });
         } else {
+          //if a user is already linked to alexa, then just send back a 200.
+          console.log('NOT UPDATING USER W/ ALEXA ID')
           res.status(200).send();
         }
       });
@@ -252,14 +258,19 @@ module.exports = function() {
   }
 
   var storeAlexaData = (req, res) => {
+
     User.findOne({where: { alexaID: req.body.userId }})
       .then((user) => {
+        console.log('----------------')
+        console.log(user.id);
+        console.log('----------------')
         var Entry = req.body.entryType === 'morning' ? morningEntryMap[req.body.prompt] : eveningEntryMap[req.body.prompt];
         Entry.create({
           entry: req.body.text,
           interface: 'alexa',
           userId: user.id
         })
+        res.status(201).send();
       })
   }
 

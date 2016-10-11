@@ -29,6 +29,9 @@ export class Settings extends Component {
       }
     }
     this._initializeSwitches()
+  }
+
+  componentWillMount() {
     $('#text-switch').on('switchChange.bootstrapSwitch', (event, state) => {
       this.setState({
         wantsTexts: state
@@ -40,6 +43,8 @@ export class Settings extends Component {
       })
     })
   }
+
+
 
   _linkToAmazon() {
     axios.get('/linkToAmazon')
