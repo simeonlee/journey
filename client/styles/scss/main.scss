@@ -1,60 +1,21 @@
-$major: 'Cinzel';
-$minor: 'Raleway';
-$haze: #ECECEC;
-$porcelain: #ECF0F1;
-$darkLynch: #30363D;
-$midLynch: #56626E;
-$lightLynch: #A5BAD1;
-$silver: #BDC3C7;
-$lynch: #6C7A89;
-$azure: azure;
+// Try to keep this file clean of anything that's not an @import statement
 
-@import 'navigation/nav';
-@import 'navigation/menu';
-@import 'user/profile';
-@import 'journal/journal';
-@import 'journal/timeline';
-@import 'journal/page';
-@import 'dashboard/dashboard';
-@import 'dashboard/calendar';
-@import 'dashboard/scatterchart';
-@import 'dashboard/circles';
-@import 'dashboard/activityfeed/activityfeed';
-@import 'dashboard/activityfeed/interaction';
+// Modules (if we had any) and Variables
+@import 'partials/base';
 
-* {
-  font-family: 'Raleway', sans-serif;
-  font-weight: 200;
-  color: $lynch;
-}
-
-body {
-}
-
-a {
-  text-decoration: none;
-  color: black;
-  &:link {
-    text-decoration: none;
-    color: black;
-  }
-  &:visited {
-    text-decoration: none;
-    color: black;
-  }
-  &:hover {
-    text-decoration: none;
-    color: black;
-  }
-  &:active {
-    text-decoration: none;
-    color: black;
-  }
-}
-
-ul {
-  list-style-type: none;
-}
+// Partials
+@import 'partials/navigation/nav';
+@import 'partials/navigation/menu';
+@import 'partials/user/profile';
+@import 'partials/journal/journal';
+@import 'partials/journal/timeline';
+@import 'partials/journal/page';
+@import 'partials/dashboard/dashboard';
+@import 'partials/dashboard/calendar';
+@import 'partials/dashboard/scatterchart';
+@import 'partials/dashboard/circles';
+@import 'partials/dashboard/activityfeed/activityfeed';
+@import 'partials/dashboard/activityfeed/interaction';
 
 .transparent {
   opacity: 0.9;
@@ -76,43 +37,6 @@ ul {
     letter-spacing: 1px;
     text-transform: uppercase;
 }
-
-// .timeline {
-//   height: 50px;
-//   overflow-x: scroll;
-//   overflow-y: hidden;
-//   white-space: nowrap;
-//   padding: 0;
-//   margin-top: 10px;
-// }
-
-// .timeline-date {
-//   display: inline-block;
-//   width: calc(100% / 7);
-//   text-align: center;
-// }
-
-// .which-date {
-//   width: 40px;
-//   border: 1px solid;
-//   position: absolute;
-//   left: 5%;
-// }
-
-// .journal-content {
-//   margin-top: 20px;
-// }
-
-// .journal-section {
-//   padding: 20px;
-// }
-
-// .journal-content {
-//   background: transparent;
-//   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-//   -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-//   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-// }
 
 .login-modal {
   z-index: 100000001;
