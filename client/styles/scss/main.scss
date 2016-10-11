@@ -9,17 +9,18 @@ $silver: #BDC3C7;
 $lynch: #6C7A89;
 $azure: azure;
 
-@import 'nav';
-@import 'dashboard';
-@import 'calendar';
-@import 'journal';
-@import 'timeline';
-@import 'page';
-@import 'activityfeed';
-@import 'scatterchart';
-@import 'interaction';
-@import 'circles';
-@import 'profile';
+@import 'navigation/nav';
+@import 'navigation/menu';
+@import 'user/profile';
+@import 'journal/journal';
+@import 'journal/timeline';
+@import 'journal/page';
+@import 'dashboard/dashboard';
+@import 'dashboard/calendar';
+@import 'dashboard/scatterchart';
+@import 'dashboard/circles';
+@import 'dashboard/activityfeed/activityfeed';
+@import 'dashboard/activityfeed/interaction';
 
 * {
   font-family: 'Raleway', sans-serif;
