@@ -44,23 +44,32 @@ AFTER RECOMMENTING BELOW CODE. */
 //   });
 
 //start listening to requests on port 3000.
-var privateKey = fs.readFileSync('./https/www_yourjourney_io.key');
-var certificate = fs.readFileSync('./https/www_yourjourney_io.crt');
-var caBundle = fs.readFileSync('./https/comodossl.ca-bundle')
 
-serverOptions = {
-  ca: caBundle,
-  key: privateKey,
-  cert: certificate
-}
 
-sequelize.sync().then(function() {
-  console.log('Synced with mySQL through Sequelize.');
+// var privateKey = fs.readFileSync('./https/www_yourjourney_io.key');
+// var certificate = fs.readFileSync('./https/www_yourjourney_io.crt');
+// var caBundle = fs.readFileSync('./https/comodossl.ca-bundle')
 
-  https.createServer(serverOptions,app).listen(443);
-  http.createServer(app).listen(3000);
+// serverOptions = {
+//   ca: caBundle,
+//   key: privateKey,
+//   cert: certificate
+// }
 
+// sequelize.sync().then(function() {
+//   console.log('Synced with mySQL through Sequelize.');
+
+//   https.createServer(serverOptions,app).listen(443);
+//   http.createServer(app).listen(3000);
+
+//   console.log('Listening on Port: 3000');
+// });
+
+app.listen(3000, () => {
   console.log('Listening on Port: 3000');
+  sequelize.sync().then(function() {
+    console.log('Synced with mySQL through Sequelize.');
+  });
 });
 
 
