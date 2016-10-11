@@ -1,8 +1,10 @@
 var passport = require('passport');
-var { User, FacebookUser, AmazonUser } = require('../db/config.js');
+var { User, FacebookUser, AmazonUser, Gratitude, Outlook, Affirmation, Amazing, Reflection } = require('../db/config.js');
 var util = require('util');
+var request = require('request');
 var bcrypt = require('bcrypt');
 var saltRounds = 10;
+
 
 module.exports = function() {
 
@@ -209,6 +211,57 @@ module.exports = function() {
       });
   }
 
+  var linkAlexa = (req, res) => {
+    User.findOne({where: { alexaID: req.body.userId }})
+      .then((user) => {
+        if (!user) {
+          request('https://api.amazon.com/user/profile?access_token=' + req.body.accessToken, (err, res, body) => {
+            if (err) {
+              console.log('error is', err)
+            }
+            // find amazonId in db and associate alexaId
+            User.findOne({where: {id: body.userId}})
+              .then((user) => {
+                user.update({
+                  alexaID: req.body.userId
+                })
+                res.status(201).send();
+              })
+          });
+        } else {
+          res.status(200).send();
+        }
+      });
+  }
+
+  var morningEntryMap = {
+    1: Gratitude,
+    2: Gratitude,
+    3: Gratitude,
+    4: Outlook,
+    5: Outlook,
+    6: Outlook,
+    7: Affirmation
+  }
+
+  var eveningEntryMap = {
+    1: Amazing,
+    2: Amazing,
+    3: Amazing,
+    4: Reflection
+  }
+
+  var storeAlexaData = (req, res) => {
+    User.findOne({where: { alexaID: req.body.userId }})
+      .then((user) => {
+        var Entry = req.body.entryType === 'morning' ? morningEntryMap[req.body.prompt] : eveningEntryMap[req.body.prompt];
+        Entry.create({
+          entry: req.body.text,
+          interface: 'alexa',
+          userId: user.id
+        })
+      })
+  }
 
 
   return {
@@ -222,5 +275,7 @@ module.exports = function() {
     createOrConnectAmazon: createOrConnectAmazon,
     connectFacebookToExisting: connectFacebookToExisting,
     createOrConnectFacebook: createOrConnectFacebook,
+    linkAlexa: linkAlexa,
+    storeAlexaData: storeAlexaData
   }
 }()

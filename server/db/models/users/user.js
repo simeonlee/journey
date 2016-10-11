@@ -14,6 +14,7 @@ module.exports = function(sequelize) {
     age: Sequelize.INTEGER(3),
     gender: Sequelize.STRING(10),
     amazonID: Sequelize.STRING(500),
+    alexaID: Sequelize.STRING(500),
     facebookID: Sequelize.STRING(20),
     wantsEmails: Sequelize.BOOLEAN,
     wantsTexts: Sequelize.BOOLEAN,

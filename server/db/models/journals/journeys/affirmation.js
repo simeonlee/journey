@@ -4,7 +4,10 @@ module.exports = function(sequelize) {
   var Affirmation = sequelize.define('affirmations', {
     entry: Sequelize.STRING(500),
     interface: Sequelize.STRING(10),
-    datetime: Sequelize.DATE,
+    datetime: {
+      type: Sequelize.DATE,
+      default: Date.now()
+    },
     userId: {
       type: Sequelize.INTEGER,
       references: {
