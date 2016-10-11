@@ -23,7 +23,6 @@ export class Profile extends Component {
       var newState = Object.assign({}, this.state, res.data);
       context.setState(newState)
       context.setState({loaded: true})
-      console.log(context.state)
     })
     .catch(res => console.log(res))
   }

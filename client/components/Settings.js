@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button } from 'react-bootstrap'
 import axios from 'axios'
 
 export class Settings extends Component {
@@ -6,14 +7,17 @@ export class Settings extends Component {
     super(props)
     this.state = {
       username: '',
+      firstName: '',
       wantsEmails: false,
       wantsTexts: false,
+      id: ''
     }
-    this._changeHour = this._changeHour.bind(this)
-    this._changeMinute = this._changeMinute.bind(this)
-    this._canEditTime = this._canEditTime.bind(this)
-    this._save = this._save.bind(this)
-    this._initializeSwitches = this._initializeSwitches.bind(this)
+    this._changeHour = this._changeHour.bind(this);
+    this._changeMinute = this._changeMinute.bind(this);
+    this._canEditTime = this._canEditTime.bind(this);
+    this._save = this._save.bind(this);
+    this._initializeSwitches = this._initializeSwitches.bind(this);
+    this._linkToAmazon = this._linkToAmazon.bind(this);
   }
 
   componentDidMount() {
@@ -21,11 +25,13 @@ export class Settings extends Component {
       if (key in this.state) {
         var obj = {}
         obj[key] = this.props.info[key]
-        console.log(obj)
         this.setState(obj)
       }
     }
     this._initializeSwitches()
+  }
+
+  componentWillMount() {
     $('#text-switch').on('switchChange.bootstrapSwitch', (event, state) => {
       this.setState({
         wantsTexts: state
@@ -36,6 +42,21 @@ export class Settings extends Component {
         wantsEmails: state
       })
     })
+  }
+
+
+
+  _linkToAmazon() {
+    axios.get('/linkToAmazon')
+      .then((res) => {
+        location.href='/auth/amazon';
+      })
+  }
+  _linkToFacebook() {
+    axios.get('/linkToFacebook')
+      .then((res) => {
+        location.href='/auth/facebook';
+      })
   }
 
   _changeHour(event) {
@@ -76,7 +97,7 @@ export class Settings extends Component {
     this._initializeSwitches()
     return (
       <div className="col-md-12 journal-content">
-        <h4>Hello, {this.state.username}</h4>
+        <h4>Hello, {this.state.firstName}!</h4>
         <div className="individual-setting">
           <p>Do you want text message alerts?</p>
           <input id="text-switch" type="checkbox" name="my-checkbox"/>
@@ -94,6 +115,21 @@ export class Settings extends Component {
             <option value="am">AM</option>
             <option value="pm">PM</option>
           </select>
+        </div>
+        <div className="individual-setting">
+          <p>Link your account to Amazon to record your journal with the Amazon Echo!</p>
+          <Button
+           className="amazon-login-button"
+           onClick={this._linkToAmazon}
+          >
+           Connect to Amazon
+          </Button>
+          <Button
+           className="facebook-login-button"
+           onClick={this._linkToFacebook}
+          >
+           Connect to Facebook
+          </Button>
         </div>
         <button onClick={this._save} type="submit" className="btn btn-primary save-changes">Save Changes</button>
       </div>

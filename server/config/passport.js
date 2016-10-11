@@ -1,8 +1,9 @@
 var FacebookStrategy = require('passport-facebook').Strategy;
 var AmazonStrategy = require('passport-amazon').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 var { facebook, amazon } = require('../../auth.js');
-var db, {User, FacebookUser, AmazonUser} = require('../db/config.js');
-var utils, { findOrCreateFbUser, findOrCreateAmazonUser } = require('./utils.js');
+var { FacebookUser } = require('../db/config.js');
+var { findOrCreateFbUser, findOrCreateAmazonUser, loginUser, createOrConnectAmazon, createOrConnectFacebook } = require('./utils.js');
 
 module.exports = (passport) => {
 
@@ -14,7 +15,7 @@ module.exports = (passport) => {
       profileFields: facebook.profileFields
     },
     function(accessToken, refreshToken, profile, done) {
-      findOrCreateFbUser(User, FacebookUser, profile, done);
+      return createOrConnectFacebook(profile, done);
     }
   ));
 
@@ -24,8 +25,14 @@ module.exports = (passport) => {
       callbackURL: amazon.callbackUrl
     },
     function(accessToken, refreshToken, profile, done) {
-      // process.nextTick(() => done(null, profile))
-      return findOrCreateAmazonUser(User, AmazonUser, profile, done);
+
+      return createOrConnectAmazon(profile, done);
+    }
+  ));
+
+  passport.use(new LocalStrategy(
+    function(username, password, done) {
+      loginUser(username, password, done)
     }
   ));
 
@@ -34,6 +41,8 @@ module.exports = (passport) => {
       done(null, {id: user.facebookID, provider: 'facebook'});
     } else if (user.provider === 'amazon') {
       done(null, {id: user.id, provider: 'amazon'});
+    } else {
+      done(null, {id: user.id, provider: 'local'});
     }
   });
 
@@ -45,6 +54,8 @@ module.exports = (passport) => {
         });
     } else if (info.provider === 'amazon') {
       done(null, info);
+    } else {
+      done(null, info)
     }
   });
 }

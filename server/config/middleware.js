@@ -4,6 +4,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
+var flash = require('connect-flash');
 
 module.exports = (app, express, passport) => {
   app.use(morgan('dev'));
@@ -29,6 +30,7 @@ module.exports = (app, express, passport) => {
   }));
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(flash())
 
   // The '/scripts' endpoint below serves up 'node_modules' buried in the
   // root directory which is inaccessible by index.html from /client

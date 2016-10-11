@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
 var passport = require('passport');
+var https = require('https');
+var fs = require('fs');
 
 // configure passport.
 require('./config/passport.js')(passport);
@@ -31,7 +33,7 @@ sequelize
 
 /* IF YOU ARE WORKING WITH THIS CODE BASE FOR THE FIRST TIME, TO SET UP DATA BASE
 MAKE SURE YOU ADD 'JOURNEY' TO MY SQL DATABASE! THEN UNCOMMENT BELOW CODE TO FORCE
-DATABASE UPDATE! RECOMMENT AFTER YOU USE 'NPM START' ONCE. THEN RESTART YOUR SERVER 
+DATABASE UPDATE! RECOMMENT AFTER YOU USE 'GULP' ONCE. THEN RESTART YOUR SERVER 
 AFTER RECOMMENTING BELOW CODE. */
 // sequelize
 //   .sync({ force: true })
@@ -42,11 +44,26 @@ AFTER RECOMMENTING BELOW CODE. */
 //   });
 
 //start listening to requests on port 3000.
-app.listen(3000, () => {
+var privateKey = fs.readFileSync('./https/www_yourjourney_io.key');
+var certificate = fs.readFileSync('./https/www_yourjourney_io.crt');
+var caBundle = fs.readFileSync('./https/comodossl.ca-bundle')
+
+serverOptions = {
+  ca: caBundle
+  key: privateKey,
+  cert: certificate
+}
+
+sequelize.sync().then(function() {
+  console.log('Synced with mySQL through Sequelize.');
+
+  https.createServer(serverOptions,app).listen(443);
+  http.createServer(app).listen(3000);
+
   console.log('Listening on Port: 3000');
-  sequelize.sync().then(function() {
-    console.log('Synced with mySQL through Sequelize.');
-  });
 });
+
+
+
 
 module.exports = app;
