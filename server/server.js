@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var passport = require('passport');
 var { sequelize } = require('./db/config');
+var port = 5000;
 
 sequelize
   .authenticate()
@@ -31,8 +32,9 @@ require('./config/routes.js')(app); // Routes
 // Runs Google Cloud NLP code to analyze user journal
 require('./analytics/analytics')();
 
-app.listen(3000, () => {
-  console.log('Listening on Port: 3000');
+// Start server
+app.listen(port, () => {
+  console.log('Listening on Port: ' + port);
   sequelize.sync().then(function() {
     console.log('Synced with mySQL through Sequelize.');
   });

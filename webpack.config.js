@@ -17,7 +17,7 @@ const common = {
         test: /\.js?$/,
         loader: 'babel-loader',
         include: path.resolve(__dirname, 'client'),
-        exclude: /node_modules/,
+        exclude: /(node_modules|bower_components)/,
       },
       // Disabling SCSS thru webpack for now (still gulping)
       // {
@@ -56,12 +56,17 @@ if (process.env.NODE_ENV === 'development') {
     ],
     plugins: [
       new webpack.optimize.OccurrenceOrderPlugin(),
-      new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin(),
-    ],
+      new webpack.HotModuleReplacementPlugin()
+    ]
   })
 } else {
-  config = common;
+  config = merge(common, {
+    plugins: [
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin()
+    ]
+  });
 }
 
 module.exports = validate(config);

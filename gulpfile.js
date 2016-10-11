@@ -13,12 +13,18 @@ const shell = require('gulp-shell');
 const imagemin = require('gulp-imagemin');
 const plumber = require('gulp-plumber'); // Handle gulp.watch errors without throwing / cancelling nodemon
 
+// Live reload of css and html through 'browser-sync'
+const browserSync = require('browser-sync');
+
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+
 gulp.task('default', []);
 
 const config = {
   src: {
     html: ['./client/**/*.html', './client/**/*.ico'],
-    css: './client/styles/scss/*.scss',
+    css: ['./client/styles/scss/*.scss', './client/styles/scss/**/*.scss'],
     js: ['./client/index.js', './client/**/*.js'],
     json: './client/**/*.json',
     img: ['./client/images/**', './client/images/**/*', '!./client/images/**/*.sketch', '!./client/images/application-photos/*']
@@ -32,13 +38,31 @@ const config = {
   }
 };
 
-gulp.task('nodemon', function() {
-  nodemon({
+gulp.task('nodemon', (cb) => {
+  var started = false;
+
+  return nodemon({
     script: 'server/server.js',
     ext: 'html js'
   })
-  .on('restart', function() {
+  .on('start', () => {
+    // avoid nodemon being started multiple times
+    if (!started) {
+      cb();
+      started = true;
+    }
+  })
+  .on('restart', () => {
     console.log('nodemon restarted server!');
+  });
+});
+
+gulp.task('browser-sync', ['nodemon'], () => {
+  browserSync({
+    proxy: "http://localhost:5000",
+    files: config.src.css,
+    browser: "google chrome",
+    port: 3000
   });
 });
 
@@ -123,7 +147,7 @@ gulp.task('default', function() {
     'set-dev',
     'build',
     'watch',
-    'nodemon'
+    'browser-sync'
   );
 });
 
