@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import d3 from 'd3'
 import moment from 'moment'
 import 'moment-range'
 import axios from 'axios'
@@ -10,7 +11,8 @@ export default class Calendar extends Component {
     this.state = {
       width: (window.innerWidth * 3 / 4),
       height: 120,
-      data: []
+      data: [],
+      dayDictionary: {}
     }
 
     this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -44,12 +46,19 @@ export default class Calendar extends Component {
   initD3() {
     this.setWidth();
 
+    // Define the div for the tooltip
+    this.tooltip = d3.select(ReactDOM.findDOMNode(this)).append('div')
+      .attr('class', 'calendar-tooltip')
+      .style('opacity', 0);
+
     this.svg = d3.select(ReactDOM.findDOMNode(this))
       .append('svg')
       .attr('width', this.state.width)
       .attr('height', this.state.height)
       .attr('class', 'calendar-svg')
       .style('padding', '36px');
+
+    // this.svg.call(this.tip);
 
     this.monthLabels = this.svg
       .selectAll('.month')
@@ -98,8 +107,6 @@ export default class Calendar extends Component {
       .selectAll('.day-cell')
       .data(this.dateRange, d => d.toDateString()); // array of days for the last year
 
-    this.dayRects.append('title').text((d) => { return d; }); // add title to mouse cursor upon hover
-    
     var color = d3.scale.linear()
       .range(this.colorRange)
       .domain([0, this.max]);
@@ -140,6 +147,73 @@ export default class Calendar extends Component {
       .transition().duration(400)
       .style('opacity', 0)
       .remove();
+
+
+    // Logic for tooltips - display nouns and adjectives for each day
+    this.dayRects
+      .on('mouseover', (d, i) => {
+        var event = d3.event;
+        var width = 200;
+        var height = 100; // default height if no content for that day
+        var focusDate = moment(d).toISOString();
+        axios.get('/api/analytics', {
+            params: {
+              date: focusDate
+            }
+          })
+          .then(({data}) => {
+
+            // Change height dynamically for amount of content in dictionary
+            if (data.dictionary) {
+              var dictionary = JSON.parse(data.dictionary);
+              var nouns = dictionary['#TYPES#']['NOUN'];
+              var adjectives = dictionary['#TYPES#']['ADJ'];
+              var nounCount = Object.keys(nouns).length;
+              var adjCount = Object.keys(adjectives).length;
+              height = 60 + (Math.max(nounCount, adjCount) * 20); // May need to recalibrate
+            }
+
+            this.tooltip
+              .transition().duration(200)
+              .style('opacity', .9); // make appear
+            this.tooltip
+              .style('width', width + 'px')
+              .style('height', height + 'px')
+              .style('left', (event.pageX - width / 2) + 'px')
+              .style('top', () => {
+                // if cut off by top of screen, show tooltip below cursor
+                // else show tooltip above cursor
+                // multiplication by 1.1 adds padding to space from cursor
+                if ((event.pageY - height * 1.1) < 0) {
+                  return (event.pageY * 1.1) + 'px';
+                } else {
+                  return (event.pageY - height * 1.1) + 'px'
+                }
+              })
+              .html(() => {
+                var title = '<div class="tooltip-title">' + moment(d).format('MMMM D') + '</div>';
+                if (data.date && data.date === focusDate) {
+                  return title +
+                    '<div class="tooltip-category things"><div class="tooltip-subtitle">Things</div>' +
+                    Object.keys(dictionary['#TYPES#']['NOUN']).map(noun => {
+                      return '<div class="tooltip-list-item">' + noun + '</div>';
+                    }).join('') + '</div>' +
+                    '<div class="tooltip-category feelings"><div class="tooltip-subtitle">Feelings</div>' +
+                    Object.keys(dictionary['#TYPES#']['ADJ']).map(adj => {
+                      return '<div class="tooltip-list-item">' + adj + '</div>';
+                    }).join('') + '</div>';
+                } else {
+                  return title +
+                    '<div class="tooltip-error">No entries for this day</div>';
+                }
+              });
+            });
+      })
+      .on('mouseout', (d, i) => {   
+        this.tooltip
+          .transition().duration(500)
+          .style('opacity', 0); // make disappear
+      });
   }
 
   redrawMonthLabels() {
@@ -223,35 +297,39 @@ export default class Calendar extends Component {
     return data;
   }
 
-  // Retrieve real data from database
-  retrieveData() { 
+  // retrieveDayDictionary(date) {
     
-    axios.get('/api/journal', {
-        params: {
-          date: date
-        }
-      })
-      .then((response) => {
-        var data = response.data;
-        // console.log(data);
+  // }
 
-        var gratitudes = data.gratitudes ? data.gratitudes.split(',') : ['', '', ''];
-        var outlooks = data.outlooks ? data.outlooks.split(',') : ['', '', ''];
-        var affirmations = data.affirmations ? data.affirmations : '';
-        var amazings = data.amazings ? data.amazings.split(',') : ['', '', ''];
-        var reflections = data.reflections ? data.reflections.split(',') : ['', '', ''];
+  // // Retrieve real data from database
+  // retrieveData() { 
+    
+  //   axios.get('/api/journal', {
+  //       params: {
+  //         date: date
+  //       }
+  //     })
+  //     .then((response) => {
+  //       var data = response.data;
+  //       // console.log(data);
 
-        this.setState({
-          gratitudes,
-          outlooks,
-          affirmations,
-          amazings,
-          reflections
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  //       var gratitudes = data.gratitudes ? data.gratitudes.split(',') : ['', '', ''];
+  //       var outlooks = data.outlooks ? data.outlooks.split(',') : ['', '', ''];
+  //       var affirmations = data.affirmations ? data.affirmations : '';
+  //       var amazings = data.amazings ? data.amazings.split(',') : ['', '', ''];
+  //       var reflections = data.reflections ? data.reflections.split(',') : ['', '', ''];
+
+  //       this.setState({
+  //         gratitudes,
+  //         outlooks,
+  //         affirmations,
+  //         amazings,
+  //         reflections
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
 }
