@@ -17,7 +17,14 @@ export default class Circles extends Component {
 
   render() {
     return (
-      <div></div>
+      <div>
+        <div className="dashboard-footer circles-footer">
+          <div className="quote">
+            <div className="footer-text quote-text">I use the Pensieve. One simply siphons the excess thoughts from one's mind, pours them into the basin, and examines them at one's leisure. It becomes easier to spot patterns and links, you understand, when they are in this form.</div>
+            <div className="footer-text quote-attribution">- Albus Dumbledore, <span>Harry Potter and the Goblet of Fire</span></div>
+          </div>
+        </div>
+      </div>
     )
   }
   

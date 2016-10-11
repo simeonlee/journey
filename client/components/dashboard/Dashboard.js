@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { Glyphicon } from 'react-bootstrap';
+import Menu from './Menu'
+import Header from './Header'
 import Circles from './circles/Circles'
 import Calendar from './calendar/Calendar'
 import WordCloud from './wordcloud/WordCloud'
@@ -17,6 +18,51 @@ export default class Dashboard extends Component {
         wordCloudUrl: './data/wordCloudSample.js',
         elementDelay: 10
       },
+      selectedDashboardType: 'calendar',
+      dashboardTypes: {
+        calendar: {
+          display: 'Calendar',
+          title: 'Entries in the last year',
+          subtitle: 'Calendar settings'
+        },
+        scatterchart: {
+          display: 'Hours',
+          title: 'Interactions by time',
+          subtitle: 'Time travel to'
+        },
+        activityfeed: {
+          display: 'Timeline',
+          title: 'Steps taken in your journey',
+          subtitle: 'Time travel to'
+        },
+        pensieve: {
+          display: 'Pensieve',
+          title: 'Pensieve',
+          subtitle: 'Time travel to'
+        },
+        budget: {
+          display: 'Budget',
+          title: 'Your emotional budget',
+          subtitle: 'Time travel to'
+        },
+        visionboard: {
+          display: 'Vision Board',
+          title: 'Your journey imagery',
+          subtitle: 'Time travel to'
+        },
+        forecast: {
+          display: 'Forecast',
+          title: 'Your journey predictions',
+          subtitle: 'Time travel to'
+        },
+        composition: {
+          display: 'Composition',
+          title: 'Your cumulative composition',
+          subtitle: 'Time travel to'
+        }
+      },
+      currentDashboardTitle: 'Entries in the last year',
+      currentDashboardSubtitle: 'Calendar settings',
       startDelay: 20
     };
 
@@ -29,66 +75,61 @@ export default class Dashboard extends Component {
         console.log(err);
       });
   }
+
+  selectDashboardType(e) {
+    var menuItem = e.target.className.split(' ')[1];
+    var selectedDashboardType = menuItem.slice(menuItem.indexOf('-') + 1); // get type 'calendar' from 'menu-calendar' class name
+    var currentDashboardTitle = this.state.dashboardTypes[selectedDashboardType].title;
+    var currentDashboardSubtitle = this.state.dashboardTypes[selectedDashboardType].subtitle;
+    this.setState({ selectedDashboardType, currentDashboardTitle, currentDashboardSubtitle });
+  }
+
   render() {
+    var dashboard = (() => {
+      switch(this.state.selectedDashboardType) {
+        case 'calendar':
+          return (
+            <Calendar />
+          );
+        case 'scatterchart':
+          return (
+            <ScatterChart />
+          );
+        case 'pensieve':
+          return (
+            <Circles
+              startDelay={this.state.startDelay}
+              elementDelay={this.state.data.elementDelay}
+              json={this.state.data.circlesUrl}
+            />
+          );
+        case 'activityfeed':
+          return (
+            <ActivityFeed />
+          );
+        default:
+          return (
+            <Calendar />
+          );
+      }
+    })();
+
     return (
       <div className="dashboard">
-        <div className="dashboard-element dashboard-calendar">
-          <div className="dashboard-header calendar-header">
-            <div className="header-title calendar-title">Entries in the last year</div>
-            <div className="header-subtitle calendar-settings">Calendar settings<Glyphicon glyph="triangle-bottom" /></div>
-          </div>
-          <Calendar
-            startDelay={this.state.startDelay}
-            elementDelay={this.state.data.elementDelay}
+        <Menu 
+          selectDashboardType={this.selectDashboardType.bind(this)}
+          selectedDashboardType={this.state.selectedDashboardType}
+          dashboardTypes={this.state.dashboardTypes}
+        />
+        <div className="dashboard-body">
+          <Header 
+            title={this.state.currentDashboardTitle}
+            subtitle={this.state.currentDashboardSubtitle}
           />
-        </div>
-        <div className="dashboard-element dashboard-scatterchart">
-          <div className="dashboard-header scatterchart-header">
-            <div className="header-title dashboard-title">Interactions by time</div>
-            <div className="header-subtitle dashboard-jump">Time travel to<Glyphicon glyph="triangle-bottom" /></div>
-          </div>
-          <ScatterChart />
-        </div>
-        <div className="dashboard-element dashboard-circles">
-          <div className="dashboard-header circles-header">
-            <div className="header-title dashboard-title">Pensieve</div>
-            <div className="header-subtitle dashboard-jump">Time travel to<Glyphicon glyph="triangle-bottom" /></div>
-          </div>
-          <Circles
-            startDelay={this.state.startDelay}
-            elementDelay={this.state.data.elementDelay}
-            json={this.state.data.circlesUrl}
-          />
-          <div className="dashboard-footer circles-footer">
-            <div className="quote">
-              <div className="footer-text quote-text">I use the Pensieve. One simply siphons the excess thoughts from one's mind, pours them into the basin, and examines them at one's leisure. It becomes easier to spot patterns and links, you understand, when they are in this form.</div>
-              <div className="footer-text quote-attribution">- Albus Dumbledore, <span>Harry Potter and the Goblet of Fire</span></div>
-            </div>
-          </div>
-        </div>
-        <div className="dashboard-element dashboard-activity-feed">
-          <div className="dashboard-header activity-feed-header">
-            <div className="header-title dashboard-title">Steps taken in your journey</div>
-            <div className="header-subtitle dashboard-jump">Time travel to<Glyphicon glyph="triangle-bottom" /></div>
-          </div>
-          <ActivityFeed />
+          {dashboard}
         </div>
       </div>
 
     )
   }
 }
-
-/*
-
-<div className="dashboard-element dashboard-wordcloud">
-  <div className="dashboard-header wordcloud-header">
-    <div className="header-title dashboard-title">Thought Cloud</div>
-    <div className="header-subtitle dashboard-jump">Time travel to<Glyphicon glyph="triangle-bottom" /></div>
-  </div>
-  <WordCloud
-    data={this.state.data.wordCloudUrl}
-  />
-</div>
-
-*/
