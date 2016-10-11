@@ -52,3 +52,6 @@ dist
 
 #authentication
 auth.js
+
+#ssl
+https
