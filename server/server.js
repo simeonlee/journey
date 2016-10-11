@@ -49,7 +49,7 @@ var certificate = fs.readFileSync('./https/www_yourjourney_io.crt');
 var caBundle = fs.readFileSync('./https/comodossl.ca-bundle')
 
 serverOptions = {
-  ca: caBundle
+  ca: caBundle,
   key: privateKey,
   cert: certificate
 }
