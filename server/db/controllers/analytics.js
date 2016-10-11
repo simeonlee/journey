@@ -154,23 +154,22 @@ module.exports = (() => {
   var retrieveTextAnalysis = (req, res) => {
     var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
 
-    config.Analysis.findAll({
+    config.Analysis.find({
         where: {
-          userId: userId
+          userId: userId,
+          datetime: req.query.date
         }
       })
-      .then(analyses => {
-        console.log('Found analyses in database!');
-        console.log(analyses);
-
-        analyses.forEach(analysis => {
-          var data = analysis.dataValues;
-          var analysis = JSON.parse(data.analysis.toString());
-          console.log('=====> converted back to json');
-          console.log(analysis);
-        });
-
-      })
+      .then(analysis => {
+        if (analysis) {
+          res.json({
+            date: req.query.date,
+            dictionary: analysis.dataValues.analysis.toString(),
+          });
+        } else {
+          res.send('Could not find a dictionary for this date');
+        }
+      });
   }
 
   return {

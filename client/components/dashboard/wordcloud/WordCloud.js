@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-
+import d3 from 'd3'
+import 'd3-cloud'
 
 export default class WordCloud extends Component {
   constructor(props) {

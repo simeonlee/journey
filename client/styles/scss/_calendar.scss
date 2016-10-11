@@ -27,18 +27,44 @@ text {
   }
 }
 
-.day-cell-tooltip {
-  position: absolute;
-  z-index: 9999;
-  padding: 5px 9px;
-  color: #bbbbbb;
-  font-size: 12px;
-  background: rgba(0, 0, 0, 0.85);
-  border-radius: 3px;
-  text-align: center;
-}
-
 .glyphicon.glyphicon-triangle-bottom {
   margin-left: 4px;
   font-size: 10px;
+}
+
+.calendar-tooltip {
+  position: absolute;     
+  text-align: left;     
+  padding: 10px;
+  background: #222;
+  border: 0px;
+  border-radius: 5px;
+  pointer-events: none;
+  z-index: 9999999;
+  * {
+    font-size: 12px;
+    color: white;
+  }
+  .tooltip-title {
+    font-size: 16px;
+    font-family: $major;
+    margin-bottom: 3%;
+  }
+  .tooltip-subtitle {
+    font-weight: 400;
+    margin-bottom: 4%;
+  }
+  .tooltip-list-item {
+  }
+  .tooltip-error {
+    color: $lynch;
+  }
+  .tooltip-category.things {
+    float: left;
+    width: 50%;
+  }
+  .tooltip-category.feelings {
+    float: right;
+    width: 50%;
+  }
 }

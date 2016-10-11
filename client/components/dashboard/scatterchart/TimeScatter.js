@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import d3 from 'd3'
 import moment from 'moment'
 
 export default class TimeScatter extends Component {
