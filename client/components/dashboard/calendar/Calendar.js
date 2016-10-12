@@ -206,15 +206,6 @@ export default class Calendar extends Component {
       .style('opacity', 0)
       .remove();
 
-
-    
-
-
-
-
-
-
-
     // Logic for tooltips - display nouns and adjectives for each day
     this.days
       .on('mouseover', (d, i) => {
@@ -311,13 +302,11 @@ export default class Calendar extends Component {
         var duration = 400; // transition duration
 
         // Expand the selected rect to the middle of the calendar
-        var focusGroup = this.days
+        this.days
           .filter((d, i) => { 
             return d === clickedDate;
           })
-          .on('mouseover', (d, i) => {
-            d3.select(this).moveToFront();
-          })
+          .moveToFront()
           .transition().duration(duration)
           .attr('transform', d => {
             // If we are expanding a rect, move to (1, 1) coordinates of calendar
@@ -343,13 +332,11 @@ export default class Calendar extends Component {
           });
 
         // When you click on other squares when there is an expanded square, transition the squares back to normal
-        var focusGroup = this.days
+        this.days
           .filter((d, i) => { 
             return d !== clickedDate;
           })
-          .on('mouseover', (d, i) => {
-            d3.select(this).moveToBack();
-          })
+          .moveToBack()
           .transition().duration(duration)
           .attr('transform', d => {
             var translateX = d.getDay() * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
