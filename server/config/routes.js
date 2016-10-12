@@ -101,8 +101,8 @@ module.exports = (app) => {
   // handle the callback after facebook has authenticated the user
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect: 'http://yourjourney.io/journal',
-      failureRedirect: 'http://yourjourney.io/'
+      successRedirect: 'https://yourjourney.io/journal',
+      failureRedirect: 'https://yourjourney.io/'
     })
   );
   
