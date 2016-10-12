@@ -74,7 +74,9 @@ module.exports = (() => {
 
     var userId = req.user.localId;
     console.log('===================================')
-    console.log(req.body)
+    console.log('req.body: ', req.body);
+    console.log('===================================')
+    console.log('req.user: ', req.user);
     console.log('===================================')
     // console.log(req);
 
