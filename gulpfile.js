@@ -103,12 +103,9 @@ gulp.task('copy-html-files', function () {
     .pipe(gulp.dest(config.build.html));
 });
 
-
-
 gulp.task('images', ['clean'], function() {
   return gulp.src(config.src.img)
-    // Pass in options to the task
-    .pipe(imagemin({optimizationLevel: 5}))
+    .pipe(imagemin({optimizationLevel: 5})) // Pass in options to the task
     .pipe(gulp.dest(config.build.img));
 });
 
