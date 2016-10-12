@@ -114,7 +114,7 @@ module.exports = (app) => {
   app.get('/auth/amazon/callback', 
     passport.authenticate('amazon', { failureRedirect: '/' }),
     function(req, res) {
-      res.redirect('/profile');
+      res.redirect('/journal');
     }
   );
 
