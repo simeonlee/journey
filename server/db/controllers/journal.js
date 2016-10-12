@@ -16,6 +16,8 @@ module.exports = (() => {
 
   var getJournalEntriesForDate = (req, res) => {
 
+    //wooooooo!
+
     var userId = req.user.localId /* Amazon */ || req.user.dataValues.localId /* Facebook */;
     var data = {
       'date': req.query.date
