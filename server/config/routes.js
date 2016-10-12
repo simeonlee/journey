@@ -18,6 +18,10 @@ module.exports = (app) => {
     analytics.retrieveTextAnalysis(req, res);
   });
 
+  app.get('/api/cumulative-analytics', (req, res) => {
+    analytics.retrieveAllTextAnalyses(req, res);
+  });
+
   app.post('/api/analytics', (req, res) => {
     // POST request to '/api/analytics/' tells server to run analytics
     // on journal entries for days that we have not run analytics

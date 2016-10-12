@@ -7,16 +7,20 @@ import Calendar from './calendar/Calendar'
 import WordCloud from './wordcloud/WordCloud'
 import ScatterChart from './scatterchart/ScatterChart'
 import ActivityFeed from './activityFeed/ActivityFeed'
+import Composition from './composition/Composition'
 import axios from 'axios'
 
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      bodyWidth: 200,
+      bodyHeight: 200,
       data: {
         circlesUrl: './data/sample.json',
         wordCloudUrl: './data/wordCloudSample.js',
-        elementDelay: 10
+        elementDelay: 10,
+        cumulativeUserJournalData: {}
       },
       selectedDashboardType: 'calendar',
       dashboardTypes: {
@@ -74,6 +78,30 @@ export default class Dashboard extends Component {
       .catch(err => {
         console.log(err);
       });
+    this.aggregateCumulativeUserJournalData()
+  }
+
+  componentDidMount() {
+    var dashboardBody = document.getElementsByClassName('dashboard-body')[0];
+    var bodyWidth = dashboardBody.clientWidth;
+    var bodyHeight = dashboardBody.clientHeight;
+    this.setState({ bodyWidth, bodyHeight });
+  }
+
+  aggregateCumulativeUserJournalData() {
+    axios.get('/api/cumulative-analytics', {
+        params: {
+          aggregate: true // set this flag to true to have the server aggregate and format our data
+        }
+      })
+      .then(response => {
+        var { data } = this.state;
+        data.cumulativeUserJournalData = response.data;
+        this.setState({ data });
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   selectDashboardType(e) {
@@ -107,6 +135,14 @@ export default class Dashboard extends Component {
           return (
             <ActivityFeed />
           );
+        case 'composition':
+          return (
+            <Composition
+              width={this.state.bodyWidth}
+              height={this.state.bodyHeight}
+              data={this.state.data.cumulativeUserJournalData}
+            />
+          );
         default:
           return (
             <Calendar />
@@ -122,10 +158,6 @@ export default class Dashboard extends Component {
           dashboardTypes={this.state.dashboardTypes}
         />
         <div className="dashboard-body">
-          <Header 
-            title={this.state.currentDashboardTitle}
-            subtitle={this.state.currentDashboardSubtitle}
-          />
           {dashboard}
         </div>
       </div>
@@ -133,3 +165,10 @@ export default class Dashboard extends Component {
     )
   }
 }
+
+/*
+<Header 
+  title={this.state.currentDashboardTitle}
+  subtitle={this.state.currentDashboardSubtitle}
+/>
+ */

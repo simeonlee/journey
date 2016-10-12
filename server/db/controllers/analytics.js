@@ -172,9 +172,96 @@ module.exports = (() => {
       });
   }
 
+  var retrieveAllTextAnalyses = (req, res) => {
+    var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
+
+    config.Analysis.findAll({
+        where: {
+          userId: userId
+        }
+      })
+      .then(analyses => {
+        // console.log(analyses);
+        var responseObject = {}; // general object with date-keys and dictionaries
+        var responseArray = [
+          {
+            name: 'Things',
+            children: []
+          },
+          {
+            name: 'Feelings',
+            children: []
+          }
+        ]; // for treemap, etc.
+        analyses.forEach(analysis => {
+          var data = analysis.dataValues;
+          var date = data.datetime;
+          var dictionary = analysis.dataValues.analysis.toString();
+          // console.log('===>', req.query);
+          // console.log(date);
+          // console.log(JSON.parse(dictionary));
+
+          if (req.query.aggregate) { // process dictionaries into workable cumulative array
+            var types = JSON.parse(dictionary)['#TYPES#'];
+            if (types && types['NOUN']) {
+              var nouns = types['NOUN'];
+              Object.keys(nouns).forEach(noun => {
+                var increment = nouns[noun].count;
+                // check if noun already in array
+                var found = false;
+                responseArray[0].children.forEach(child => {
+                  if (child.name.toLowerCase() === noun.toLowerCase()) {
+                    child.size += increment;
+                    found = true;
+                  }
+                })
+                // else instantiate with size in dictionary
+                if (!found) {
+                  responseArray[0].children.push({
+                    name: noun,
+                    size: increment
+                  })
+                }
+              })
+            }
+            if (types && types['ADJ']) {
+              var adjectives = types['ADJ'];
+              Object.keys(adjectives).forEach(adjective => {
+                var increment = adjectives[adjective].count;
+                // check if adjective already in array
+                var found = false;
+                responseArray[1].children.forEach(child => {
+                  if (child.name.toLowerCase() === adjective.toLowerCase()) {
+                    child.size += increment;
+                    found = true;
+                  }
+                })
+                // else instantiate with size in dictionary
+                if (!found) {
+                  responseArray[1].children.push({
+                    name: adjective,
+                    size: increment
+                  })
+                }
+              })
+            }
+          } else {
+            // just send back dictionaries without processing
+            responseObject[date] = dictionary;
+          }
+        });
+        if (req.query.aggregate) {
+          res.json(responseArray); // return array formatted for use in treemap and other charts
+        } else {
+          res.json(responseObject); // return object organized by date-keys with dictionaries
+        }
+      });
+  }
+
   return {
     analyzeDays: analyzeDays,
     saveTextAnalysis: saveTextAnalysis,
-    retrieveTextAnalysis: retrieveTextAnalysis
+    retrieveTextAnalysis: retrieveTextAnalysis,
+    retrieveAllTextAnalyses: retrieveAllTextAnalyses
   }
 })();
