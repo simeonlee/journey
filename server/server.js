@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var passport = require('passport');
 var https = require('https');
-var http = require('http');
+var http = require('http'); 
 var fs = require('fs');
 
 var { sequelize } = require('./db/config');
