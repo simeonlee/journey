@@ -1,15 +1,16 @@
-.dashboard-calendar {
-  width: 80%;
-}
+// .dashboard-calendar {
+//   width: 80%;
+// }
 
 .calendar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
 }
 
 .calendar-svg {
-  box-sizing: initial;
+  // box-sizing: initial;
+  // background-color: $lynch;
 }
 
 text {
@@ -21,7 +22,7 @@ text {
   }
 }
 
-.day-cell {
+.day-rect {
   fill-opacity: .7;
   pointer-events: all;
   cursor: pointer;
@@ -71,3 +72,22 @@ text {
     width: 50%;
   }
 }
+
+// http://stackoverflow.com/questions/16265123/resize-svg-when-window-is-resized-in-d3-js
+// .svg-container {
+//     display: inline-block;
+//     position: relative;
+//     width: 100%;
+//     padding-bottom: 100%; /* aspect ratio */
+//     vertical-align: top;
+//     overflow: hidden;
+// }
+// .svg-content-responsive {
+//     display: inline-block;
+//     width: 100%;
+//     height: 100%;
+//     position: absolute;
+//     top: 0;
+//     // top: 10px;
+//     left: 0;
+// }
