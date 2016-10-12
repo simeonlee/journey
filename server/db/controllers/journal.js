@@ -16,8 +16,7 @@ module.exports = (() => {
 
   var getJournalEntriesForDate = (req, res) => {
 
-    var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
-
+    var userId = req.user.localId /* Amazon */ || req.user.dataValues.localId /* Facebook */;
     var data = {
       'date': req.query.date
     };
@@ -73,7 +72,7 @@ module.exports = (() => {
 
   var postJournalEntriesForDate = (req, res) => {
 
-    var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
+    var userId = req.body.localId;
 
     Gratitude.findOrCreate({
         where: {

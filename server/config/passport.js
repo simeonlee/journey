@@ -38,10 +38,11 @@ module.exports = (passport) => {
   ));
 
   passport.serializeUser(function(user, done) {
+    console.log('SERIALIZING =============>', user);
     if (user.facebookID) {
-      done(null, {id: user.facebookID, provider: 'facebook'});
+      done(null, {id: user.facebookID, provider: 'facebook', localId: user.userId});
     } else if (user.provider === 'amazon') {
-      done(null, {id: user.id, provider: 'amazon'});
+      done(null, {id: user.id, provider: 'amazon', localId: user.userId});
     } else {
       done(null, {id: user.id, provider: 'local'});
     }

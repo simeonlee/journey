@@ -2,7 +2,7 @@ var passport = require('passport');
 var { User, FacebookUser, AmazonUser, Gratitude, Outlook, Affirmation, Amazing, Reflection } = require('../db/config.js');
 var util = require('util');
 var request = require('request');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 var saltRounds = 10;
 
 
