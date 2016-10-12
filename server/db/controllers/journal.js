@@ -16,7 +16,7 @@ module.exports = (() => {
 
   var getJournalEntriesForDate = (req, res) => {
 
-    var userId = req.user.localId /* Amazon */ || req.user.dataValues.localId /* Facebook */;
+    var userId = req.user.localId /* Amazon */ || req.user.userId /* Facebook */;
     var data = {
       'date': req.query.date
     };
@@ -76,7 +76,8 @@ module.exports = (() => {
     console.log('===================================')
     console.log('req.body: ', req.body);
     console.log('===================================')
-    console.log('req.user: ', req.user);
+    console.log('req.user.localId: ', req.user.localId);
+    console.log('req.user.userId: ', req.user.userId);
     console.log('===================================')
     // console.log(req);
 
