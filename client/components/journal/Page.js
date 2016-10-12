@@ -123,7 +123,7 @@ export default class Page extends Component {
               {' '}
               <input
                 type="text"
-                placeholder="Express gratitude..."
+                placeholder="Say thanks..."
                 className="gratitudes 1"
                 value={this.state.gratitudes[1] || ''}
                 onChange={this.updateEntry.bind(this)}
@@ -134,7 +134,7 @@ export default class Page extends Component {
               {' '}
               <input
                 type="text"
-                placeholder="Express gratitude..."
+                placeholder="Show appreciation..."
                 className="gratitudes 2"
                 value={this.state.gratitudes[2] || ''}
                 onChange={this.updateEntry.bind(this)}
@@ -152,7 +152,7 @@ export default class Page extends Component {
               {' '}
               <input
                 type="text"
-                placeholder="Express hopes..."
+                placeholder="Be optimistic..."
                 className="outlooks 0"
                 value={this.state.outlooks[0] || ''}
                 onChange={this.updateEntry.bind(this)}
@@ -163,7 +163,7 @@ export default class Page extends Component {
               {' '}
               <input
                 type="text"
-                placeholder="Express hopes..."
+                placeholder="Set goals..."
                 className="outlooks 1"
                 value={this.state.outlooks[1] || ''}
                 onChange={this.updateEntry.bind(this)}
@@ -174,7 +174,7 @@ export default class Page extends Component {
               {' '}
               <input
                 type="text"
-                placeholder="Express hopes..."
+                placeholder="Look forward..."
                 className="outlooks 2"
                 value={this.state.outlooks[2] || ''}
                 onChange={this.updateEntry.bind(this)}
@@ -220,7 +220,7 @@ export default class Page extends Component {
               {' '}
               <input
                 type="text"
-                placeholder="Reflect on the positives..."
+                placeholder="Think about the good in today..."
                 className="amazings 1"
                 value={this.state.amazings[1] || ''}
                 onChange={this.updateEntry.bind(this)}
@@ -231,7 +231,7 @@ export default class Page extends Component {
               {' '}
               <input
                 type="text"
-                placeholder="Reflect on the positives..."
+                placeholder="Someone made your day great..."
                 className="amazings 2"
                 value={this.state.amazings[2] || ''}
                 onChange={this.updateEntry.bind(this)}
@@ -250,7 +250,7 @@ export default class Page extends Component {
               {' '}
               <input
                 type="text"
-                placeholder="Identify growth opportunities..."
+                placeholder="Identify constructive opportunities..."
                 className="reflections 0"
                 value={this.state.reflections[0] || ''}
                 onChange={this.updateEntry.bind(this)}
@@ -261,7 +261,7 @@ export default class Page extends Component {
               {' '}
               <input
                 type="text"
-                placeholder="Identify growth opportunities..."
+                placeholder="Have a growth mindset..."
                 className="reflections 1"
                 value={this.state.reflections[1] || ''}
                 onChange={this.updateEntry.bind(this)}
@@ -272,7 +272,7 @@ export default class Page extends Component {
               {' '}
               <input
                 type="text"
-                placeholder="Identify growth opportunities..."
+                placeholder="Always be improving..."
                 className="reflections 2"
                 value={this.state.reflections[2] || ''}
                 onChange={this.updateEntry.bind(this)}

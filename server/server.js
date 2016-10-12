@@ -1,26 +1,8 @@
 var express = require('express');
 var app = express();
 var passport = require('passport');
-var https = require('https');
-var fs = require('fs');
-
-// configure passport.
-require('./config/passport.js')(passport);
-
-// configure server with middleware.
-require('./config/middleware.js')(app, express, passport);
-
-// configure server with routing.
-
-/* === connect database to server === */
-var config = require('./db/config');
-var sequelize = config.sequelize;
-var controllers = require('./db/models/utilities/controllers')(sequelize, config.User);
-
-require('./config/routes.js')(app, controllers);
-
-/* === connect database to server === */
 var { sequelize } = require('./db/config');
+var port = 5000;
 
 sequelize
   .authenticate()
@@ -43,36 +25,16 @@ AFTER RECOMMENTING BELOW CODE. */
 //     console.log('An error occurred while creating the table:', err);
 //   });
 
-//start listening to requests on port 3000.
+require('./config/passport.js')(passport); // Authentication
+require('./config/middleware.js')(app, express, passport); // Middleware
+require('./config/routes.js')(app); // Routes
 
-
-// var privateKey = fs.readFileSync('./https/www_yourjourney_io.key');
-// var certificate = fs.readFileSync('./https/www_yourjourney_io.crt');
-// var caBundle = fs.readFileSync('./https/comodossl.ca-bundle')
-
-// serverOptions = {
-//   ca: caBundle,
-//   key: privateKey,
-//   cert: certificate
-// }
-
-// sequelize.sync().then(function() {
-//   console.log('Synced with mySQL through Sequelize.');
-
-//   https.createServer(serverOptions,app).listen(443);
-//   http.createServer(app).listen(3000);
-
-//   console.log('Listening on Port: 3000');
-// });
-
-app.listen(3000, () => {
-  console.log('Listening on Port: 3000');
+// Start server
+app.listen(port, () => {
+  console.log('Listening on Port: ' + port);
   sequelize.sync().then(function() {
     console.log('Synced with mySQL through Sequelize.');
   });
 });
-
-
-
 
 module.exports = app;

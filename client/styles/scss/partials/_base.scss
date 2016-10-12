@@ -1,0 +1,42 @@
+$major: 'Cinzel';
+$minor: 'Raleway';
+$haze: #ECECEC;
+$porcelain: #ECF0F1;
+$darkLynch: #30363D;
+$midLynch: #56626E;
+$lightLynch: #A5BAD1;
+$silver: #BDC3C7;
+$lynch: #6C7A89;
+$azure: azure;
+$nav-height: 60px;
+
+* {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 200;
+  color: $lynch;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  &:link {
+    text-decoration: none;
+    color: black;
+  }
+  &:visited {
+    text-decoration: none;
+    color: black;
+  }
+  &:hover {
+    text-decoration: none;
+    color: black;
+  }
+  &:active {
+    text-decoration: none;
+    color: black;
+  }
+}
+
+ul {
+  list-style-type: none;
+}

@@ -1,25 +1,27 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { App } from './components/App'
-import { Router, Route, browserHistory, IndexRoute } from 'react-router'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import Journal from './components/journal/Journal'
-import Dashboard from './components/Dashboard'
-import { Profile } from './components/Profile'
-import { Home } from './components/Home'
-import { LoginModal } from './components/LoginModal'
-import { authenticateUser, checkIfLoggedIn } from './utils'
+import 'babel-polyfill'
+import { AppContainer } from 'react-hot-loader'
+import App from './components/App'
 
+const rootElement = document.getElementById('app');
 
+render(
+  <AppContainer>
+    <App />
+  </AppContainer>,
+  rootElement,
+)
 
-render((
-  <Router history={browserHistory}>
-    <Route path="/" component={App}>
-      <IndexRoute component={Home}/>
-      <Route path="/journal" component={Journal} onEnter={authenticateUser}/>
-      <Route path="/dashboard" component={Dashboard} onEnter={authenticateUser}/>
-      <Route path="/profile" component={Profile}/>
-    </Route>
-  </Router>
-), document.getElementById('app'))
+if (module.hot) {
+  module.hot.accept('./components/App', () => {
+    const NextApp = require('./components/App').default;
+
+    render(
+      <AppContainer>
+         <NextApp />
+      </AppContainer>,
+      rootElement,
+    );
+  });
+}

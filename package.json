@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack --progress --colors --watch --inline --content-base .",
     "build-css": "node-sass --include-path scss client/styles/scss/main.scss client/styles/css/styles.css",
-    "watch-css": "nodemon -e scss -x \"npm run build-css\""
+    "watch-css": "nodemon -e scss -x \"npm run build-css\"",
+    "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,11 @@
   },
   "homepage": "https://github.com/scrumptiousAmpersand/journal#readme",
   "dependencies": {
+    "@google-cloud/language": "^0.3.0",
     "axios": "^0.14.0",
     "babel-loader": "^6.2.5",
     "bcrypt": "^0.8.7",
+    "babel-polyfill": "^6.16.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
@@ -35,6 +38,7 @@
     "eslint-config-airbnb": "^11.1.0",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
+    "google-cloud": "^0.41.2",
     "gulp-webpack": "^1.5.0",
     "jquery": "^3.1.1",
     "moment": "^2.15.1",
@@ -60,13 +64,19 @@
     "request-promise": "^4.1.1",
     "sequelize": "^3.24.3",
     "serve-favicon": "^2.3.0",
-    "util": "^0.10.3"
+    "util": "^0.10.3",
+    "webpack-merge": "^0.14.1",
+    "webpack-validator": "^2.2.9"
   },
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.14.0",
-    "babel-preset-es2015": "^6.14.0",
-    "babel-preset-react": "^6.11.1",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-transform-react-jsx-img-import": "^0.1.2",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "browser-sync": "^2.17.2",
     "chai": "^3.5.0",
     "eslint": "^3.6.0",
     "eslint-plugin-import": "^1.16.0",
@@ -95,12 +105,16 @@
     "http-server": "^0.8.5",
     "jshint": "^2.9.3",
     "mocha": "^3.0.2",
-    "node-sass": "^3.10.0",
+    "node-sass": "^3.10.1",
     "react-hot-loader": "^3.0.0-beta.5",
     "run-sequence": "^1.2.2",
     "sass-loader": "^4.0.2",
     "sinon": "^1.17.6",
     "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.16.1"
+    "webpack-dev-middleware": "^1.8.4",
+    "webpack-dev-server": "^1.16.1",
+    "webpack-hot-middleware": "^2.13.0",
+    "webpack-module-hot-accept": "^1.0.4",
+    "webpack-stream": "^3.2.0"
   }
 }

@@ -1,0 +1,87 @@
+nav {
+  z-index: 9999999;
+  letter-spacing: 1.2px;
+}
+
+nav button {
+  border: 0 !important;
+}
+
+.brand-centered {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.logo {
+  color: $lynch;
+  font-size: 30px;
+  font-family: $major, serif;
+  letter-spacing: 1.5px !important;
+}
+
+.navbar-brand {
+  height: $nav-height;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left, .navbar-right {
+  width: 40%;
+}
+
+.nav > li {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* line height is 16px so add 44px top and bottom to equal the new .navbar-brand 60px height */
+.nav > li > a {
+  padding-top: 22px;
+  padding-bottom: 22px;
+  font-size: 16px;
+}
+.navbar-toggle {
+  padding: 0;
+  margin: 25px 15px 25px 0;
+}
+
+.wrap {
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.navbar-collapse {
+  border: 0px solid rgba(255, 255, 255, 0.0) !important;
+}
+
+.nav-active {
+  box-shadow: 0 2px 0 0 $lynch;
+}
+
+.navbar-nav > li > .dropdown-menu {
+  z-index: 9999999;
+}
+
+/*
+  HOMEPAGE NAV:
+*/
+
+.brand-left {
+  display: flex;
+  justify-content: left;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 20px;
+}
+
+li.home-login-button {
+  float: right;
+}
+

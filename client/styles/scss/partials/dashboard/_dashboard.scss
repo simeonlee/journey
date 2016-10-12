@@ -1,0 +1,73 @@
+.dashboard {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.menu {
+  position: absolute;
+  top: $nav-height;
+  bottom: 0;
+  left: 0;
+  width: 20%;
+  display: flex;
+  cursor: pointer;
+  justify-content: space-around;
+  flex-direction: column;
+  > div {
+    color: white;
+    font-size: 16px;
+    padding-left: 10%;
+    opacity: 0.6;
+    background-color: $lynch;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    // border-right: 1px solid $lynch;
+  }
+  > div:hover {
+    opacity: 0.5;
+  }
+  > .selected {
+    opacity: 0.5;
+    padding-left: 15%;
+  }
+}
+
+.dashboard-body {
+  position: absolute;
+  top: $nav-height;
+  right: 0;
+  bottom: 0;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  // justify-content: space-around;
+}
+
+.header {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 20px;
+  width: 80%;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 400;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.header-subtitle {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

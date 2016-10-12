@@ -1,34 +1,18 @@
 var passport = require('passport');
 var path = require('path');
 var { checkForFacebookUser, signUpLocalUser, logoutAndRememberUser, linkAlexa, storeAlexaData} = require('./utils');
+// var { checkForFacebookUser } = require('../db/controllers/auth'); // TODO: MOVE AUTH CONTROLLERS TO CONTROLLERS DIRECTORY, NOT GENERIC UTILS
+var journal = require('../db/controllers/journal'); // Controller to save and retrieve journal entries
+var analytics = require('../db/controllers/analytics');
 
-module.exports = (app, controllers) => {
-
-/* Deprecated method for entries retrieval - will be deleted in next pull request
-  app.get('/api/journal/:userId/:month/:day/:year', (req, res, next) => {
-    controllers
-      .UserController
-      .getEntriesOnDate(
-        req,
-        res,
-        next,
-        req.params.userId,
-        req.params.month,
-        req.params.day,
-        req.params.year );
-  */
-
-  //Serve up static files upon request.
-  // app.get('/', (req, res) => {
-  //   res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
-  // });
+module.exports = (app) => {
 
   app.get('/api/journal', (req, res) => {
-    controllers.UserController.getJournalEntries(req, res);
+    journal.getJournalEntriesForDate(req, res); // get journal entries for a particular date
   });
 
   app.post('/api/journal', (req, res) => {
-    controllers.UserController.postJournalEntries(req, res);
+    journal.postJournalEntriesForDate(req, res); // post journal entries for a particular date
   });
 
   app.get('/api/profile/:userId', (req, res, next) => {
@@ -37,6 +21,29 @@ module.exports = (app, controllers) => {
 
   app.post('/api/profile', (req, res, next) => {
     controllers.UserController.updateUserInfo(req, res, next);
+  });
+  
+  app.get('/api/analytics', (req, res) => {
+    analytics.retrieveTextAnalysis(req, res);
+  });
+
+  app.get('/api/cumulative-analytics', (req, res) => {
+    analytics.retrieveAllTextAnalyses(req, res);
+  });
+
+  app.post('/api/analytics', (req, res) => {
+    // POST request to '/api/analytics/' tells server to run analytics
+    // on journal entries for days that we have not run analytics
+    // yet (or for days where user has updated the journal entry)
+
+    // We keep track of this by saving the day to analyze
+    // in the 'daysToBeAnalyzed' object saved in the user table
+
+    // We also throttle the api calls to once every 12 hours
+    // by making sure we are at least 12 hours ahead of the
+    // 'timeOfLastAnalysis' datetime saved in the user table
+
+    analytics.analyzeDays(req, res); 
   });
 
   app.get('/journal', (req, res) => {

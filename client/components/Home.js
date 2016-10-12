@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { Col, Grid, Row, Button, FieldGroup, Image } from 'react-bootstrap'
 import Jumbotron from 'react-bootstrap/lib/Jumbotron'
-import { LoginModal } from './LoginModal'
-import { SignUp } from './SignUp'
+import LoginModal from './access/LoginModal'
+import SignUp from './access/SignUp'
 
-export class Home extends Component {
+export default class Home extends Component {
   constructor(props) {
     super(props)
     this.state = {

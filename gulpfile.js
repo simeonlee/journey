@@ -10,17 +10,21 @@ const clean = require('gulp-clean');
 const runSequence = require('run-sequence');
 const ngAnnotate = require('gulp-ng-annotate');
 const shell = require('gulp-shell');
-const image = require('gulp-image');
 const imagemin = require('gulp-imagemin');
-const webpack = require('gulp-webpack');
 const plumber = require('gulp-plumber'); // Handle gulp.watch errors without throwing / cancelling nodemon
+
+// Live reload of css and html through 'browser-sync'
+const browserSync = require('browser-sync');
+
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
 
 gulp.task('default', []);
 
 const config = {
   src: {
     html: ['./client/**/*.html', './client/**/*.ico'],
-    css: './client/styles/scss/*.scss',
+    css: ['./client/styles/scss/*.scss', './client/styles/scss/**/*.scss'],
     js: ['./client/index.js', './client/**/*.js'],
     json: './client/**/*.json',
     img: ['./client/images/**', './client/images/**/*', '!./client/images/**/*.sketch', '!./client/images/application-photos/*']
@@ -34,13 +38,31 @@ const config = {
   }
 };
 
-gulp.task('nodemon', function() {
-  nodemon({
+gulp.task('nodemon', (cb) => {
+  var started = false;
+
+  return nodemon({
     script: 'server/server.js',
     ext: 'html js'
   })
-  .on('restart', function() {
+  .on('start', () => {
+    // avoid nodemon being started multiple times
+    if (!started) {
+      cb();
+      started = true;
+    }
+  })
+  .on('restart', () => {
     console.log('nodemon restarted server!');
+  });
+});
+
+gulp.task('browser-sync', ['nodemon'], () => {
+  browserSync({
+    proxy: "http://localhost:5000",
+    files: config.src.css,
+    browser: "google chrome",
+    port: 3000
   });
 });
 
@@ -69,12 +91,6 @@ gulp.task('build-css', function() {
     .pipe(gulp.dest(config.build.css));
 });
 
-gulp.task('webpack', function() {
-  return gulp.src('./client/index.js')
-    .pipe(webpack(require('./webpack.config.js')))
-    .pipe(gulp.dest('./dist/'));
-});
-
 gulp.task('copy-json-files', function () {
   gulp.src(config.src.json)
     .pipe(plumber())
@@ -87,12 +103,9 @@ gulp.task('copy-html-files', function () {
     .pipe(gulp.dest(config.build.html));
 });
 
-
-
 gulp.task('images', ['clean'], function() {
   return gulp.src(config.src.img)
-    // Pass in options to the task
-    .pipe(imagemin({optimizationLevel: 5}))
+    .pipe(imagemin({optimizationLevel: 5})) // Pass in options to the task
     .pipe(gulp.dest(config.build.img));
 });
 
@@ -115,13 +128,12 @@ gulp.task('stop', shell.task([
 gulp.task('build', function() {
   runSequence(
     'clean',
-    ['build-css', 'webpack', 'copy-json-files', 'copy-html-files', 'images']
+    ['build-css', 'copy-json-files', 'copy-html-files', 'images']
   );
 });
 
 gulp.task('watch', function() {
   gulp.watch(config.src.css, ['build-css']);
-  gulp.watch(config.src.js, ['webpack']);
   gulp.watch(config.src.json, ['copy-json-files']);
   gulp.watch(config.src.html, ['copy-html-files']);
   gulp.watch(config.src.img, ['images']);
@@ -132,7 +144,7 @@ gulp.task('default', function() {
     'set-dev',
     'build',
     'watch',
-    'nodemon'
+    'browser-sync'
   );
 });
 

@@ -6,7 +6,7 @@ var bcrypt = require('bcrypt');
 var saltRounds = 10;
 
 
-module.exports = function() {
+module.exports = (() => {
 
   var currentUserID = null;
 
@@ -289,4 +289,4 @@ module.exports = function() {
     linkAlexa: linkAlexa,
     storeAlexaData: storeAlexaData
   }
-}()
+})();
