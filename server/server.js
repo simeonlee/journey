@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var passport = require('passport');
 var https = require('https');
-var http = require('http'); 
+var http = require('http');
 var fs = require('fs');
 
 var { sequelize } = require('./db/config');
@@ -32,7 +32,6 @@ AFTER RECOMMENTING BELOW CODE. */
 require('./config/passport.js')(passport); // Authentication
 require('./config/middleware.js')(app, express, passport); // Middleware
 require('./config/routes.js')(app); // Routes
-
 
 // var privateKey = fs.readFileSync('./https/www_yourjourney_io.key');
 // var certificate = fs.readFileSync('./https/www_yourjourney_io.crt');
