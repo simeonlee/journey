@@ -9,26 +9,21 @@ export default class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: (window.innerWidth / 2),
-      height: 120,
+      width: props.width,
+      height: props.height,
       data: [],
       dayDictionary: {}
     }
 
     this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    this.days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    this.weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     this.colorRange = ['#ECECEC', '#6C7A89'];
 
-    this.dayRects;
-    this.SQUARE_LENGTH = 16;
-    this.SQUARE_PADDING = 2;
-    this.MONTH_LABEL_PADDING = 6;
-
-    this.tooltip;
-    this.tooltipEnabled = true;
+    this.SQUARE_PADDING = 3;
+    this.SQUARE_LENGTH = (this.state.width - (9 * this.SQUARE_PADDING)) / 8; // 9 pads around 8 squares in a row
 
     this.max = 5;
-
+    this.dayRectExpanded = false; // set to true when we have something expanded to fill the page
   }
 
   componentDidMount() {
@@ -38,119 +33,190 @@ export default class Calendar extends Component {
   }
 
   render() {
+    var svgStyle = {
+      padding: this.SQUARE_PADDING + 'px',
+    };
+    
     return (
-      <div className="calendar"></div>
+      <div className="calendar">
+        <svg
+          className="calendar-svg"
+          // preserveAspectRatio="xMidYMid meet"
+          // preserveAspectRatio="none"
+          // viewBox="0 0 750 750" // x, y, width, height
+          width={this.state.width}
+          height={this.state.height}
+          style={svgStyle}
+        ></svg>
+      </div>
     )
   }
 
   initD3() {
     this.setWidth();
 
+
+
     // Define the div for the tooltip
     this.tooltip = d3.select(ReactDOM.findDOMNode(this)).append('div')
       .attr('class', 'calendar-tooltip')
       .style('opacity', 0);
 
-    this.svg = d3.select(ReactDOM.findDOMNode(this))
-      .append('svg')
-      .attr('width', this.state.width)
-      .attr('height', this.state.height)
-      .attr('class', 'calendar-svg')
-      .style('padding', '36px');
+    // console.log(this.svg);
+    // this.svg = d3.select(ReactDOM.findDOMNode(this))
+      // .append('svg')
+      // .attr('width', this.state.width)
+      // .attr('height', this.state.height)
+      // .attr('class', 'calendar-svg')
+      // .style('padding', this.SQUARE_PADDING + 'px');
 
-    // this.svg.call(this.tip);
-
-    this.monthLabels = this.svg
-      .selectAll('.month')
-      .data(this.monthLabelData, d => d.displayText);
+    // this.monthLabels = this.svg
+    //   .selectAll('.month')
+    //   .data(this.monthLabelData, d => d.displayText);
 
     // first enter
-    this.monthLabels
-      .enter().append('text')
-      .attr('class', 'month-name')
-      .transition().duration(400)
-      .text((d) => { return d.displayText; })
-      .attr('x', (d, i) => { return d.monthLabelWeekIndex * (this.SQUARE_LENGTH + this.SQUARE_PADDING); })
-      .attr('y', 0); // affix to top
+    // this.monthLabels
+    //   .enter().append('text')
+    //   .attr('class', 'month-name')
+    //   .transition().duration(400)
+    //   .text((d) => { return d.displayText; })
+    //   .attr('x', 0) // affix to top
+    //   .attr('y', (d, i) => { return d.monthLabelWeekIndex * (this.SQUARE_LENGTH + this.SQUARE_PADDING); });
 
     this.update();
-    this.drawWeekdayLabels(); // add M W F to left side of calendar
+    // this.drawWeekdayLabels(); // add M W F to left side of calendar
 
     d3.select(window).on('resize', () => {
       this.update();
     });
   }
 
-  drawWeekdayLabels() {
-    this.days.forEach((day, index) => {
-      if (index % 2) {
-        this.svg.append('text')
-          .attr('class', 'day-initial')
-          .attr('transform', 'translate(-8,' + (this.SQUARE_LENGTH + this.SQUARE_PADDING) * (index + 1) + ')')
-          .style('text-anchor', 'middle')
-          .attr('dy', '2')
-          .text(day);
-      }
-    });
-  }
+  // drawWeekdayLabels() {
+  //   this.weekdays.forEach((day, index) => {
+  //     if (index % 2) {
+  //       this.svg.append('text')
+  //         .attr('class', 'day-initial')
+  //         .attr('transform', 'translate(-8,' + (this.SQUARE_LENGTH + this.SQUARE_PADDING) * (index + 1) + ')')
+  //         .style('text-anchor', 'middle')
+  //         .attr('dy', '2')
+  //         .text(day);
+  //     }
+  //   });
+  // }
 
   update() {
     this.setWidth();
-    this.svg.attr('width', this.state.width);
+    // this.svg.attr('width', this.state.width);
     this.setDates();
     this.redrawDayRects();
-    this.redrawMonthLabels();
+    // this.redrawMonthLabels();
   }
 
   redrawDayRects() {
-    this.dayRects = this.svg
-      .selectAll('.day-cell')
-      .data(this.dateRange, d => d.toDateString()); // array of days for the last year
-
-    var color = d3.scale.linear()
+    var color = d3.scale.linear() // function to determine color for each day's rect based on journaling intensity
       .range(this.colorRange)
       .domain([0, this.max]);
 
+    this.days = d3.select('.calendar-svg')
+      .selectAll('g')
+        .data(this.dateRange, d => d.toDateString()) // array of days for the last year
+
+    this.days
+      .enter().append('g')
+        .style('opacity', 0)
+        .attr('width', this.SQUARE_LENGTH)
+        .attr('height', this.SQUARE_LENGTH)
+        .transition().duration(400)
+        .style('opacity', 1)
+        .attr('transform', d => {
+          var x = d.getDay() * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
+          var cellDate = moment(d);
+          var result = cellDate.week() - this.firstDate.week() + (this.firstDate.weeksInYear() * (cellDate.weekYear() - this.firstDate.weekYear()));
+          var y = result * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
+          return 'translate(' + x + ',' + y + ')';
+        });
+
+    this.days
+      .append('rect')
+        .attr('class', 'day-rect')
+        .attr('width', this.SQUARE_LENGTH)
+        .attr('height', this.SQUARE_LENGTH)
+        .attr('fill', (d, i) => { return this.countData[d] ? color(this.countData[d].count) : '#ECECEC'; }); // assign color to each rect
+
+
+    this.days
+      .append('text')
+        .text((d) => { return moment(d).format('MMMM D'); })
+        .style('font-size', '10px')
+        .style('font-family', 'Cinzel')
+        .attr('x', '4px')
+        .attr('y', '12px');
+        // .attr('x', (d, i) => { return d.getDay() * (this.SQUARE_LENGTH + this.SQUARE_PADDING); })
+        // .attr('y', (d, i) => {
+        //   var cellDate = moment(d);
+        //   var result = cellDate.week() - this.firstDate.week() + (this.firstDate.weeksInYear() * (cellDate.weekYear() - this.firstDate.weekYear()));
+        //   return result * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
+        // });
+        // .attr('x', function(d) { return x(d.value) - 3; })
+        // .attr('y', barHeight / 2)
+        // .attr('dy', '.35em')
+
+        // .attr('transform', function(d, i) { return 'translate(0,' + i * barHeight + ')'; });
+
+    // this.dayRects = this.svg
+    //   .selectAll('.day-rect')
+    //   .data(this.dateRange, d => d.toDateString()); // array of days for the last year
+
+
+
     // update
-    this.dayRects
-      .attr('class', 'day-cell')
-      .attr('width', this.SQUARE_LENGTH)
-      .attr('height', this.SQUARE_LENGTH)
-      .attr('fill', (d, i) => { return this.countData[d] ? color(this.countData[d].count) : '#ECECEC'; }) // assign color to each rect
-      .attr('x', (d, i) => {
-        var cellDate = moment(d);
-        var result = cellDate.week() - this.firstDate.week() + (this.firstDate.weeksInYear() * (cellDate.weekYear() - this.firstDate.weekYear()));
-        return result * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
-      })
-      .attr('y', (d, i) => { return this.MONTH_LABEL_PADDING + d.getDay() * (this.SQUARE_LENGTH + this.SQUARE_PADDING); });
+    // this.dayRects
+      // .attr('class', 'day-rect')
+      // .attr('width', this.SQUARE_LENGTH)
+      // .attr('height', this.SQUARE_LENGTH)
+      // .attr('fill', (d, i) => { return this.countData[d] ? color(this.countData[d].count) : '#ECECEC'; }) // assign color to each rect
+      // .attr('y', (d, i) => {
+      //   var cellDate = moment(d);
+      //   var result = cellDate.week() - this.firstDate.week() + (this.firstDate.weeksInYear() * (cellDate.weekYear() - this.firstDate.weekYear()));
+      //   return result * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
+      // })
+      // .attr('x', (d, i) => { return d.getDay() * (this.SQUARE_LENGTH + this.SQUARE_PADDING); });
 
     // enter
-    this.dayRects
-      .enter().append('rect')
-      .attr('class', 'day-cell')
-      .style('opacity', 0)
-      .attr('width', this.SQUARE_LENGTH)
-      .attr('height', this.SQUARE_LENGTH)
-      .attr('fill', (d, i) => { return this.countData[d] ? color(this.countData[d].count) : '#ECECEC'; }) // assign color to each rect
-      .transition().duration(400)
-      .style('opacity', 1)
-      .attr('x', (d, i) => {
-        var cellDate = moment(d);
-        var result = cellDate.week() - this.firstDate.week() + (this.firstDate.weeksInYear() * (cellDate.weekYear() - this.firstDate.weekYear()));
-        return result * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
-      })
-      .attr('y', (d, i) => { return this.MONTH_LABEL_PADDING + d.getDay() * (this.SQUARE_LENGTH + this.SQUARE_PADDING); });
+    // this.dayRects
+      // .enter().append('rect')
+      // .attr('class', 'day-rect')
+      // .style('opacity', 0)
+      // .attr('width', this.SQUARE_LENGTH)
+      // .attr('height', this.SQUARE_LENGTH)
+      // .attr('fill', (d, i) => { return this.countData[d] ? color(this.countData[d].count) : '#ECECEC'; }) // assign color to each rect
+      // .transition().duration(400)
+      // .style('opacity', 1)
+      // .attr('y', (d, i) => {
+      //   var cellDate = moment(d);
+      //   var result = cellDate.week() - this.firstDate.week() + (this.firstDate.weeksInYear() * (cellDate.weekYear() - this.firstDate.weekYear()));
+      //   return result * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
+      // })
+      // .attr('x', (d, i) => { return d.getDay() * (this.SQUARE_LENGTH + this.SQUARE_PADDING); });
 
     // exit
-    this.dayRects
+    this.days
       .exit()
       .transition().duration(400)
       .style('opacity', 0)
       .remove();
 
 
+    
+
+
+
+
+
+
+
     // Logic for tooltips - display nouns and adjectives for each day
-    this.dayRects
+    this.days
       .on('mouseover', (d, i) => {
         var event = d3.event;
         var width = 200;
@@ -180,18 +246,15 @@ export default class Calendar extends Component {
               .style('width', width + 'px')
               .style('height', height + 'px')
               .style('left', () => {
-                return (parseInt(event.pageX - document.getElementsByClassName('calendar-svg')[0].getBoundingClientRect().left)) + 'px';
+                var leftOffset = document.getElementsByClassName('calendar-svg')[0].getBoundingClientRect().left;
+                return (event.pageX - leftOffset - width / 2) + 'px';
               })
-              .style('top', () => { // TODO: re-calibrate for svg moving around on-screen
-                // if cut off by top of screen, show tooltip below cursor
-                // else show tooltip above cursor
-                // multiplication by 1.1 adds padding to space from cursor
-                var optimal = event.pageY - document.getElementsByClassName('calendar-svg')[0].getBoundingClientRect().top;
-                if (optimal < 0) {
-                  return (event.pageY * 1.1) + 'px';
-                } else {
-                  return optimal + 'px'
-                }
+              .style('top', () => {
+                // Show tooltip above cursor
+                // Multiplication by 1.2 adds padding to space from cursor
+                var topOffset = document.getElementsByClassName('calendar-svg')[0].getBoundingClientRect().top;
+                return (event.pageY - topOffset - height * 1.2) + 'px';
+                // TODO: If tooltip cut off by top of screen, show tooltip below cursor
               })
               .html(() => {
                 var title = '<div class="tooltip-title">' + moment(d).format('MMMM D') + '</div>';
@@ -214,16 +277,102 @@ export default class Calendar extends Component {
       })
       .on('mouseout', (d, i) => {   
         this.tooltip
-          .transition().duration(500)
+          .transition().duration(100)
           .style('opacity', 0); // make disappear
       });
+
+    // Below prototype methods allow our selected square to move forward and backward of other squares
+    // http://bl.ocks.org/eesur/4e0a69d57d3bfc8a82c2
+    // https://github.com/wbkd/d3-extended
+    d3.selection.prototype.moveToFront = function() {  
+      return this.each(function(){
+        this.parentNode.appendChild(this);
+      });
+    };
+    d3.selection.prototype.moveToBack = function() {  
+      return this.each(function() { 
+        var firstChild = this.parentNode.firstChild; 
+        if (firstChild) { 
+            this.parentNode.insertBefore(this, firstChild); 
+        } 
+      });
+    };
+
+    // .on('mouseover', function(d) {
+    //   d3.select(this).moveToFront();
+    // })
+    // .on('click', function(d) {
+    //   d3.select(this).moveToBack();
+    // })
+
+    this.days
+      .on('click', clickedDate => {
+        var active = this.dayRectExpanded ? false : true; // flag to determine if rect is expanded currently or not
+        var duration = 400; // transition duration
+
+        // Expand the selected rect to the middle of the calendar
+        var focusGroup = this.days
+          .filter((d, i) => { 
+            return d === clickedDate;
+          })
+          .on('mouseover', (d, i) => {
+            d3.select(this).moveToFront();
+          })
+          .transition().duration(duration)
+          .attr('transform', d => {
+            // If we are expanding a rect, move to (1, 1) coordinates of calendar
+            var originalTranslateX = d.getDay() * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
+            var expandedTranslateX = this.SQUARE_LENGTH + this.SQUARE_PADDING;
+            var translateX = active ? expandedTranslateX : originalTranslateX;
+
+            var cellDate = moment(d);
+            var result = cellDate.week() - this.firstDate.week() + (this.firstDate.weeksInYear() * (cellDate.weekYear() - this.firstDate.weekYear()));
+            var originalY = result * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
+            var expandedY = this.SQUARE_LENGTH + this.SQUARE_PADDING;
+            var translateY = active ? expandedY : originalY;
+
+            // Multiply scale by however many times it takes to be the proportion to SVG that we desire
+            // Specifically, expand to fill up 5 days worth but 4 paddings worth of space
+            var expandedScaleX = ((this.SQUARE_LENGTH * 5 + this.SQUARE_PADDING * 4) / this.SQUARE_LENGTH);
+            var expandedScaleY = ((this.SQUARE_LENGTH * 5 + this.SQUARE_PADDING * 4) / this.SQUARE_LENGTH);
+
+            var scaleX = active ? expandedScaleX : 1;
+            var scaleY = active ? expandedScaleY : 1;
+
+            return 'translate(' + translateX + ',' + translateY + ') scale(' + scaleX + ',' + scaleY + ')';
+          });
+
+        // When you click on other squares when there is an expanded square, transition the squares back to normal
+        var focusGroup = this.days
+          .filter((d, i) => { 
+            return d !== clickedDate;
+          })
+          .on('mouseover', (d, i) => {
+            d3.select(this).moveToBack();
+          })
+          .transition().duration(duration)
+          .attr('transform', d => {
+            var translateX = d.getDay() * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
+            var cellDate = moment(d);
+            var result = cellDate.week() - this.firstDate.week() + (this.firstDate.weeksInYear() * (cellDate.weekYear() - this.firstDate.weekYear()));
+            var translateY = result * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
+
+            var scaleX = 1;
+            var scaleY = 1;
+
+            return 'translate(' + translateX + ',' + translateY + ') scale(' + scaleX + ',' + scaleY + ')';
+          });
+
+        // Toggle our flag
+        this.dayRectExpanded = active;
+      })
   }
 
-  redrawMonthLabels() {
+  // redrawMonthLabels() {
     // update
-    this.monthLabels
-      .data(this.monthLabelData, d => d.displayText)
-      .attr('x', (d, i) => { return d.monthLabelWeekIndex * (this.SQUARE_LENGTH + this.SQUARE_PADDING); });
+    // this.monthLabels
+    //   .data(this.monthLabelData, d => d.displayText)
+    //   .attr('x', (d, i) => { return d.monthLabelWeekIndex * (this.SQUARE_LENGTH + this.SQUARE_PADDING); });
 
     /** 
      * TODO:
@@ -246,7 +395,7 @@ export default class Calendar extends Component {
     //   .transition().duration(400)
     //   .style('opacity', 0)
     //   .remove();
-  }
+  // }
 
   setWidth() {
     // Set width (get size from parent div)
@@ -260,12 +409,19 @@ export default class Calendar extends Component {
      * Divide this.state.width by 'SQUARE_LENGTH' and 'SQUARE_PADDING' to get
      * how many weeks there should be with plenty of negative space left
      */
+    var numRows = 0;
+    var calendarHeight = this.SQUARE_PADDING;
+    while ((calendarHeight + this.SQUARE_LENGTH + this.SQUARE_PADDING) < this.state.height) {
+      numRows++;
+      calendarHeight += (this.SQUARE_LENGTH + this.SQUARE_PADDING);
+    }
+
     var startDate = moment().startOf('day')
-      .subtract((this.state.width / (this.SQUARE_LENGTH + 3 * this.SQUARE_PADDING)), 'week')
+      .subtract(numRows, 'week')
       .startOf('week')
       .toDate();
 
-    var now = moment().endOf('day').toDate();
+    var now = moment().endOf('week').toDate();
 
     // Generate an array of date objects within the specified range
     this.dateRange = d3.time.days(startDate, now);
@@ -299,40 +455,4 @@ export default class Calendar extends Component {
     }
     return data;
   }
-
-  // retrieveDayDictionary(date) {
-    
-  // }
-
-  // // Retrieve real data from database
-  // retrieveData() { 
-    
-  //   axios.get('/api/journal', {
-  //       params: {
-  //         date: date
-  //       }
-  //     })
-  //     .then((response) => {
-  //       var data = response.data;
-  //       // console.log(data);
-
-  //       var gratitudes = data.gratitudes ? data.gratitudes.split(',') : ['', '', ''];
-  //       var outlooks = data.outlooks ? data.outlooks.split(',') : ['', '', ''];
-  //       var affirmations = data.affirmations ? data.affirmations : '';
-  //       var amazings = data.amazings ? data.amazings.split(',') : ['', '', ''];
-  //       var reflections = data.reflections ? data.reflections.split(',') : ['', '', ''];
-
-  //       this.setState({
-  //         gratitudes,
-  //         outlooks,
-  //         affirmations,
-  //         amazings,
-  //         reflections
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
-
 }

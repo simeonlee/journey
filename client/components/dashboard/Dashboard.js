@@ -14,8 +14,8 @@ export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bodyWidth: 200,
-      bodyHeight: 200,
+      bodyWidth: 400,
+      bodyHeight: 400,
       data: {
         circlesUrl: './data/sample.json',
         wordCloudUrl: './data/wordCloudSample.js',
@@ -49,21 +49,21 @@ export default class Dashboard extends Component {
           title: 'Your cumulative composition',
           subtitle: 'Time travel to'
         },
-        budget: {
-          display: 'Budget',
-          title: 'Your emotional budget',
-          subtitle: 'Time travel to'
-        },
-        forecast: {
-          display: 'Forecast',
-          title: 'Your journey predictions',
-          subtitle: 'Time travel to'
-        },
-        visionboard: {
-          display: 'Vision Board',
-          title: 'Your journey imagery',
-          subtitle: 'Time travel to'
-        },
+        // budget: {
+        //   display: 'Budget',
+        //   title: 'Your emotional budget',
+        //   subtitle: 'Time travel to'
+        // },
+        // forecast: {
+        //   display: 'Forecast',
+        //   title: 'Your journey predictions',
+        //   subtitle: 'Time travel to'
+        // },
+        // visionboard: {
+        //   display: 'Vision Board',
+        //   title: 'Your journey imagery',
+        //   subtitle: 'Time travel to'
+        // },
       },
       currentDashboardTitle: 'Entries in the last year',
       currentDashboardSubtitle: 'Calendar settings',
@@ -117,7 +117,10 @@ export default class Dashboard extends Component {
       switch(this.state.selectedDashboardType) {
         case 'calendar':
           return (
-            <Calendar />
+            <Calendar
+              width={this.state.bodyWidth}
+              height={this.state.bodyHeight}
+            />
           );
         case 'scatterchart':
           return (
