@@ -88,7 +88,6 @@ module.exports = (() => {
       }
     })
     .spread((journal, created) => {
-      console.log(journal)
       if (!created) { 
         if (req.body.morningCount > journal.dataValues.morningCount) {
           journal.update({
@@ -320,7 +319,8 @@ module.exports = (() => {
     JournalEntry.findAll({
       where: {
         userId: userId
-      }
+      },
+      limit: parseInt(req.query.limit)
     })
     .then(entries => {
       res.send(entries)

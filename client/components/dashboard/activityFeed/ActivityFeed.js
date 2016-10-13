@@ -47,7 +47,7 @@ export default class ActivityFeed extends Component {
 
   _streak() {
     if (this.state.entries.length > 0) {
-      return (<div>Your are on a {this._checkStreak()} day streak!</div>)
+      return (<h4 className="streak-header">Your are on a {this._checkStreak()} day streak!</h4>)
     }
   }
 
