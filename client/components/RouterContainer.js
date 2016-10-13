@@ -23,7 +23,6 @@ export default class RouterContainer extends Component {
 
   render() {
     var renderNav = this.state.loggedIn ? <Nav logInOrOut={'Log In'}/> : null;
-
     return (
       <div>
         {renderNav}

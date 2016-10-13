@@ -15,8 +15,11 @@ module.exports = (() => {
   var Reflection = config.Reflection;
 
   var getJournalEntriesForDate = (req, res) => {
+    // console.log('=====================================')
+    // console.log(req.user.dataValues.userId)
+    // console.log('=====================================')
 
-    var userId = req.user.localId /* Amazon */ || req.user.userId /* Facebook */;
+    var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
     var data = {
       'date': req.query.date
     };
@@ -72,13 +75,13 @@ module.exports = (() => {
 
   var postJournalEntriesForDate = (req, res) => {
 
-    var userId = req.user.localId;
-    console.log('===================================')
-    console.log('req.body: ', req.body);
-    console.log('===================================')
-    console.log('req.user.localId: ', req.user.localId);
-    console.log('req.user.userId: ', req.user.userId);
-    console.log('===================================')
+    var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
+    // console.log('===================================')
+    // console.log('req.body: ', req.body);
+    // console.log('===================================')
+    // console.log('req.user.localId: ', req.user.localId);
+    // console.log('req.user.userId: ', req.user.userId);
+    // console.log('===================================')
     // console.log(req);
 
     Gratitude.findOrCreate({
@@ -229,31 +232,7 @@ module.exports = (() => {
         }
       })
       .then(user => {
-        var daysToBeAnalyzed = user.dataValues.daysToBeAnalyzed || null;
-        if (!daysToBeAnalyzed) {
-          var days = {}
-        } else {
-          var days = JSON.parse(daysToBeAnalyzed.toString()); // converted from buffer format to object
-        }
-
-        days[req.body.date] = true; // update the date in days object to true to signify that a date needs to be updated here
-        var buffer = Buffer.from(JSON.stringify(days));
-        User.update({
-          daysToBeAnalyzed: buffer,
-        }, {
-          where: {
-            id: userId
-          }
-        });
-      })
-
-    // Update the days to be analyzed for this day's entries
-    User.find({
-        where: {
-          id: userId
-        }
-      })
-      .then(user => {
+        console.log(user);
         var daysToBeAnalyzed = user.dataValues.daysToBeAnalyzed || null;
         if (!daysToBeAnalyzed) {
           var days = {}
@@ -274,27 +253,6 @@ module.exports = (() => {
 
     res.send('Posted entries to database!');
   };
-
-  var getUser = (req, res, next, userId) => {
-    User.find({
-      where: {
-        id: userId
-      }
-    })
-    .then(user => {
-      res.send(user)
-    })
-  }
-
-  var updateUserInfo = (req, res, next) => {
-    User.find({
-      id: req.body.userId
-    })
-    .then(user => {
-      user.updateAttributes(JSON.parse(req.body.updated))
-      .then(user => res.send(user))
-    })
-  }
 
   var getUser = (req, res, next, userId) => {
     User.find({

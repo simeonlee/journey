@@ -29,7 +29,6 @@ export default class App extends Component {
   }
 
   render() {
-    var renderNav = this.state.loggedIn ? <Nav logInOrOut={'Log In'}/> : null;
     return (
       <div>
         <Router history={browserHistory}>
