@@ -262,10 +262,22 @@ module.exports = (() => {
     })
   }
 
+  var getEntryInfo = (req, res, next) => {
+    var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
+    JournalEntry.find({
+      limit: req.body.limit,
+      order: ['datetime', 'DESC']
+    })
+    .then(entries => {
+      res.send(entries)
+    })
+  }
+
   return {
     getJournalEntriesForDate: getJournalEntriesForDate,
     postJournalEntriesForDate: postJournalEntriesForDate,
     getUser: getUser,
-    updateUserInfo: updateUserInfo
+    updateUserInfo: updateUserInfo,
+    getEntryInfo: getEntryInfo
   }
 })();

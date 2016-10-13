@@ -27,6 +27,10 @@ module.exports = (app) => {
     journal.updateUserInfo(req, res, next);
   });
   
+  app.get('/api/entries', (req, res, next) => {
+    journal.getEntryInfo(req, res, next);
+  });
+
   app.get('/api/analytics', (req, res) => {
     analytics.retrieveTextAnalysis(req, res);
   });
