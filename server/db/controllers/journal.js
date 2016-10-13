@@ -13,6 +13,7 @@ module.exports = (() => {
   var Affirmation = config.Affirmation;
   var Amazing = config.Amazing;
   var Reflection = config.Reflection;
+  var JournalEntry = config.JournalEntry;
 
   var getJournalEntriesForDate = (req, res) => {
     var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
@@ -266,7 +267,10 @@ module.exports = (() => {
     var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
     JournalEntry.find({
       limit: req.body.limit,
-      order: ['datetime', 'DESC']
+      order: ['datetime', 'DESC'],
+      where: {
+        userId: userId
+      }
     })
     .then(entries => {
       res.send(entries)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import BasicInteraction from './BasicInteraction'
+import {BasicInteraction} from './BasicInteraction'
 
 export default class ActivityFeed extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class ActivityFeed extends Component {
   componentWillMount() {
     axios.get('/api/entries', {
       params: {
-        limit: this.limit;
+        limit: this.limit
       }
     })
     .then(recent => {
