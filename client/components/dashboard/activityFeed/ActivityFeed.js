@@ -22,12 +22,12 @@ export default class ActivityFeed extends Component {
   render() {
     return (
       <div className="activity-feed">
-        <BasicInteraction />
-        <BasicInteraction />
-        <BasicInteraction />
-        <BasicInteraction />
-        <BasicInteraction />
+        
       </div>
     )
   }
 }
+
+/** 
+ * <BasicInteraction />
+ */

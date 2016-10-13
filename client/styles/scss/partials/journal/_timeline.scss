@@ -3,13 +3,14 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin: 20px;
+  margin-bottom: 20px;
 }
 
 .timeline-glyph { // in Journal.js component
   font-size: 14px;
   line-height: 14px;
   height: 14px;
+  color: white;
 }
 
 .timeline { // in Timeline.js component
@@ -17,11 +18,14 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  div.timeline-day {
-    font-size: 14px;
-    line-height: 14px;
-    height: 14px;
-    font-family: $major;
+  // div.timeline-day {
+  //   font-size: 14px;
+  //   line-height: 14px;
+  //   height: 14px;
+  //   font-family: $major;
+  // }
+  * {
+    color: white;
   }
 }
 

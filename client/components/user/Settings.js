@@ -114,21 +114,21 @@ export default class Settings extends Component {
           </select>
         </div>
         <div className="individual-setting">
-          <Button
-           className="facebook-login-button"
+          <div
+           className="journey-btn journey-btn-auth journey-btn-facebook"
            onClick={this._linkToFacebook}
           >
            Connect to Facebook
-          </Button>
-          <p>Link your account to Amazon to record your journal with the Amazon Echo!</p>
-          <Button
-           className="amazon-login-button"
+          </div>
+          <p className="amazon-bumper">Link your account to Amazon to record your journal with the Amazon Echo!</p>
+          <div
+           className="journey-btn journey-btn-auth journey-btn-amazon"
            onClick={this._linkToAmazon}
           >
            Connect to Amazon
-          </Button>
+          </div>
         </div>
-        <button onClick={this._save} type="submit" className="btn btn-primary save-changes">Save Changes</button>
+        <button onClick={this._save} type="submit" className="journey-btn journey-btn-primary save-changes">Save Changes</button>
       </div>
     )
   }
