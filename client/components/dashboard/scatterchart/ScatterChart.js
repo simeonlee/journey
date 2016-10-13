@@ -18,7 +18,6 @@ export default class Chart extends Component {
   componentWillMount() {
     axios.get('/api/entries')
     .then(entries => {
-      console.log('from database', entries.data);
       this.formatData(entries.data);
     })
   }
@@ -37,24 +36,27 @@ export default class Chart extends Component {
       }
       if (data[i].morning) {
         time = this.formatTime(data[i].morning);
-        formattedData.push({
+        formattedData.morning.push({
           day: day,
-          time: data[i]
+          time: time
         })
       }
       if (data[i].evening) {
-
+        time = this.formatTime(data[i].evening);
+        formattedData.evening.push({
+          day: day,
+          time: time
+        })
       }
     }
 
-    this.setState({data: data});
+    this.setState({data: formattedData});
   }
 
   formatTime(date) {
-    // date = Oct 13, 2016 12:42 PM
     var time = date.split(' ')[3].split(':');
-    time = time[0] + time[1]/60;
-    console.log('time', time[1]);
+    time = parseInt(time[0]) + parseInt(time[1])/60;
+    return time;
   }
 
   generateTestData() {
@@ -75,7 +77,6 @@ export default class Chart extends Component {
         time: this.generateRandomTime(12, 24)
       });
     }
-    console.log('dummy data', data);
     return data;
   }
 
@@ -92,7 +93,7 @@ export default class Chart extends Component {
   render() {
     return (
       <div className="barchart">
-        <ScatterChart width={this.state.width} height={200} margin={{ top: 20, right: 20, bottom: 10, left: 10 }}>
+        <ScatterChart width={this.state.width} height={window.innerHeight - 70} margin={{ top: 20, right: 20, bottom: 10, left: 10 }}>
           <XAxis dataKey="day" name="day" unit="" />
           <YAxis dataKey="time" name="time" unit=" o'clock" />
           <CartesianGrid strokeDasharray="3 3" />
