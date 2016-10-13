@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { Col, Grid, Row, Button, FieldGroup, Image } from 'react-bootstrap'
 import Jumbotron from 'react-bootstrap/lib/Jumbotron'
-import { LoginModal } from './LoginModal'
-import { SignUp } from './SignUp'
+import LoginModal from './access/LoginModal'
+import SignUp from './access/SignUp'
 
 export default class Home extends Component {
   constructor(props) {
@@ -59,26 +59,5 @@ export default class Home extends Component {
         <LoginModal open={this.openModal} close={this.closeModal} currentState={this.currentModalState}/>
       </div>
     )
-
-    // return (
-    //   <div>
-    //     <div id="homepage-background col-md-12">
-    //       <div className="home-top-content-container col-md-10 col-md-offset-1">
-    //         <div>
-    //           <div className="col-md-6">
-    //             <h1>Home</h1>
-    //           </div>
-    //           <div className="col-md-6">
-    //             <h1>Sign Up</h1>
-    //             <p>
-    //               It's Free!
-    //             </p>
-    //             <SignUp/>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // )
   }
 }

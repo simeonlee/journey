@@ -10,13 +10,7 @@ const clean = require('gulp-clean');
 const runSequence = require('run-sequence');
 const ngAnnotate = require('gulp-ng-annotate');
 const shell = require('gulp-shell');
-<<<<<<< f196f8bdda18012abef03f3afd981aa994185cb5
 const imagemin = require('gulp-imagemin');
-=======
-const image = require('gulp-image');
-const imagemin = require('gulp-imagemin');
-const webpack = require('gulp-webpack');
->>>>>>> modify gulp file to minify images, add image to client/images/home
 const plumber = require('gulp-plumber'); // Handle gulp.watch errors without throwing / cancelling nodemon
 
 // Live reload of css and html through 'browser-sync'

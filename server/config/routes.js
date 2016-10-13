@@ -98,11 +98,26 @@ module.exports = (app) => {
     passport.authenticate('facebook')
   );
 
+  var redirects = {
+    production: {
+      facebook: {
+        success: 'https://yourjourney.io/journal',
+        failure: 'https://yourjourney.io/'
+      },
+    },
+    development: {
+      facebook: {
+        success: 'http://localhost:3000/journal',
+        failure: 'http://localhost:3000/'
+      },
+    }
+  }
+
   // handle the callback after facebook has authenticated the user
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect: 'https://yourjourney.io/journal',
-      failureRedirect: 'https://yourjourney.io/'
+      successRedirect: redirects[process.env.NODE_ENV].facebook.success,
+      failureRedirect: redirects[process.env.NODE_ENV].facebook.failure
     })
   );
   
@@ -118,24 +133,13 @@ module.exports = (app) => {
     }
   );
 
-  // handle the callback after facebook has authenticated the user
-  app.get('/auth/amazon/callback',
-    passport.authenticate('amazon', {
-      successRedirect: 'http://localhost:3000/journal',
-      failureRedirect: 'http://localhost:3000/login'
-    })
-  );
-  
   app.post('/token', (req, res) => {
-    // console.log('REQUEST BODY =======>', req.body);
     linkAlexa(req, res);
   });
   
   app.post('/alexaPost', (req, res) => {
-    //alexa id, message, and show what prompt it's on.
     storeAlexaData(req, res)
   });
-  
 }
 
 /*

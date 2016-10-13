@@ -6,6 +6,7 @@ import Journal from './journal/Journal'
 import Dashboard from './dashboard/Dashboard'
 import Profile from './user/Profile'
 import { authenticateUser, checkIfLoggedIn } from '../utils'
+import axios from 'axios'
 
 export default class App extends Component {
 
@@ -29,9 +30,6 @@ export default class App extends Component {
 
   render() {
     var renderNav = this.state.loggedIn ? <Nav logInOrOut={'Log In'}/> : null;
-    console.log('logged in: ', this.state.loggedIn)
-    console.log(this.props.children);
-
     return (
       <div>
         <Router history={browserHistory}>
