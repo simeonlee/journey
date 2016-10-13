@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import d3 from 'd3'
 import Menu from './Menu'
 import Header from './Header'
 import Circles from './circles/Circles'
@@ -14,8 +15,8 @@ export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bodyWidth: 400,
-      bodyHeight: 400,
+      bodyWidth: window.innerWidth,
+      bodyHeight: window.innerHeight - 60,
       data: {
         circlesUrl: './data/sample.json',
         wordCloudUrl: './data/wordCloudSample.js',
@@ -82,10 +83,17 @@ export default class Dashboard extends Component {
   }
 
   componentDidMount() {
-    var dashboardBody = document.getElementsByClassName('dashboard-body')[0];
+    var dashboardBody = document.getElementsByClassName('dashboard')[0];
     var bodyWidth = dashboardBody.clientWidth;
     var bodyHeight = dashboardBody.clientHeight;
     this.setState({ bodyWidth, bodyHeight });
+
+    d3.select(window).on('resize', () => {
+      var dashboardBody = document.getElementsByClassName('dashboard')[0];
+      var bodyWidth = dashboardBody.clientWidth;
+      var bodyHeight = dashboardBody.clientHeight;
+      this.setState({ bodyWidth, bodyHeight });
+    });
   }
 
   aggregateCumulativeUserJournalData() {
@@ -155,14 +163,7 @@ export default class Dashboard extends Component {
 
     return (
       <div className="dashboard">
-        <Menu 
-          selectDashboardType={this.selectDashboardType.bind(this)}
-          selectedDashboardType={this.state.selectedDashboardType}
-          dashboardTypes={this.state.dashboardTypes}
-        />
-        <div className="dashboard-body">
-          {dashboard}
-        </div>
+        {dashboard}
       </div>
 
     )
@@ -170,6 +171,13 @@ export default class Dashboard extends Component {
 }
 
 /*
+<div className="dashboard-body">
+</div>
+<Menu 
+  selectDashboardType={this.selectDashboardType.bind(this)}
+  selectedDashboardType={this.state.selectedDashboardType}
+  dashboardTypes={this.state.dashboardTypes}
+/>
 <Header 
   title={this.state.currentDashboardTitle}
   subtitle={this.state.currentDashboardSubtitle}
