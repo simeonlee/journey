@@ -6,16 +6,22 @@ import moment from 'moment'
 export default class ActivityFeed extends Component {
   constructor(props) {
     super(props);
-    this.limit = 5;
+    this.limit = 0;
     this.state = {
       entries: []
     }
     this._populateInteractions = this._populateInteractions.bind(this)
     this._streak = this._streak.bind(this)
     this._checkStreak = this._checkStreak.bind(this)
+    this._moreHistory = this._moreHistory.bind(this)
   }
 
   componentWillMount() {
+    this._moreHistory()
+  }
+
+  _moreHistory() {
+    this.limit += 5;
     axios.get('/api/entries', {
       params: {
         limit: this.limit
@@ -24,8 +30,7 @@ export default class ActivityFeed extends Component {
     .then(entries => {
       this.setState({
         entries: entries.data.reverse()
-      })
-      console.log(entries);
+      });
     })
   }
 
@@ -64,7 +69,7 @@ export default class ActivityFeed extends Component {
       <div className="activity-feed">
         {this._streak()}
         {this._populateInteractions()}
-        }
+        <button onClick={() => this._moreHistory()} type="button" className="btn btn-default center-block">Show More</button>
       </div>
     )
   }
