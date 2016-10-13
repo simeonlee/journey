@@ -31,9 +31,9 @@ export default class Home extends Component {
     return (
       <div>
         <div className="home-main-image home-banner">
-          <Button onClick={this.openModal} className="home-login-button" bsSize="small">Log In</Button>
+          <Button onClick={this.openModal} className="journey-btn journey-btn-secondary journey-btn-sm home-login-button" bsSize="small">Log In</Button>
           <h1 className="home-title">Journey</h1>
-          <p className="home-slogan">Uncage the mind.</p>
+          <p className="home-slogan">Uncage the mind</p>
           <div className="home-signup-form">
             <h1 className="home-section-title">Sign up</h1>
             <SignUp className="col-md-4 col-md-offset-3"/>

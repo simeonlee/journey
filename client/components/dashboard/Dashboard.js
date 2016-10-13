@@ -17,28 +17,29 @@ export default class Dashboard extends Component {
     this.state = {
       bodyWidth: window.innerWidth,
       bodyHeight: window.innerHeight - 60,
+      startDelay: 20, // for pensieve
       data: {
-        circlesUrl: './data/sample.json',
+        circlesUrl: './data/sample.json', // for pensieve
         wordCloudUrl: './data/wordCloudSample.js',
-        elementDelay: 10,
-        cumulativeUserJournalData: {}
+        elementDelay: 10, // for pensieve
+        cumulativeUserJournalData: {} // for pensieve and composition
       },
-      selectedDashboardType: 'calendar',
+      selectedDashboardType: 'activityfeed',
       dashboardTypes: {
-        calendar: {
-          display: 'Calendar',
-          title: 'Entries in the last year',
-          subtitle: 'Calendar settings'
+        activityfeed: {
+          display: 'History',
+          title: 'Steps taken in your journey',
+          subtitle: 'Time travel to'
         },
         scatterchart: {
           display: 'Hours',
           title: 'Interactions by time',
           subtitle: 'Time travel to'
         },
-        activityfeed: {
-          display: 'History',
-          title: 'Steps taken in your journey',
-          subtitle: 'Time travel to'
+        calendar: {
+          display: 'Calendar',
+          title: 'Entries in the last year',
+          subtitle: 'Calendar settings'
         },
         // pensieve: {
         //   display: 'Pensieve',
@@ -66,9 +67,8 @@ export default class Dashboard extends Component {
         //   subtitle: 'Time travel to'
         // },
       },
-      currentDashboardTitle: 'Entries in the last year',
-      currentDashboardSubtitle: 'Calendar settings',
-      startDelay: 20
+      // currentDashboardTitle: 'Entries in the last year',
+      // currentDashboardSubtitle: 'Calendar settings',
     };
 
     // Send request to server to run some analytics on user's journal for later retrieval

@@ -91,7 +91,7 @@ export default class Settings extends Component {
   }
 
   render() {
-    this._initializeSwitches()
+    this._initializeSwitches();
     return (
       <div className="col-md-12 journal-content">
         <h4>Hello, {this.state.firstName}!</h4>

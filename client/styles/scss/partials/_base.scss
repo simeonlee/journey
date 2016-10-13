@@ -11,6 +11,7 @@ $azure: azure;
 $nav-height: 60px;
 $gossip: #87D37C; // light, pale green
 $jade: #00B16A; // primary green, looks good against darkLynch background
+$cinnabar: #E74C3C; // secondary red
 
 body {
   background-color: $darkLynch;
@@ -47,23 +48,14 @@ ul {
   list-style-type: none;
 }
 
-.flex {
-  width: 100%;
-  height: 100%;
-  display: flex;  
+.transparent {
+  opacity: 0.9;
 }
 
-.flex-center {
-  align-items: center;
-  justify-content: center;
+.white-background {
+  background-color: #FFFFFF !important;
 }
 
-.flex-left {
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.flex-right {
-  align-items: center;
-  justify-content: flex-end;
+.haze-background {
+  background-color: $haze !important;
 }

@@ -14,7 +14,7 @@ export default class PersonalInfo extends Component {
       birthday: {edit: false, info: ''},
       gender: {edit: false, info: ''},
     }
-    this._beingEditted = this._beingEditted.bind(this)
+    this._beingEdited = this._beingEdited.bind(this)
     this._edit = this._edit.bind(this)
     this._editOrSave = this._editOrSave.bind(this)
     this._saveInfo = this._saveInfo.bind(this)
@@ -32,13 +32,13 @@ export default class PersonalInfo extends Component {
     }
   }
 
-  _beingEditted(current, name) {
+  _beingEdited(current, name) {
     if (current.edit) {
       return (
-        <input type="text" className="col-md-11" id={name} placeholder={current.info}/>
+        <input type="text" className="personal-info-entry col-md-11" id={name} placeholder={current.info}/>
       )
     } else {
-      return (<p className="col-md-11">{current.info}</p>)
+      return (<p className="personal-info-entry col-md-11">{current.info}</p>)
     }
   }
 
@@ -54,9 +54,9 @@ export default class PersonalInfo extends Component {
 
   _editOrSave(passed) {
     if (!this.state[passed].edit) {
-      return (<div className="col-md-1"><button onClick={() => this._edit(passed)} type="button" className="btn btn-default btn-sm pull-right">Edit</button></div>)
+      return (<div className="col-md-1"><button onClick={() => this._edit(passed)} type="button" className="journey-btn journey-btn-secondary journey-btn-sm pull-right">Edit</button></div>)
     } else {
-      return <div className="col-md-1"><button onClick={() => this._saveInfo(passed)} type="button" className="btn btn-default btn-sm pull-right">Save</button></div>
+      return <div className="col-md-1"><button onClick={() => this._saveInfo(passed)} type="button" className="journey-btn journey-btn-primary journey-btn-sm pull-right">Save</button></div>
     }
   }
 
@@ -80,7 +80,7 @@ export default class PersonalInfo extends Component {
   render() {
     return (
       <div className="col-md-12 journal-content">
-        <h4>Hello, {this.state.username.info}</h4>
+        <h4>Hello, {this.state.firstName.info}!</h4>
         <div className="individual-info col-md-12">
           <h5>Name</h5>
           {this.state.firstName.info} {this.state.lastName.info}
@@ -88,26 +88,34 @@ export default class PersonalInfo extends Component {
         <hr/>
         <div className="individual-info col-md-12">
           <h5 className="personal-headers col-md-11">Email</h5>
-          {this._beingEditted(this.state.email, 'email')}
-          {this._editOrSave('email')}
+          <div className="flex flex-between">
+            {this._beingEdited(this.state.email, 'email')}
+            {this._editOrSave('email')}
+          </div>
         </div>
         <hr/>
         <div className="individual-info col-md-12">
           <h5 className="personal-headers col-md-11">Phone</h5>
-          {this._beingEditted(this.state.phone, 'phone')}
-          {this._editOrSave('phone')}
+          <div className="flex flex-between">
+            {this._beingEdited(this.state.phone, 'phone')}
+            {this._editOrSave('phone')}
+          </div>
         </div>
         <hr/>
         <div className="individual-info col-md-12">
           <h5 className="personal-headers col-md-11">Birthday</h5>
-          {this._beingEditted(this.state.birthday, 'birthday')}
-          {this._editOrSave('birthday')}
+          <div className="flex flex-between">
+            {this._beingEdited(this.state.birthday, 'birthday')}
+            {this._editOrSave('birthday')}
+          </div>
         </div>
         <hr/>
         <div className="individual-info col-md-12">
           <h5 className="personal-headers col-md-11">Gender</h5>
-          {this._beingEditted(this.state.gender)}
-          {this._editOrSave('gender')}
+          <div className="flex flex-between">
+            {this._beingEdited(this.state.gender)}
+            {this._editOrSave('gender')}
+          </div>
         </div>
       </div>
     )
