@@ -586,7 +586,6 @@ export default class Calendar extends Component {
 
     // Generate an array of date objects within the specified range
     this.dateRange = d3.time.days(startDate, now);
-    console.log(this.dateRange);
 
     this.firstDate = moment(this.dateRange[0]);
 

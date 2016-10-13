@@ -39,7 +39,6 @@ export default class ActivityFeed extends Component {
     var count = 0;
     var counting = true;
     this.state.entries.reverse().forEach(entry => {
-      console.log(current.format('LLLL'), '<<>>', moment(entry.datetime).startOf('day').format('LLLL'))
       if (counting === true && current.format('LLLL') === moment(entry.datetime).startOf('day').format('LLLL')) {
         count++
       } else {
