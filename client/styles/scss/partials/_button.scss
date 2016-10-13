@@ -7,21 +7,48 @@
   color: white;
   border: 0;
   opacity: 0.9;
-  width: 200px;
+  width: 200px; // default
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 7px 0;
   border-radius: 4px;
   font-weight: 200;
-  &:hover {
+  font-size: 14px;
+  &:link, &:hover, &:active, &:visited {
     opacity: 1.0;
-    color: white;
-  }  
+    color: #fff;
+  }
+}
+
+.journey-btn-sm {
+  width: 100px;
+}
+
+.journey-btn-mid {
+  width: 150px;
+}
+
+.journey-btn-lg {
+  width: 200px;
+}
+
+.journey-btn-xl {
+  width: 300px;
 }
 
 .journey-btn-primary {
   background-color: $jade;
+  &:link, &:hover, &:active, &:visited {
+    background-color: $jade;
+  }
+}
+
+.journey-btn-secondary {
+  background-color: $cinnabar;
+  &:link, &:hover, &:active, &:visited {
+    background-color: $cinnabar;
+  }
 }
 
 .journey-btn-auth {
@@ -45,6 +72,24 @@
   align-items: center;
   flex-direction: column;
 }
+
+.individual-setting > select {
+  height: 34px;
+  color: black;
+  font-size: 14px;
+  border: 0px;
+  margin: 0 5px;
+}
+
+// button.close-modal {
+//   padding: 3px;
+//   font-size: 12px;
+//   color: $haze;
+//   border-color: $haze;
+//   &:hover {
+//     color: $lynch;
+//   }
+// }
 
 // a.login-button {
 //   -webkit-appearance: button;

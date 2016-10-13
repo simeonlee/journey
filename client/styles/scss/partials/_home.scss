@@ -1,0 +1,90 @@
+.home-main-image {
+  box-shadow: inset 0 0 10em 20em rgba(255,255,255,.1);
+}
+
+.home-top-content-container {
+  background-color: lightgray;
+}
+
+div.home-jumbotron.jumbotron {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  &:nth-child(odd) {
+    background-color: $midLynch
+  }
+}
+
+.home-banner {
+  height: 100vh;
+  min-height: 605px;
+  background-image: url("../../images/home/homepage1.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.home-login-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.home-title {
+  margin-top: 0;
+  margin-bottom: 5px;
+  padding-top: 40px;
+  text-align: center;
+  color: $darkLynch;
+  font-size: 70px;
+  font-family: $major, serif;
+  letter-spacing: 1.5px !important;
+}
+
+.home-slogan {
+  margin-bottom: 40px;
+  font-size: 25px;
+  font-family: $minor, serif;
+  color: $midLynch;
+  text-align: center;
+}
+
+.home-signup-form {
+  max-width: 350px;
+  margin: 0 auto;
+  padding: 10px 25px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 10em 5em rgba(0,0,0,.2);
+}
+
+.home-section-title {
+  font-family: $minor, serif;
+  color: $porcelain;
+  margin-bottom: 17px;
+}
+
+.jumbo-banner {
+  background-color: transparent !important;
+}
+
+.home-jumbotron {
+  margin: 1px 0 !important;
+  color: $silver;
+}
+
+.jumbo-right-text {
+  text-align: right;
+  margin-right: 8.33333333%;
+}
+
+.jumbo-left-text {
+  display: block !important;
+  margin-top: 0;
+  height: 150px;
+}
+
+.jumbo-first {
+  margin-top: -20px !important;
+}
+
+label {
+  color: $midLynch;
+}

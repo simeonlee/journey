@@ -23,8 +23,8 @@ export class LoginForm extends Component {
         </FormGroup>
 
         <FormGroup>
-          <Col sm={10}>
-            <Button type="submit" className="col-sm-offset-10 local-login-button">
+          <Col className="flex flex-center" sm={10}>
+            <Button type="submit" className="journey-btn journey-btn-primary journey-btn-sm">
               Log In
             </Button>
           </Col>

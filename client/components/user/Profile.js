@@ -62,8 +62,8 @@ export default class Profile extends Component {
         </h2>
         <div>
           <ul className="ul-profile col-md-3">
-            <li onClick={() => {this._onClick('settings')}} className="profile-list"><h3 className="profile-subheader">Settings</h3></li>
-            <li onClick={() => {this._onClick('personal')}} className="profile-list"><h3 className="profile-subheader">Personal Info</h3></li>
+            <li onClick={() => {this._onClick('settings')}} className="profile-selection"><h3 className="profile-subheader">Settings</h3></li>
+            <li onClick={() => {this._onClick('personal')}} className="profile-selection"><h3 className="profile-subheader">Personal Info</h3></li>
           </ul>
         </div>
         <div className="col-md-9">

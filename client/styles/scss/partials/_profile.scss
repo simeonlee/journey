@@ -22,5 +22,21 @@
 }
 
 .personal-info {
-  width: 90%;
+  width: 80%;
+}
+
+.profile-selection {
+  cursor: pointer;
+}
+
+.personal-info-entry {
+  color: black;
+  background-color: rgba(255, 255, 255, 1.0);
+  width: 50%;
+  height: 30px;
+  border-radius: 4px;
+  border: 0px;
+  font-size: 12px;
+  padding: 7px;
+  margin: 0;
 }
