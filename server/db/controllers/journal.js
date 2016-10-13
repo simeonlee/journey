@@ -317,14 +317,12 @@ module.exports = (() => {
 
   var getEntryInfo = (req, res, next) => {
     var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
-    console.log(userId)
-    JournalEntry.find({
+    JournalEntry.findAll({
       where: {
         userId: userId
       }
     })
     .then(entries => {
-      console.log(entries)
       res.send(entries)
     })
   }
