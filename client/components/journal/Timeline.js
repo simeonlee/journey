@@ -13,15 +13,21 @@ const Timeline = (props) => {
     days.push(day);
   });
 
+  const weekdays = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 
   return (
     <div className="timeline">
       {days.map((day) => (
-        <div
-          className={'timeline-day ' + day.toISOString()}
-          key={day.toISOString()}
-          onClick={props.onDateClick}
-        >{day.format('M[/]D').toString()}</div>
+        <div className="timeline-marker" key={day.toISOString()}>
+          <div
+            className={'timeline-weekday ' + day.toISOString()}
+            onClick={props.onDateClick}
+          >{weekdays[day.weekday()]}</div>
+          <div
+            className={'timeline-date ' + day.toISOString()}
+            onClick={props.onDateClick}
+          >{day.format('M[/]D').toString()}</div>
+        </div>
       ))}
     </div>
   )

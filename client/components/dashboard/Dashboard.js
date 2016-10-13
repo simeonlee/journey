@@ -83,13 +83,13 @@ export default class Dashboard extends Component {
   }
 
   componentDidMount() {
-    var dashboardBody = document.getElementsByClassName('dashboard')[0];
+    var dashboardBody = document.getElementsByClassName('dashboard-body')[0];
     var bodyWidth = dashboardBody.clientWidth;
     var bodyHeight = dashboardBody.clientHeight;
     this.setState({ bodyWidth, bodyHeight });
 
     d3.select(window).on('resize', () => {
-      var dashboardBody = document.getElementsByClassName('dashboard')[0];
+      var dashboardBody = document.getElementsByClassName('dashboard-body')[0];
       var bodyWidth = dashboardBody.clientWidth;
       var bodyHeight = dashboardBody.clientHeight;
       this.setState({ bodyWidth, bodyHeight });
@@ -163,21 +163,20 @@ export default class Dashboard extends Component {
 
     return (
       <div className="dashboard">
-        {dashboard}
+        <Menu 
+          selectDashboardType={this.selectDashboardType.bind(this)}
+          selectedDashboardType={this.state.selectedDashboardType}
+          dashboardTypes={this.state.dashboardTypes}
+        />
+        <div className="dashboard-body">
+          {dashboard}
+        </div>
       </div>
-
     )
   }
 }
 
 /*
-<div className="dashboard-body">
-</div>
-<Menu 
-  selectDashboardType={this.selectDashboardType.bind(this)}
-  selectedDashboardType={this.state.selectedDashboardType}
-  dashboardTypes={this.state.dashboardTypes}
-/>
 <Header 
   title={this.state.currentDashboardTitle}
   subtitle={this.state.currentDashboardSubtitle}

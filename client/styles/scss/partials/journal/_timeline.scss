@@ -1,5 +1,5 @@
 .journal-timeline { // in Journal.js component
-  width: 80%;
+  width: 60%;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -29,6 +29,15 @@
   cursor: pointer;
 }
 
-.timeline-day { // in Timeline.js file
+.timeline-marker { // in Timeline.js file
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.timeline-weekday {
+  font-size: 12px;
+  font-family: $major;
 }

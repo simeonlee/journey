@@ -100,9 +100,15 @@ export default class Page extends Component {
   }
 
   render() {
+    const weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     return (
       <div className="page">
-        <div className="page-date">{moment(this.props.focusDate).format('MMMM D[,] YYYY').toString()}</div>
+        <div className="page-head">
+          <div className="page-date">
+            {moment(this.props.focusDate).format('MMMM D[,] YYYY')}
+            <span className="page-weekday">{weekdays[moment(this.props.focusDate).weekday()]}</span>
+          </div>
+        </div>
         <div className="page-section gratitudes">
           <div className="page-title">Gratitudes</div>
           <div className="page-subtitle">List up to three things in your recent life that you are grateful for</div>
@@ -142,7 +148,7 @@ export default class Page extends Component {
             </div>
           </form>
         </div>
-        <hr/>
+        {/*<hr/>*/}
         <div className="page-section outlooks">
           <div className="page-title">Outlooks</div>
           <div className="page-subtitle">What occurrences or events would make today great? Try to think of up to three</div>
@@ -182,7 +188,7 @@ export default class Page extends Component {
             </div>
           </form>
         </div>
-        <hr/>
+        {/*<hr/>*/}
         <div className="page-section affirmations">
           <div className="page-title">Affirmations</div>
           <div className="page-subtitle">What are you? How do you perceive yourself? List as many traits as you can think of (separated by commas)</div>
@@ -199,7 +205,7 @@ export default class Page extends Component {
             </div>
           </form>
         </div>
-        <hr/>
+        {/*<hr/>*/}
         <div className="page-section amazings">
           <div className="page-title">Amazings</div>
           <div className="page-subtitle">What happened today that made the day amazing? Try to write down up to three</div>
@@ -239,7 +245,7 @@ export default class Page extends Component {
             </div>
           </form>
         </div>
-        <hr/>
+        {/*<hr/>*/}
         <div className="page-section reflections">
           <div className="page-title">Reflections</div>
           <div className="page-subtitle">What could you have done to make today better?</div>

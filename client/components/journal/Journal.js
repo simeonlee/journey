@@ -5,6 +5,7 @@ import Page from './Page'
 import Timeline from './Timeline'
 import moment from 'moment' // useful for calculating and manipulating dates
 import 'moment-range' // adds moment.range(start, end) functionality to moment library
+import Calendar from '../dashboard/calendar/Calendar'
 
 export default class Journal extends Component {
   constructor(props) {
@@ -59,9 +60,19 @@ export default class Journal extends Component {
           />
         </div>
         <div className="journal-page">
+          <div id="viewport"></div>
+          {/*<Page
+            className="page-left"
+            focusDate={moment(this.state.focusDate).subtract(1,'day')}
+          />*/}
           <Page
+            className="page-center"
             focusDate={this.state.focusDate}
           />
+          {/*<Page
+            className="page-right"
+            focusDate={moment(this.state.focusDate).add(1,'day')}
+          />*/}
         </div>
       </div>
     )

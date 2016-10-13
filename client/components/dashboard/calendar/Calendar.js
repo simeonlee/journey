@@ -36,22 +36,26 @@ export default class Calendar extends Component {
   render() {
     var svgStyle = {
       padding: this.SQUARE_PADDING + 'px',
+      // position: 'absolute',
+      // top: '60px',
+      // left: 0,
     };
     
     return (
       <div className="calendar">
         <svg
           className="calendar-svg"
-          // preserveAspectRatio="xMidYMid meet"
+          preserveAspectRatio="xMidYMax meet"
           // preserveAspectRatio="none"
-          // viewBox="0 0 750 750" // x, y, width, height
+          viewBox={'0 0 ' + this.state.width + ' ' + this.state.height} // x, y, width, height
           width={this.state.width}
           height={this.state.height}
           style={svgStyle}
         >
           <g
             className="calendar-group"
-            transform={'translate(' + this.state.width + ',' + -60 + ')'}
+            // preserveAspectRatio="xMinYMax meet"
+            // transform={'translate(' + 0 + ',' + 60 + ')'}
           ></g>
         </svg>
       </div>
@@ -140,10 +144,16 @@ export default class Calendar extends Component {
         .transition().duration(400)
         .style('opacity', 1)
         .attr('transform', d => {
-          var x = (d.getDay() - 7) * (this.SQUARE_LENGTH + this.SQUARE_PADDING); // .getDay() returns day of week 0 - 6... subtract 7 to get in quadrant II around origin (0,0)
+          var x = d.getDay() * (this.SQUARE_LENGTH + this.SQUARE_PADDING); // .getDay() returns day of week 0 - 6... subtract 7 to get in quadrant II around origin (0,0)
+          // // var x = (d.getDay() - 7) * (this.SQUARE_LENGTH + this.SQUARE_PADDING); // .getDay() returns day of week 0 - 6... subtract 7 to get in quadrant II around origin (0,0)
+          // var cellDate = moment(d);
+          // // var result = cellDate.week() - this.firstDate.week() + (this.firstDate.weeksInYear() * (cellDate.weekYear() - this.firstDate.weekYear()));
+          // var result = this.firstDate.week() - cellDate.week() + (this.firstDate.weeksInYear() * (this.firstDate.weekYear() - cellDate.weekYear()));
+          // // var y = -result * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
+          // var y = result * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
           var cellDate = moment(d);
           var result = cellDate.week() - this.firstDate.week() + (this.firstDate.weeksInYear() * (cellDate.weekYear() - this.firstDate.weekYear()));
-          var y = -result * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
+          var y = result * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
           return 'translate(' + x + ',' + y + ')';
         });
 
@@ -472,17 +482,9 @@ export default class Calendar extends Component {
           .attr('transform', d => {
 
 
-            // var x = (d.getDay() - 7) * (this.SQUARE_LENGTH + this.SQUARE_PADDING); // .getDay() returns day of week 0 - 6... subtract 7 to get in quadrant II around origin (0,0)
-            var cellDate = moment(d);
-            var result = cellDate.week() - this.firstDate.week() + (this.firstDate.weeksInYear() * (cellDate.weekYear() - this.firstDate.weekYear()));
-            var y = -result * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
-            return 'translate(' + x + ',' + y + ')';
-
-
-
             
             // If we are expanding a rect, move to (1, 1) coordinates of calendar
-            var originalTranslateX = (d.getDay() - 7) * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
+            var originalTranslateX = d.getDay() * (this.SQUARE_LENGTH + this.SQUARE_PADDING);
             var expandedTranslateX = this.SQUARE_LENGTH + this.SQUARE_PADDING;
             var translateX = active ? expandedTranslateX : originalTranslateX;
 
