@@ -6,7 +6,6 @@ export class BasicInteraction extends Component {
     super(props);
   }
   render() {
-    console.log(this.props)
     return (
       <div className="basic-interaction">
         <div className="interaction-symbol"></div>
