@@ -21,6 +21,18 @@ export default class Settings extends Component {
   }
 
   componentDidMount() {
+    $('#text-switch').on('switchChange.bootstrapSwitch', (event, state) => {
+      this.setState({
+        wantsTexts: state
+      })
+      this._save();
+    })
+    $('#email-switch').on('switchChange.bootstrapSwitch', (event, state) => {
+      this.setState({
+        wantsEmails: state
+      })
+      this._save();
+    })
     for (var key in this.props.info) {
       if (key in this.state) {
         var obj = {}
@@ -30,21 +42,6 @@ export default class Settings extends Component {
     }
     this._initializeSwitches()
   }
-
-  componentWillMount() {
-    $('#text-switch').on('switchChange.bootstrapSwitch', (event, state) => {
-      this.setState({
-        wantsTexts: state
-      })
-    })
-    $('#email-switch').on('switchChange.bootstrapSwitch', (event, state) => {
-      this.setState({
-        wantsEmails: state
-      })
-    })
-  }
-
-
 
   _linkToAmazon() {
     axios.get('/linkToAmazon')
@@ -117,18 +114,18 @@ export default class Settings extends Component {
           </select>
         </div>
         <div className="individual-setting">
+          <Button
+           className="facebook-login-button"
+           onClick={this._linkToFacebook}
+          >
+           Connect to Facebook
+          </Button>
           <p>Link your account to Amazon to record your journal with the Amazon Echo!</p>
           <Button
            className="amazon-login-button"
            onClick={this._linkToAmazon}
           >
            Connect to Amazon
-          </Button>
-          <Button
-           className="facebook-login-button"
-           onClick={this._linkToFacebook}
-          >
-           Connect to Facebook
           </Button>
         </div>
         <button onClick={this._save} type="submit" className="btn btn-primary save-changes">Save Changes</button>

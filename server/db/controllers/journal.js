@@ -15,10 +15,6 @@ module.exports = (() => {
   var Reflection = config.Reflection;
 
   var getJournalEntriesForDate = (req, res) => {
-    // console.log('=====================================')
-    // console.log(req.user.dataValues.userId)
-    // console.log('=====================================')
-
     var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
     var data = {
       'date': req.query.date
@@ -76,14 +72,6 @@ module.exports = (() => {
   var postJournalEntriesForDate = (req, res) => {
 
     var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
-    // console.log('===================================')
-    // console.log('req.body: ', req.body);
-    // console.log('===================================')
-    // console.log('req.user.localId: ', req.user.localId);
-    // console.log('req.user.userId: ', req.user.userId);
-    // console.log('===================================')
-    // console.log(req);
-
     Gratitude.findOrCreate({
         where: {
           datetime: req.body.date,
@@ -232,7 +220,6 @@ module.exports = (() => {
         }
       })
       .then(user => {
-        console.log(user);
         var daysToBeAnalyzed = user.dataValues.daysToBeAnalyzed || null;
         if (!daysToBeAnalyzed) {
           var days = {}

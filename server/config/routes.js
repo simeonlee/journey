@@ -11,22 +11,20 @@ module.exports = (app) => {
     journal.getJournalEntriesForDate(req, res); // get journal entries for a particular date
   });
 
-  app.get('/api/journal/:userId/:month/:day/:year', (req, res, next) => {
-    controllers
-      .UserController
-      .getEntriesOnDate( req, res, next, req.params.userId, req.params.month, req.params.day, req.params.year);
-  });
-
   app.post('/api/journal', (req, res) => {
     journal.postJournalEntriesForDate(req, res); // post journal entries for a particular date
   });
 
+  app.get('/api/journal/:userId/:month/:day/:year', (req, res, next) => {
+    journal.getEntriesOnDate( req, res, next, req.params.userId, req.params.month, req.params.day, req.params.year);
+  });
+
   app.get('/api/profile/:userId', (req, res, next) => {
-    controllers.UserController.getUser(req, res, next, req.params.userId);
+    journal.getUser(req, res, next, req.params.userId);
   });
 
   app.post('/api/profile', (req, res, next) => {
-    controllers.UserController.updateUserInfo(req, res, next);
+    journal.updateUserInfo(req, res, next);
   });
   
   app.get('/api/analytics', (req, res) => {

@@ -36,7 +36,7 @@ export default class App extends Component {
             <IndexRoute component={Home}/>
             <Route path="/journal" component={Journal} onEnter={authenticateUser}/>
             <Route path="/dashboard" component={Dashboard} onEnter={authenticateUser}/>
-            <Route path="/profile" component={Profile}/>
+            <Route path="/profile" component={Profile} onEnter={authenticateUser}/>
           </Route>
         </Router>
       </div>

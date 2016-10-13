@@ -33,7 +33,6 @@ export default class PersonalInfo extends Component {
   }
 
   _beingEditted(current, name) {
-    console.log(current.edit)
     if (current.edit) {
       return (
         <input type="text" className="col-md-11" id={name} placeholder={current.info}/>
@@ -51,7 +50,6 @@ export default class PersonalInfo extends Component {
     }
     obj[passed] = item
     this.setState(obj)
-    console.log(obj)
   }
 
   _editOrSave(passed) {
@@ -63,7 +61,6 @@ export default class PersonalInfo extends Component {
   }
 
   _saveInfo(passed) {
-    console.log('saving!')
     var val = document.getElementById(passed).value
     var obj = {}
     var item = {
@@ -78,7 +75,6 @@ export default class PersonalInfo extends Component {
     axios.post('/api/profile', {
       updated: JSON.stringify(sendObj)
     })
-    .then(user => console.log(user))
   }
 
   render() {

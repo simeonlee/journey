@@ -213,7 +213,6 @@ module.exports = (() => {
   }
 
   var linkAlexa = (req, res) => {
-    // console.log(req.body);
     User.findOne({where: { alexaID: req.body.userId }})
       .then((user) => {
 
@@ -235,7 +234,6 @@ module.exports = (() => {
           });
         } else {
           //if a user is already linked to alexa, then just send back a 200.
-          console.log('NOT UPDATING USER W/ ALEXA ID')
           res.status(200).send();
         }
       });
@@ -262,9 +260,6 @@ module.exports = (() => {
 
     User.findOne({where: { alexaID: req.body.userId }})
       .then((user) => {
-        console.log('----------------')
-        console.log(user.id);
-        console.log('----------------')
         var Entry = req.body.entryType === 'morning' ? morningEntryMap[req.body.prompt] : eveningEntryMap[req.body.prompt];
         Entry.create({
           entry: req.body.text,
