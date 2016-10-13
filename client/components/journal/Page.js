@@ -82,14 +82,26 @@ export default class Page extends Component {
 
   updateEntriesInDatabase() {
     // Take any entries from user and update state in database
+    var morning = Array.prototype.concat(this.state.gratitudes, this.state.outlooks)
+    var evening = Array.prototype.concat(this.state.affirmations, this.state.amazings, this.state.reflections)
+    var morningCount = 0
+    var eveningCount = 0
+    morning.forEach(item => { if (item) morningCount++})
+    evening.forEach(item => { if (item) eveningCount++})
+    var count = morningCount + eveningCount
+
     axios.post('/api/journal', {
-        date: this.props.focusDate,
+        date: moment(this.props.focusDate).format('lll'),
         interface: 'web',
         gratitudes: this.state.gratitudes.join(),
         outlooks: this.state.outlooks.join(),
         affirmations: this.state.affirmations,
         amazings: this.state.amazings.join(),
-        reflections: this.state.reflections.join()
+        reflections: this.state.reflections.join(),
+        morningCount: morningCount,
+        eveningCount: eveningCount,
+        morning: morningCount === 0 ? null : moment().format('lll'),
+        evening: eveningCount === 0 ? null : moment().format('lll')
       })
       .then((response) => {
         // console.log(response);

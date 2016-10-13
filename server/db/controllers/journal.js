@@ -72,6 +72,58 @@ module.exports = (() => {
 
   var postJournalEntriesForDate = (req, res) => {
 
+    JournalEntry.findOrCreate({
+      where: {
+        datetime: req.body.date,
+        userId: userId
+      },
+      defaults: {
+        datetime: req.body.date,
+        userId: userId,
+        morningCount: req.body.morningCount,
+        morning: req.body.morning,
+        eveningCount: req.body.eveningCount,
+        evening: req.body.evening
+      }
+    })
+    .spread((journal, created) => {
+      console.log(journal[0])
+      if (!created) { 
+        if (req.body.morningCount > journal[0].dataValues.morningCount) {
+          journal[0].update({
+            morningCount: req.body.morningCount,
+            morning: req.body.morning
+          })
+          // .then(() => {
+          //   if (req.body.morning > journal[0].dataValues.morning || journal[0].dataValues.morning === null) {
+          //     journal[0].update({
+      
+          //     })
+          //   }
+          // })
+          .catch(err => {
+            console.log(err)
+          })
+        }
+        if (req.body.eveningCount > journal[0].dataValues.eveningCount) {
+          journal[0].update({
+            eveningCount: req.body.eveningCount,
+            evening: req.body.evening
+          })
+          // .then(() => {
+          //   if (req.body.evening > journal[0].dataValues.evening || journal[0].dataValues.evening === null) {
+          //     journal[0].update({
+                
+          //     })
+          //   }
+          // })
+          .catch(err => {
+            console.log(err)
+          })
+        }
+      }
+    })
+
     var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
     Gratitude.findOrCreate({
         where: {
@@ -264,15 +316,16 @@ module.exports = (() => {
   }
 
   var getEntryInfo = (req, res, next) => {
-    var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
+    var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
+    console.log(userId)
     JournalEntry.find({
       limit: req.body.limit,
-      order: ['datetime', 'DESC'],
       where: {
         userId: userId
       }
     })
     .then(entries => {
+      console.log(entries)
       res.send(entries)
     })
   }
