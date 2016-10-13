@@ -1,6 +1,6 @@
 'use strict';
 
-  var request = require('request');
+var request = require('request');
 
 // --------------- Helpers that build all of the responses -----------------------
 
@@ -50,12 +50,7 @@ function journal (intent, session, callback) {
   let shouldEndSession = false;
   var userId = session.user.userId.slice(-207);
 
-  var amznProfileURL = 'https://api.amazon.com/user/profile?access_token=';
-
-  amznProfileURL += session.user.accessToken;
-
-
-  if (!sessionAttributes.step && sessionAttributes.reprompt) {
+  if (!sessionAttributes.type) {
     if (intent.name === 'MorningIntent') {
       sessionAttributes = {type: 'morning', step: 1};
       speechOutput = 'Let\'s record three things you\'re grateful for. What\'s the first thing?';
@@ -69,65 +64,97 @@ function journal (intent, session, callback) {
     console.log(sessionAttributes);
     callback(sessionAttributes, buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
   } else {
-    console.log('USER SAID ' + intent.slots.entry.value);
-    if (sessionAttributes.type === 'morning') {
-      if (sessionAttributes.step === 1) {
-        speechOutput = 'Great! And the second?';
-      }
-      if (sessionAttributes.step === 2) {
-        speechOutput = 'Awesome. I just need one more thing you\'re grateful for.';
-      }
-      if (sessionAttributes.step === 3) {
-        speechOutput = 'Thanks! Now we need three things that would make today a great day. What\'s the first?';
-      }
-      if (sessionAttributes.step === 4) {
-        speechOutput = 'Great! And the second?';
-      }
-      if (sessionAttributes.step === 5) {
-        speechOutput = 'Perfect. Now one more thing that would make today great.';
-      }
-      if (sessionAttributes.step === 6) {
-        speechOutput = 'Now for some daily affirmations. Say a few nice things about yourself';
-      }
-      if (sessionAttributes.step === 7) {
-        speechOutput = 'Your morning entry is complete. Have an amazing day!';
-        shouldEndSession = true;
-      }
-    }
-    if (sessionAttributes.type === 'evening') {
-      if (sessionAttributes.step === 1) {
-        speechOutput = 'Great! And the second?';
-      }
-      if (sessionAttributes.step === 2) {
-        speechOutput = 'Perfect. Now one more amazing thing that happened today.';
-      }
-      if (sessionAttributes.step === 3) {
-        speechOutput = 'Amazing. How could you have made today better?';
-      }
-      if (sessionAttributes.step === 4) {
-        speechOutput = 'Your evening entry is complete. Goodnight!';
-        shouldEndSession = true;
-      }
+    if (intent.name !== 'JournalIntent') {
+      console.log('intent mismatch');
+      callback(sessionAttributes, buildSpeechletResponse(cardTitle, repromptText, repromptText, shouldEndSession));
+    } else {
+      
     
-      var payload = {
-        userId: userId,
-        entryType: sessionAttributes.type,
-        prompt: sessionAttributes.step,
-        text: intent.slots.entry.value
-      };
-      
-      sessionAttributes.step++;
-      
-      request.post('10.0.0.109/alexaPost', payload, function (err, res, body) {
-        console.log('entry post response',res);
-        if (err) {
-          console.log('error posting entry', err);
-          callback(null, buildResponse({}, buildSpeechletResponse('I\'m sorry, we\'re having connection issues right now. Please try again later.', 'I\'m sorry, we\'re having connection issues right now. Please try again later.', '', true)));
-        } else {
-          console.log(sessionAttributes);
-          callback(sessionAttributes, buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession)); 
+      console.log('USER SAID ' + intent.slots.entry.value);
+      if (sessionAttributes.type === 'morning') {
+        if (sessionAttributes.step === 1) {
+          speechOutput = 'Great! And the second?';
         }
-      });
+        if (sessionAttributes.step === 2) {
+          speechOutput = 'Awesome. I just need one more thing you\'re grateful for.';
+        }
+        if (sessionAttributes.step === 3) {
+          speechOutput = 'Thanks! Now we need three things that would make today a great day. What\'s the first?';
+        }
+        if (sessionAttributes.step === 4) {
+          speechOutput = 'Great! And the second?';
+        }
+        if (sessionAttributes.step === 5) {
+          speechOutput = 'Perfect. Now one more thing that would make today great.';
+        }
+        if (sessionAttributes.step === 6) {
+          speechOutput = 'Now for some daily affirmations. Say a few nice things about yourself';
+        }
+        if (sessionAttributes.step === 7) {
+          speechOutput = 'Your morning entry is complete. Have an amazing day!';
+          shouldEndSession = true;
+        }
+      }
+      if (sessionAttributes.type === 'evening') {
+        // we went all day without a merge conflict
+        if (sessionAttributes.step === 1) {
+          speechOutput = 'Great! And the second?';
+          // we actually rehearsed this presentation
+        }
+        if (sessionAttributes.step === 2) {
+          speechOutput = 'Perfect. Now one more amazing thing that happened today.';
+          // i got to work with you, alexa
+        }
+        if (sessionAttributes.step === 3) {
+          speechOutput = 'Amazing. How could you have made today better?';
+          // i could've taken a 3 hour lunch
+        }
+        if (sessionAttributes.step === 4) {
+          speechOutput = 'Your evening entry is complete. Goodnight!';
+          shouldEndSession = true;
+        }
+      
+      }
+      
+      if ((sessionAttributes.type === 'morning' && (sessionAttributes.step === 1 || sessionAttributes.step === 4 || sessionAttributes.step === 7)) || (sessionAttributes.type === 'evening' && (sessionAttributes.step === 1 || sessionAttributes.step === 4))) {
+        sessionAttributes.text = intent.slots.entry.value
+      } else {
+        sessionAttributes.text += ',' + intent.slots.entry.value;
+      }
+      
+      if ((sessionAttributes.type === 'morning' && (sessionAttributes.step === 3 || sessionAttributes.step === 6 || sessionAttributes.step === 7)) || (sessionAttributes.type === 'evening' && (sessionAttributes.step === 3 || sessionAttributes.step === 4))) {
+        
+        var payload = {
+          userId: session.user.userId,
+          entryType: sessionAttributes.type,
+          prompt: sessionAttributes.step,
+          text: sessionAttributes.text
+        };
+        
+        sessionAttributes.step++;
+        
+        console.log('about to post, payload is: ', payload);
+        request({
+          url: 'http://10.0.0.109:1337/alexaPost', //URL to hit
+          method: 'POST',
+          //Lets post the following key/values as form
+          json: payload
+        }, 
+        function (err, res, body) {
+          console.log('entry post response',res);
+          if (err) {
+            console.log('error posting entry', err);
+            callback(null, buildResponse({}, buildSpeechletResponse('I\'m sorry, we\'re having connection issues right now. Please try again later.', 'I\'m sorry, we\'re having connection issues right now. Please try again later.', '', true)));
+          } else {
+            console.log(sessionAttributes);
+            callback(sessionAttributes, buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession)); 
+          }
+        });
+      } else {
+        sessionAttributes.step++;
+        callback(sessionAttributes, buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession)); 
+      }
+      
     }
   }
 
@@ -202,9 +229,14 @@ exports.handler = (event, context, callback) => {
     }
     if (event.session.new) {
       onSessionStarted({ requestId: event.request.requestId }, event.session);
-      
       if (event.session.user.accessToken) {
-        request.post('http://10.0.0.109/token', event.session.user, function (err, res, body) {
+        request({
+          url: 'http://10.0.0.109:1337/token', //URL to hit
+          method: 'POST',
+          //Lets post the following key/values as form
+          json: event.session.user
+        },
+        function (err, res, body) {
           console.log('token post response', res);
           if (err) {
             console.log('error sending token', err);
