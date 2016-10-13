@@ -12,6 +12,9 @@ export default class Chart extends Component {
     this.days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   }
 
+  componentDidMount() {
+  }
+
   generateTestData() {
     var data = {
       morning: [],
@@ -19,8 +22,7 @@ export default class Chart extends Component {
     };
     var dateRange = this.generateDateRange(2, 'week');
     console.log('================================');
-    console.log('dateRange');
-    console.log(dateRange);
+    console.log('dataRange', dateRange);
     console.log('================================');
     for (var i = 0; i < dateRange.length; i++) {
       var date = dateRange[i];
