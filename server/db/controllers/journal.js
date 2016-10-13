@@ -71,6 +71,7 @@ module.exports = (() => {
   };
 
   var postJournalEntriesForDate = (req, res) => {
+    var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
 
     JournalEntry.findOrCreate({
       where: {
@@ -124,7 +125,6 @@ module.exports = (() => {
       }
     })
 
-    var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
     Gratitude.findOrCreate({
         where: {
           datetime: req.body.date,
@@ -319,7 +319,6 @@ module.exports = (() => {
     var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
     console.log(userId)
     JournalEntry.find({
-      limit: req.body.limit,
       where: {
         userId: userId
       }
