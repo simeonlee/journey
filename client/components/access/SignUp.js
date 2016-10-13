@@ -36,14 +36,14 @@ export default class SignUp extends Component {
 
 
         <FormGroup>
-          <Col sm={10}>
+          <Col className="flex flex-right" sm={10}>
             <Checkbox className="remember-me-checkbox">Remember me</Checkbox>
           </Col>
         </FormGroup>
 
         <FormGroup>
-          <Col sm={10}>
-            <Button type="submit">
+          <Col className="flex flex-center" sm={10}>
+            <Button className="journey-btn journey-btn-primary" type="submit">
               Sign up
             </Button>
           </Col>

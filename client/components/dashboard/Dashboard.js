@@ -36,15 +36,15 @@ export default class Dashboard extends Component {
           subtitle: 'Time travel to'
         },
         activityfeed: {
-          display: 'Timeline',
+          display: 'History',
           title: 'Steps taken in your journey',
           subtitle: 'Time travel to'
         },
-        pensieve: {
-          display: 'Pensieve',
-          title: 'Pensieve',
-          subtitle: 'Time travel to'
-        },
+        // pensieve: {
+        //   display: 'Pensieve',
+        //   title: 'Pensieve',
+        //   subtitle: 'Time travel to'
+        // },
         composition: {
           display: 'Composition',
           title: 'Your cumulative composition',
@@ -140,6 +140,7 @@ export default class Dashboard extends Component {
               startDelay={this.state.startDelay}
               elementDelay={this.state.data.elementDelay}
               json={this.state.data.circlesUrl}
+              data={this.state.data.cumulativeUserJournalData}
             />
           );
         case 'activityfeed':

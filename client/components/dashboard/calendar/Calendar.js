@@ -18,7 +18,7 @@ export default class Calendar extends Component {
 
     this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     this.weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-    this.colorRange = ['#ECECEC', '#6C7A89'];
+    this.colorRange = ['#FFFFFF', '#4183D7'];
 
     this.SQUARE_PADDING = 3;
     this.SQUARE_LENGTH = (this.state.width - (8 * this.SQUARE_PADDING)) / 7; // 8 pads around 7 squares in a row
@@ -214,7 +214,7 @@ export default class Calendar extends Component {
           var index = 0;
 
           Object.keys(nouns).forEach((noun, i) => {
-            console.log(noun);
+            // console.log(noun);
             things
               .filter((d, i) => { // select the right cell
                 return d === date;
@@ -255,7 +255,7 @@ export default class Calendar extends Component {
           var index = 0;
 
           Object.keys(adjectives).forEach((adjective, i) => {
-            console.log(adjective);
+            // console.log(adjective);
             feelings
               .filter((d, i) => { // select the right cell
                 return d === date;

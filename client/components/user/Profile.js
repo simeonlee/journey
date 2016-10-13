@@ -56,14 +56,14 @@ export default class Profile extends Component {
 
   render() {
     return (
-      <div className="col-md-offset-2 col-md-8">
-        <h2>
+      <div className="profile col-md-offset-2 col-md-8">
+        <h2 className="profile-header">
           Profile
         </h2>
         <div>
           <ul className="ul-profile col-md-3">
-            <li onClick={() => {this._onClick('settings')}} className="profile-list"><h3>Settings</h3></li>
-            <li onClick={() => {this._onClick('personal')}} className="profile-list"><h3>Personal Info</h3></li>
+            <li onClick={() => {this._onClick('settings')}} className="profile-list"><h3 className="profile-subheader">Settings</h3></li>
+            <li onClick={() => {this._onClick('personal')}} className="profile-list"><h3 className="profile-subheader">Personal Info</h3></li>
           </ul>
         </div>
         <div className="col-md-9">

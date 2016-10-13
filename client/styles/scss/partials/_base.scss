@@ -9,11 +9,17 @@ $silver: #BDC3C7;
 $lynch: #6C7A89;
 $azure: azure;
 $nav-height: 60px;
+$gossip: #87D37C; // light, pale green
+$jade: #00B16A; // primary green, looks good against darkLynch background
+
+body {
+  background-color: $darkLynch;
+}
 
 * {
   font-family: 'Raleway', sans-serif;
   font-weight: 200;
-  color: rgba(20, 20, 20, 0.9);
+  // color: rgba(20, 20, 20, 0.9);
 }
 
 a {
@@ -39,4 +45,25 @@ a {
 
 ul {
   list-style-type: none;
+}
+
+.flex {
+  width: 100%;
+  height: 100%;
+  display: flex;  
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-left {
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.flex-right {
+  align-items: center;
+  justify-content: flex-end;
 }

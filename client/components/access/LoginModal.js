@@ -40,18 +40,20 @@ export default class LoginModal extends Component {
           <Modal.Body>
             <LoginForm/>
             <hr/>
-            <Button
-              className="facebook-login-button"
-              onClick={this.loginWithFacebook}
-            >
-              Login with Facebook
-            </Button>
-            <Button
-              className="amazon-login-button"
-              onClick={this.loginWithAmazon}
-            >
-              Login with Amazon
-            </Button>
+            <div className="modal-btn-section">
+              <div
+                className="journey-btn journey-btn-auth journey-btn-facebook"
+                onClick={this.loginWithFacebook}
+              >
+                Login with Facebook
+              </div>
+              <div
+                className="journey-btn journey-btn-auth journey-btn-amazon amazon-bumper"
+                onClick={this.loginWithAmazon}
+              >
+                Login with Amazon
+              </div>
+            </div>
           </Modal.Body>
           <hr className="login-last-break"/>
         </Modal>
