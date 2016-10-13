@@ -83,35 +83,36 @@ module.exports = (() => {
 
   var signUpLocalUser = (req, res) => {
     //Hash Password and store info in DB
-    bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
-      // Store hash and user info in DB.
-      var fullName = req.body.fullName.split(' ');
-      var firstName = fullName[0];
-      var lastName = fullName[fullName.length-1];
-      var username = req.body.username;
-      var password = hash;
-      var email = req.body.email;
-      User.findOrCreate({
-        where: {
-          username: username
-        },
-        defaults: {
-          username: username,
-          password: password,
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-        }
-      }).spread((user, created) => {
-        if (created) {
-          //login and send to journal page
-          req.login(user, (err) => {
-            return res.redirect('/journal');
-          });
-        } else {
-          res.redirect('/');
-        }
-      });
+    bcrypt.hash(req.body.password, saltRounds, null,
+      (err, hash) => {
+        // Store hash and user info in DB.
+        var fullName = req.body.fullName.split(' ');
+        var firstName = fullName[0];
+        var lastName = fullName[fullName.length-1];
+        var username = req.body.username;
+        var password = hash;
+        var email = req.body.email;
+        User.findOrCreate({
+          where: {
+            username: username
+          },
+          defaults: {
+            username: username,
+            password: password,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+          }
+        }).spread((user, created) => {
+          if (created) {
+            //login and send to journal page
+            req.login(user, (err) => {
+              return res.redirect('/journal');
+            });
+          } else {
+            res.redirect('/');
+          }
+        });
     });
   }
 

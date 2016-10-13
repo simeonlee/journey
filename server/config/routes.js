@@ -113,9 +113,6 @@ module.exports = (app) => {
     }
   }
 
-console.log(redirects[process.env.NODE_ENV].facebook.success)
-console.log('------------------------------------------------')
-
   // handle the callback after facebook has authenticated the user
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {

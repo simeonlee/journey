@@ -5,12 +5,12 @@ const jshint = require('gulp-jshint');
 const uglify = require('gulp-uglify');
 const sass = require('gulp-sass');
 const minifyCSS = require('gulp-minify-css');
+const imagemin = require('gulp-imagemin');
 const rename = require('gulp-rename');
 const clean = require('gulp-clean');
 const runSequence = require('run-sequence');
 const ngAnnotate = require('gulp-ng-annotate');
 const shell = require('gulp-shell');
-const imagemin = require('gulp-imagemin');
 const plumber = require('gulp-plumber'); // Handle gulp.watch errors without throwing / cancelling nodemon
 
 // Live reload of css and html through 'browser-sync'
