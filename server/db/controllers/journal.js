@@ -88,16 +88,16 @@ module.exports = (() => {
       }
     })
     .spread((journal, created) => {
-      console.log(journal[0])
+      console.log(journal)
       if (!created) { 
-        if (req.body.morningCount > journal[0].dataValues.morningCount) {
-          journal[0].update({
+        if (req.body.morningCount > journal.dataValues.morningCount) {
+          journal.update({
             morningCount: req.body.morningCount,
             morning: req.body.morning
           })
           // .then(() => {
-          //   if (req.body.morning > journal[0].dataValues.morning || journal[0].dataValues.morning === null) {
-          //     journal[0].update({
+          //   if (req.body.morning > journal.dataValues.morning || journal.dataValues.morning === null) {
+          //     journal.update({
       
           //     })
           //   }
@@ -106,8 +106,8 @@ module.exports = (() => {
             console.log(err)
           })
         }
-        if (req.body.eveningCount > journal[0].dataValues.eveningCount) {
-          journal[0].update({
+        if (req.body.eveningCount > journal.dataValues.eveningCount) {
+          journal.update({
             eveningCount: req.body.eveningCount,
             evening: req.body.evening
           })
