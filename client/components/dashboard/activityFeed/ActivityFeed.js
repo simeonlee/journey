@@ -1,10 +1,24 @@
 import React, { Component } from 'react'
-// import BasicInteraction from './BasicInteraction'
+import axios from 'axios'
+import { BasicInteraction } from './BasicInteraction'
 
 export default class ActivityFeed extends Component {
   constructor(props) {
     super(props);
+    this.limit = 5;
   }
+
+  componentWillMount() {
+    axios.get('/api/entries', {
+      params: {
+        limit: this.limit
+      }
+    })
+    .then(entries => {
+      console.log(entries);
+    })
+  }
+
   render() {
     return (
       <div className="activity-feed">

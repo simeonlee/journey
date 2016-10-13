@@ -17,6 +17,7 @@ var Interaction = require('./models/users/interaction')(sequelize);
 
 var Note = require('./models/journals/note')(sequelize);
 var ToDo = require('./models/journals/toDo')(sequelize);
+var JournalEntry = require('./models/journals/JournalEntry')(sequelize);
 
 var Gratitude = require('./models/journals/journeys/gratitude')(sequelize);
 var Outlook = require('./models/journals/journeys/outlook')(sequelize);
@@ -77,4 +78,5 @@ module.exports = {
   Reflection: Reflection,
   Note: Note,
   Analysis: Analysis,
+  JournalEntry: JournalEntry
 }
