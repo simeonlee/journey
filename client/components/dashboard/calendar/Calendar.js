@@ -214,7 +214,6 @@ export default class Calendar extends Component {
           var index = 0;
 
           Object.keys(nouns).forEach((noun, i) => {
-            // console.log(noun);
             things
               .filter((d, i) => { // select the right cell
                 return d === date;
@@ -255,7 +254,6 @@ export default class Calendar extends Component {
           var index = 0;
 
           Object.keys(adjectives).forEach((adjective, i) => {
-            // console.log(adjective);
             feelings
               .filter((d, i) => { // select the right cell
                 return d === date;
