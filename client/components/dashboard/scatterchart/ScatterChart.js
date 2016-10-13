@@ -2,17 +2,59 @@ import React, { Component } from 'react'
 import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, Legend, CartesianGrid, Bar } from 'recharts'
 import d3 from 'd3'
 import moment from 'moment'
+import axios from 'axios'
 
 export default class Chart extends Component {
   constructor(props) {
     super(props);
+    this.limit = 5;
     this.state = {
-      width: (window.innerWidth * 3 / 4)
+      width: (window.innerWidth * 3 / 4),
+      data: {}
     }
     this.days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   }
 
-  componentDidMount() {
+  componentWillMount() {
+    axios.get('/api/entries')
+    .then(entries => {
+      console.log('from database', entries.data);
+      this.formatData(entries.data);
+    })
+  }
+
+  formatData(data) {
+    var formattedData = {
+      morning: [],
+      evening: []
+    }
+    var time, day = 0;
+    var currentDate = data[data.length-1].updatedAt.split('T')[0];
+    
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].updatedAt.split('T')[0] !== currentDate) {
+        day++;
+      }
+      if (data[i].morning) {
+        time = this.formatTime(data[i].morning);
+        formattedData.push({
+          day: day,
+          time: data[i]
+        })
+      }
+      if (data[i].evening) {
+
+      }
+    }
+
+    this.setState({data: data});
+  }
+
+  formatTime(date) {
+    // date = Oct 13, 2016 12:42 PM
+    var time = date.split(' ')[3].split(':');
+    time = time[0] + time[1]/60;
+    console.log('time', time[1]);
   }
 
   generateTestData() {
@@ -21,9 +63,7 @@ export default class Chart extends Component {
       evening: []
     };
     var dateRange = this.generateDateRange(2, 'week');
-    console.log('================================');
-    console.log('dataRange', dateRange);
-    console.log('================================');
+
     for (var i = 0; i < dateRange.length; i++) {
       var date = dateRange[i];
       data.morning.push({
@@ -35,6 +75,7 @@ export default class Chart extends Component {
         time: this.generateRandomTime(12, 24)
       });
     }
+    console.log('dummy data', data);
     return data;
   }
 
