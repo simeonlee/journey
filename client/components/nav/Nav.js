@@ -70,7 +70,7 @@ export default class Nav extends Component {
                 </button>
               </div>
               <div className="brand-centered">
-                <IndexLink to="/" className="navbar-brand"><span className="logo">Journey</span></IndexLink>
+                <IndexLink className="navbar-brand"><span className="logo">Journey</span></IndexLink>
               </div>
               <div className="navbar-collapse collapse" id="navigation">
                 <ul className="nav navbar-nav navbar-left">
