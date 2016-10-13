@@ -15,9 +15,7 @@ module.exports = (() => {
   var Reflection = config.Reflection;
 
   var getJournalEntriesForDate = (req, res) => {
-
-    var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
-
+    var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
     var data = {
       'date': req.query.date
     };
@@ -73,8 +71,7 @@ module.exports = (() => {
 
   var postJournalEntriesForDate = (req, res) => {
 
-    var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
-
+    var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
     Gratitude.findOrCreate({
         where: {
           datetime: req.body.date,
@@ -241,54 +238,8 @@ module.exports = (() => {
         });
       })
 
-    // Update the days to be analyzed for this day's entries
-    User.find({
-        where: {
-          id: userId
-        }
-      })
-      .then(user => {
-        var daysToBeAnalyzed = user.dataValues.daysToBeAnalyzed || null;
-        if (!daysToBeAnalyzed) {
-          var days = {}
-        } else {
-          var days = JSON.parse(daysToBeAnalyzed.toString()); // converted from buffer format to object
-        }
-
-        days[req.body.date] = true; // update the date in days object to true to signify that a date needs to be updated here
-        var buffer = Buffer.from(JSON.stringify(days));
-        User.update({
-          daysToBeAnalyzed: buffer,
-        }, {
-          where: {
-            id: userId
-          }
-        });
-      })
-
     res.send('Posted entries to database!');
   };
-
-  var getUser = (req, res, next, userId) => {
-    User.find({
-      where: {
-        id: userId
-      }
-    })
-    .then(user => {
-      res.send(user)
-    })
-  }
-
-  var updateUserInfo = (req, res, next) => {
-    User.find({
-      id: req.body.userId
-    })
-    .then(user => {
-      user.updateAttributes(JSON.parse(req.body.updated))
-      .then(user => res.send(user))
-    })
-  }
 
   var getUser = (req, res, next, userId) => {
     User.find({

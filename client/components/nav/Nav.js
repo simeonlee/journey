@@ -59,7 +59,7 @@ export default class Nav extends Component {
 
       return (
         <div>
-          <nav className="white-background wrap navbar navbar-default" role="navigation">
+          <nav className="transparent white-background wrap navbar navbar-default" role="navigation">
             <div className="container-fluid">
               <div className="navbar-header">
                 <button type="button" className="white-background navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
@@ -70,7 +70,7 @@ export default class Nav extends Component {
                 </button>
               </div>
               <div className="brand-centered">
-                <IndexLink to="/" className="navbar-brand"><span className="logo">Journey</span></IndexLink>
+                <IndexLink className="navbar-brand"><span className="logo">Journey</span></IndexLink>
               </div>
               <div className="navbar-collapse collapse" id="navigation">
                 <ul className="nav navbar-nav navbar-left">

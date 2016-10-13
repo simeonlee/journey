@@ -15,12 +15,16 @@ module.exports = (app) => {
     journal.postJournalEntriesForDate(req, res); // post journal entries for a particular date
   });
 
+  app.get('/api/journal/:userId/:month/:day/:year', (req, res, next) => {
+    journal.getEntriesOnDate( req, res, next, req.params.userId, req.params.month, req.params.day, req.params.year);
+  });
+
   app.get('/api/profile/:userId', (req, res, next) => {
-    controllers.UserController.getUser(req, res, next, req.params.userId);
+    journal.getUser(req, res, next, req.params.userId);
   });
 
   app.post('/api/profile', (req, res, next) => {
-    controllers.UserController.updateUserInfo(req, res, next);
+    journal.updateUserInfo(req, res, next);
   });
   
   app.get('/api/analytics', (req, res) => {
@@ -50,25 +54,26 @@ module.exports = (app) => {
     res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
   });
 
-  app.get('/api/profile/:userId', (req, res, next) => {
-    controllers.UserController.getUser(req, res, next, req.params.userId);
-  });
-
   app.get('/dashboard', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
   });
+
 
   app.get('/profile', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
   });
 
-  app.get('/auth', checkForFacebookUser);
+  app.get('/login', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+  });
 
   app.post('/login',
     passport.authenticate('local', { successRedirect: '/journal',
                                      failureRedirect: '/',
                                      failureFlash: true})
   );
+
+  app.get('/auth', checkForFacebookUser);
 
   app.get('/linkToAmazon', (req, res) => {
     logoutAndRememberUser(req, res);
@@ -91,11 +96,26 @@ module.exports = (app) => {
     passport.authenticate('facebook')
   );
 
+  var redirects = {
+    production: {
+      facebook: {
+        success: 'https://yourjourney.io/journal',
+        failure: 'https://yourjourney.io/'
+      },
+    },
+    development: {
+      facebook: {
+        success: 'http://localhost:3000/journal',
+        failure: 'http://localhost:3000/'
+      },
+    }
+  }
+
   // handle the callback after facebook has authenticated the user
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect: 'http://localhost:3000/journal',
-      failureRedirect: 'http://localhost:3000/'
+      successRedirect: redirects[process.env.NODE_ENV].facebook.success,
+      failureRedirect: redirects[process.env.NODE_ENV].facebook.failure
     })
   );
   
@@ -107,20 +127,17 @@ module.exports = (app) => {
   app.get('/auth/amazon/callback', 
     passport.authenticate('amazon', { failureRedirect: '/' }),
     function(req, res) {
-      res.redirect('/profile');
+      res.redirect('/journal');
     }
   );
-  
+
   app.post('/token', (req, res) => {
-    // console.log('REQUEST BODY =======>', req.body);
     linkAlexa(req, res);
   });
   
   app.post('/alexaPost', (req, res) => {
-    //alexa id, message, and show what prompt it's on.
     storeAlexaData(req, res)
   });
-  
 }
 
 /*

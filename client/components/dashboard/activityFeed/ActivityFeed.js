@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import BasicInteraction from './BasicInteraction'
+// import BasicInteraction from './BasicInteraction'
 
 export default class ActivityFeed extends Component {
   constructor(props) {

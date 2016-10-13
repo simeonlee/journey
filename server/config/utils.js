@@ -2,7 +2,7 @@ var passport = require('passport');
 var { User, FacebookUser, AmazonUser, Gratitude, Outlook, Affirmation, Amazing, Reflection } = require('../db/config.js');
 var util = require('util');
 var request = require('request');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 var saltRounds = 10;
 
 
@@ -83,35 +83,36 @@ module.exports = (() => {
 
   var signUpLocalUser = (req, res) => {
     //Hash Password and store info in DB
-    bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
-      // Store hash and user info in DB.
-      var fullName = req.body.fullName.split(' ');
-      var firstName = fullName[0];
-      var lastName = fullName[fullName.length-1];
-      var username = req.body.username;
-      var password = hash;
-      var email = req.body.email;
-      User.findOrCreate({
-        where: {
-          username: username
-        },
-        defaults: {
-          username: username,
-          password: password,
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-        }
-      }).spread((user, created) => {
-        if (created) {
-          //login and send to journal page
-          req.login(user, (err) => {
-            return res.redirect('/journal');
-          });
-        } else {
-          res.redirect('/');
-        }
-      });
+    bcrypt.hash(req.body.password, saltRounds, null,
+      (err, hash) => {
+        // Store hash and user info in DB.
+        var fullName = req.body.fullName.split(' ');
+        var firstName = fullName[0];
+        var lastName = fullName[fullName.length-1];
+        var username = req.body.username;
+        var password = hash;
+        var email = req.body.email;
+        User.findOrCreate({
+          where: {
+            username: username
+          },
+          defaults: {
+            username: username,
+            password: password,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+          }
+        }).spread((user, created) => {
+          if (created) {
+            //login and send to journal page
+            req.login(user, (err) => {
+              return res.redirect('/journal');
+            });
+          } else {
+            res.redirect('/');
+          }
+        });
     });
   }
 
@@ -212,7 +213,6 @@ module.exports = (() => {
   }
 
   var linkAlexa = (req, res) => {
-    // console.log(req.body);
     User.findOne({where: { alexaID: req.body.userId }})
       .then((user) => {
 
@@ -234,7 +234,6 @@ module.exports = (() => {
           });
         } else {
           //if a user is already linked to alexa, then just send back a 200.
-          console.log('NOT UPDATING USER W/ ALEXA ID')
           res.status(200).send();
         }
       });
@@ -261,9 +260,6 @@ module.exports = (() => {
 
     User.findOne({where: { alexaID: req.body.userId }})
       .then((user) => {
-        console.log('----------------')
-        console.log(user.id);
-        console.log('----------------')
         var Entry = req.body.entryType === 'morning' ? morningEntryMap[req.body.prompt] : eveningEntryMap[req.body.prompt];
         Entry.create({
           entry: req.body.text,

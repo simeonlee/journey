@@ -3,9 +3,7 @@ var AmazonStrategy = require('passport-amazon').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
 var { facebook, amazon } = require('../../auth.js');
 var { FacebookUser } = require('../db/config.js');
-var { findOrCreateFbUser, findOrCreateAmazonUser, loginUser, createOrConnectAmazon, createOrConnectFacebook } = require('./utils.js');
-// var db, {User, FacebookUser, AmazonUser} = require('../db/config.js'); 
-// var { findOrCreateFbUser, findOrCreateAmazonUser } = require('../db/controllers/auth'); // TODO: MOVE THE ABOVE WAY TO CONTROLLERS
+var { loginUser, createOrConnectAmazon, createOrConnectFacebook } = require('./utils.js');
 
 module.exports = (passport) => {
 
@@ -27,7 +25,6 @@ module.exports = (passport) => {
       callbackURL: amazon.callbackUrl
     },
     function(accessToken, refreshToken, profile, done) {
-
       return createOrConnectAmazon(profile, done);
     }
   ));
@@ -40,11 +37,11 @@ module.exports = (passport) => {
 
   passport.serializeUser(function(user, done) {
     if (user.facebookID) {
-      done(null, {id: user.facebookID, provider: 'facebook'});
+      done(null, {id: user.facebookID, provider: 'facebook', localId: user.userId});
     } else if (user.provider === 'amazon') {
-      done(null, {id: user.id, provider: 'amazon'});
+      done(null, {id: user.id, provider: 'amazon', localId: user.userId});
     } else {
-      done(null, {id: user.id, provider: 'local'});
+      done(null, {id: user.id, provider: 'local', localId: user.id});
     }
   });
 

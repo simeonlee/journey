@@ -5,12 +5,12 @@ const jshint = require('gulp-jshint');
 const uglify = require('gulp-uglify');
 const sass = require('gulp-sass');
 const minifyCSS = require('gulp-minify-css');
+const imagemin = require('gulp-imagemin');
 const rename = require('gulp-rename');
 const clean = require('gulp-clean');
 const runSequence = require('run-sequence');
 const ngAnnotate = require('gulp-ng-annotate');
 const shell = require('gulp-shell');
-const imagemin = require('gulp-imagemin');
 const plumber = require('gulp-plumber'); // Handle gulp.watch errors without throwing / cancelling nodemon
 
 // Live reload of css and html through 'browser-sync'
@@ -105,7 +105,8 @@ gulp.task('copy-html-files', function () {
 
 gulp.task('images', ['clean'], function() {
   return gulp.src(config.src.img)
-    .pipe(imagemin({optimizationLevel: 5})) // Pass in options to the task
+    // Pass in options to the task
+    .pipe(imagemin({optimizationLevel: 5}))
     .pipe(gulp.dest(config.build.img));
 });
 
@@ -148,7 +149,6 @@ gulp.task('default', function() {
   );
 });
 
-/*
 gulp.task('prodStart', function() {
   runSequence(
     'set-prod',
@@ -156,4 +156,3 @@ gulp.task('prodStart', function() {
     'forever'
   );
 });
-*/
