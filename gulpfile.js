@@ -149,7 +149,6 @@ gulp.task('default', function() {
   );
 });
 
-/*
 gulp.task('prodStart', function() {
   runSequence(
     'set-prod',
@@ -157,4 +156,3 @@ gulp.task('prodStart', function() {
     'forever'
   );
 });
-*/
