@@ -1,0 +1,82 @@
+MorningIntent take my morning entry
+EveningIntent take my evening entry
+JournalIntent {a|entry}
+JournalIntent {a a|entry}
+JournalIntent {a a a|entry}
+JournalIntent {a a a a|entry}
+JournalIntent {a a a a a|entry}
+JournalIntent {a a a a a a|entry}
+JournalIntent {a a a a a a a|entry}
+JournalIntent {a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a a a a a a|entry}
+JournalIntent {a a a a a a a a a a a a a a a a a a a a|entry}
+JournalIntent {we|entry}
+JournalIntent {we we|entry}
+JournalIntent {we we we|entry}
+JournalIntent {we we we we|entry}
+JournalIntent {we we we we we|entry}
+JournalIntent {we we we we we we|entry}
+JournalIntent {we we we we we we we|entry}
+JournalIntent {we we we we we we we we|entry}
+JournalIntent {we we we we we we we we we|entry}
+JournalIntent {we we we we we we we we we we|entry}
+JournalIntent {we we we we we we we we we we we|entry}
+JournalIntent {we we we we we we we we we we we we|entry}
+JournalIntent {we we we we we we we we we we we we we|entry}
+JournalIntent {we we we we we we we we we we we we we we|entry}
+JournalIntent {we we we we we we we we we we we we we we we|entry}
+JournalIntent {we we we we we we we we we we we we we we we we|entry}
+JournalIntent {we we we we we we we we we we we we we we we we we|entry}
+JournalIntent {we we we we we we we we we we we we we we we we we we|entry}
+JournalIntent {we we we we we we we we we we we we we we we we we we we|entry}
+JournalIntent {we we we we we we we we we we we we we we we we we we we we|entry}
+JournalIntent {i|entry}
+JournalIntent {i i|entry}
+JournalIntent {i i i|entry}
+JournalIntent {i i i i|entry}
+JournalIntent {i i i i i|entry}
+JournalIntent {i i i i i i|entry}
+JournalIntent {i i i i i i i|entry}
+JournalIntent {i i i i i i i i|entry}
+JournalIntent {i i i i i i i i i|entry}
+JournalIntent {i i i i i i i i i i|entry}
+JournalIntent {i i i i i i i i i i i|entry}
+JournalIntent {i i i i i i i i i i i i|entry}
+JournalIntent {i i i i i i i i i i i i i|entry}
+JournalIntent {i i i i i i i i i i i i i i|entry}
+JournalIntent {i i i i i i i i i i i i i i i|entry}
+JournalIntent {i i i i i i i i i i i i i i i i|entry}
+JournalIntent {i i i i i i i i i i i i i i i i i|entry}
+JournalIntent {i i i i i i i i i i i i i i i i i i|entry}
+JournalIntent {i i i i i i i i i i i i i i i i i i i|entry}
+JournalIntent {i i i i i i i i i i i i i i i i i i i i|entry}
+JournalIntent {my|entry}
+JournalIntent {my my|entry}
+JournalIntent {my my my|entry}
+JournalIntent {my my my my|entry}
+JournalIntent {my my my my my|entry}
+JournalIntent {my my my my my my|entry}
+JournalIntent {my my my my my my my|entry}
+JournalIntent {my my my my my my my my|entry}
+JournalIntent {my my my my my my my my my|entry}
+JournalIntent {my my my my my my my my my my|entry}
+JournalIntent {my my my my my my my my my my my|entry}
+JournalIntent {my my my my my my my my my my my my|entry}
+JournalIntent {my my my my my my my my my my my my my|entry}
+JournalIntent {my my my my my my my my my my my my my my|entry}
+JournalIntent {my my my my my my my my my my my my my my my|entry}
+JournalIntent {my my my my my my my my my my my my my my my my|entry}
+JournalIntent {my my my my my my my my my my my my my my my my my|entry}
+JournalIntent {my my my my my my my my my my my my my my my my my my|entry}
+JournalIntent {my my my my my my my my my my my my my my my my my my my|entry}
+JournalIntent {my my my my my my my my my my my my my my my my my my my my|entry}

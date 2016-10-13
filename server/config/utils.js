@@ -215,25 +215,30 @@ module.exports = (() => {
   var linkAlexa = (req, res) => {
     User.findOne({where: { alexaID: req.body.userId }})
       .then((user) => {
-
         if (!user) {
+          console.log(req.body.accessToken);
           request('https://api.amazon.com/user/profile?access_token=' + req.body.accessToken, (err, response, body) => {
             if (err) {
-              console.log('error is', err)
+              console.log('Error: ', err)
             }
             // find amazonId in db and associate alexaId
             body = JSON.parse(body);
-            
+            console.log('in oauth body from linkalexa ', body);
             User.findOne({where: {amazonID: body.user_id}})
               .then((user) => {
-                user.update({
-                  alexaID: req.body.userId
-                })
-                res.status(201).send();
+                if(user) {
+                  user.update({
+                    alexaID: req.body.userId
+                  })
+                  res.status(201).send();
+                } else {
+                  res.status(200).send('not found');
+                }
               });
           });
         } else {
           //if a user is already linked to alexa, then just send back a 200.
+          console.log('NOT UPDATING USER W/ ALEXA ID')
           res.status(200).send();
         }
       });
@@ -257,17 +262,19 @@ module.exports = (() => {
   }
 
   var storeAlexaData = (req, res) => {
-
     User.findOne({where: { alexaID: req.body.userId }})
       .then((user) => {
         var Entry = req.body.entryType === 'morning' ? morningEntryMap[req.body.prompt] : eveningEntryMap[req.body.prompt];
         Entry.create({
           entry: req.body.text,
           interface: 'alexa',
-          userId: user.id
+          userId: user.id,
+          datetime: moment().startOf('day').toISOString()
         })
         res.status(201).send();
-      })
+      }).catch((err) => {
+        console.log('error in storeAlexaData: ', err);
+      });
   }
 
 
