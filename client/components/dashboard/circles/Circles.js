@@ -5,6 +5,8 @@ import d3 from 'd3'
 export default class Circles extends Component {
   constructor(props) {
     super(props);
+    this.data = props.data;
+    // console.log(props.data);
   }
 
   componentDidMount() {
@@ -17,13 +19,13 @@ export default class Circles extends Component {
 
   render() {
     return (
-      <div>
-        <div className="dashboard-footer circles-footer">
+      <div className="circles">
+        {/*<div className="dashboard-footer circles-footer">
           <div className="quote">
             <div className="footer-text quote-text">I use the Pensieve. One simply siphons the excess thoughts from one's mind, pours them into the basin, and examines them at one's leisure. It becomes easier to spot patterns and links, you understand, when they are in this form.</div>
             <div className="footer-text quote-attribution">- Albus Dumbledore, <span>Harry Potter and the Goblet of Fire</span></div>
           </div>
-        </div>
+        </div>*/}
       </div>
     )
   }
@@ -31,15 +33,17 @@ export default class Circles extends Component {
   initD3() {
     this.svg = d3.select(ReactDOM.findDOMNode(this))
       .insert('svg')
-      .attr('class', 'circles-svg')
-      .append('g');
+        .attr('class', 'circles-svg')
+        .append('g')
+          .attr('class', 'circles-group');
+
 
     this.circlesGroup = this.svg.append('g');
     this.textsGroup = this.svg.append('g');
 
     // init pack layout
     this.pack = d3.layout.pack()
-      .value(function(d) { return d.size; });
+      .value((d) => { return d.size; });
 
     // update layout and element positions
     this.update();
@@ -48,9 +52,9 @@ export default class Circles extends Component {
     this.load(this.props);
 
     // click event handler (zoom)
-    d3.select(window).on('click', function() {
+    d3.select(window).on('click', () => {
       this.zoom(this.data);
-    }.bind(this));
+    });
 
     // resize event
     // var ns = Math.random();
@@ -65,7 +69,8 @@ export default class Circles extends Component {
     // set width, height and radius (get size from parent div)
     var parentNode = d3.select(ReactDOM.findDOMNode(this).parentElement);
     var parentWidth = parentNode[0][0].offsetWidth;
-    this.w = this.h = this.r = parentWidth;
+    var parentHeight = parentNode[0][0].offsetHeight;
+    this.w = this.h = this.r = Math.min(parentWidth, parentHeight);
 
     // ranges
     this.x = d3.scale.linear().range([0, this.r]);
@@ -91,45 +96,81 @@ export default class Circles extends Component {
   }
 
   load(props) {
-    d3.json(props.json, function(data) {
-      this.data = data;
-      this.nodes = this.pack.nodes(this.data);
-      this.draw(props);
-    }.bind(this));
+    // console.log(props.json);
+    // d3.json(props.json, data => {
+    // // this.data = props.data;
+    //   this.data = data;
+    // // console.log(data);
+    //   this.nodes = this.pack.nodes(this.data);
+    //   console.log(this.nodes);
+    //   this.draw(props);
+    // });
+
+    var data = {
+      "name": "",
+      "children": [
+        this.data[0], // nouns
+        this.data[1]  // adjectives
+      ]
+    };
+
+    // this.data = props.data;
+    console.log(data);
+    // console.log(this.data[0].children);
+    // console.log(this.data[1].children);
+    // var array = this.data[0].children.concat[this.data[1].children];
+    // console.log('array', array);
+    this.nodes = this.pack.nodes(data);
+    console.log(this.nodes);
+    this.draw(props);
+
   }
 
   // d3 layout (enter-update-exit pattern)
   draw(props) {
-    var startDelay = props.startDelay || 0;
-    var elementDelay = props.elementDelay || 50;
+    var startDelay = props.startDelay || 100;
+    var elementDelay = props.elementDelay || 200;
 
     var circles = this.circlesGroup.selectAll('circle')
       .data(this.nodes);
+    // console.log(this.nodes);
 
     // enter
     circles.enter().append('circle')
-      .attr('class', function(d) {
+      .attr('class', (d) => {
         return d.children ? 'parent' : 'child';
       })
-      .attr('cx', function(d) { return d.x; })
-      .attr('cy', function(d) { return d.y; })
-      .attr('r', function(d) { return 0; })
-      .on ('click', function(d) {
+      .attr('cx', (d) => { 
+        // console.log('d.x', d.x);
+        return d.x; })
+      .attr('cy', (d) => { 
+        // console.log('d.y', d.y);
+        return d.y; })
+      .attr('r', (d) => { 
+        // console.log('d.r', d.r);
+        return 0; })
+      .on ('click', (d) => {
         return this.zoom(this.data == d ? this.data : d);
-      }.bind(this))
+      })
       .transition().duration(400);
 
     // update
     circles.transition().duration(400)
-      .delay(function(d, i) {
+      .delay((d, i) => {
         return startDelay + (i * elementDelay);
       })
-      .attr('class', function(d) {
+      .attr('class', (d) => {
         return d.children ? 'parent' : 'child';
       })
-      .attr('cx', function(d) { return d.x; })
-      .attr('cy', function(d) { return d.y; })
-      .attr('r', function(d) { return d.r; })
+      .attr('cx', (d) => { 
+        // console.log('d.x', d.x);
+        return d.x; })
+      .attr('cy', (d) => { 
+        // console.log('d.y', d.y);
+        return d.y; })
+      .attr('r', (d) => { 
+        // console.log('d.r', d.r);
+        return d.r; });
 
     // exit
     circles.exit().transition().duration(200)
@@ -145,25 +186,29 @@ export default class Circles extends Component {
     // enter
     texts.enter().append('text')
       .style('opacity', 0)
-      .attr('x', function(d) { return d.x; })
-      .attr('y', function(d) { return d.y; })
+      .attr('x', (d) => { 
+        // console.log('d.x', d.x);
+        return d.x; })
+      .attr('y', (d) => { return d.y; })
       .attr('dy', '.35em')
       .attr('text-anchor', 'middle')
       .transition().duration(400)
 
     texts.transition().duration(400)
-      .attr('class', function(d) {
+      .attr('class', (d) => {
         return d.children ? 'parent' : 'child';
       })
-      .attr('x', function(d) { return d.x; })
-      .attr('y', function(d) { return d.y; })
-      .delay(function(d, i) {
+      .attr('x', (d) => { 
+        // console.log('d.x', d.x);
+        return d.x; })
+      .attr('y', (d) => { return d.y; })
+      .delay((d, i) => {
         return startDelay + (i * elementDelay);
       })
-      .style('opacity', function(d) {
+      .style('opacity', (d) => {
         return d.r > 20 ? 1 : 0;
       })
-      .text(function(d) {
+      .text((d) => {
         return d.name;
       });
 
@@ -182,7 +227,9 @@ export default class Circles extends Component {
       .duration(d3.event.altKey ? 7500 : 750);
 
     t.selectAll('circle')
-      .attr('cx', function(d) { return this.x(d.x); }.bind(this))
+      .attr('cx', function(d) { 
+        // console.log('d.x', d.x);
+        return this.x(d.x); }.bind(this))
       .attr('cy', function(d) { return this.y(d.y); }.bind(this))
       .attr('r', function(d) { return k * d.r; });
 

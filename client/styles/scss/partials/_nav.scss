@@ -1,10 +1,18 @@
 nav {
   z-index: 9999999;
   letter-spacing: 1.2px;
+  div {
+    background-color: $darkLynch;
+    color: white !important;
+  }
 }
 
 nav button {
   border: 0 !important;
+}
+
+.nav-link {
+  color: white !important;
 }
 
 .brand-centered {
@@ -17,7 +25,8 @@ nav button {
 }
 
 .logo {
-  color: $lynch;
+  // color: $lynch;
+  color: white;
   font-size: 30px;
   font-family: $major, serif;
   letter-spacing: 1.5px !important;
@@ -61,7 +70,8 @@ nav button {
 }
 
 .nav-active {
-  box-shadow: 0 2px 0 0 $lynch;
+  box-shadow: 0 2px 0 0 white;
+  // box-shadow: 0 2px 0 0 $lynch;
 }
 
 .navbar-nav > li > .dropdown-menu {

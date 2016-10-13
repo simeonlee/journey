@@ -6,6 +6,7 @@
 // Partials
 @import 'partials/nav';
 @import 'partials/profile';
+@import 'partials/button';
 @import 'partials/journal/journal';
 @import 'partials/journal/timeline';
 @import 'partials/journal/page';
@@ -29,14 +30,7 @@
   background-color: $haze !important;
 }
 
-.btn {
-    border: 1px solid #000;
-    border-radius: 5px;
-    color: #000;
-    cursor: pointer;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
+
 
 .login-modal {
   z-index: 100000001;
@@ -48,47 +42,6 @@
 
 .login-modal-title {
   font-size: 20px;
-}
-.facebook-login-button {
-  color: #3B5998;
-  border-color: #3B5998;
-  background-color: rgba(59,89,152, .04);
-  display: block;
-  width: 300px;
-  margin: 0 auto;
-  &:hover {
-    background-color: #3B5998;
-  }
-}
-
-.amazon-login-button {
-  color: #232F3E;
-  border-color: #232F3E;
-  background-color: rgba(35,47,62, .04);
-  display: block;
-  width: 300px;
-  margin: 10px auto 0 auto;
-  &:hover {
-    background-color: #3B5998;
-  }
-}
-
-a.login-button {
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
-
-    text-decoration: none;
-
-    color: #3B5998;
-    border-color: #3B5998;
-    display: flex;
-    width: 300px;
-    height: 50px;
-    &:hover {
-      background-color: #3B5998;
-      border-color: #3B5998 !important;
-    }
 }
 
 .modal-dialog {

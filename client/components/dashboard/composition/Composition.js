@@ -2,12 +2,12 @@ import React from 'react'
 import { Treemap } from 'recharts'
 
 const COLORS = [
+  '#9FBCD7', // PRINCE BLUE
   '#87D37C', // GOSSIP
-  '#DCC6E0', // SNUFF
-  '#BDC3C7', // SILVER SAND
-  '#4183D7', // ROYAL BLUE
   '#E9D460', // CONFETTI
   '#F1A9A0', // WAX FLOWER
+  '#DCC6E0', // SNUFF
+  '#BDC3C7', // SILVER SAND
 ];
 
 const CustomizedContent = (props) => {

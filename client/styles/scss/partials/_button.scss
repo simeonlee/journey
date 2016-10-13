@@ -1,0 +1,65 @@
+.journey-btn {
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  letter-spacing: 1px;
+  cursor: pointer;
+  color: white;
+  border: 0;
+  opacity: 0.9;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 0;
+  border-radius: 4px;
+  font-weight: 200;
+  &:hover {
+    opacity: 1.0;
+    color: white;
+  }  
+}
+
+.journey-btn-primary {
+  background-color: $jade;
+}
+
+.journey-btn-auth {
+  width: 300px;
+}
+
+.journey-btn-facebook {
+  background-color: #3b5998;
+}
+
+.journey-btn-amazon {
+  background-color: #FF9900;
+}
+
+.amazon-bumper {
+  margin-top: 12px;
+}
+
+.modal-btn-section {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+// a.login-button {
+//   -webkit-appearance: button;
+//   -moz-appearance: button;
+//   appearance: button;
+
+//   text-decoration: none;
+
+//   color: #3B5998;
+//   border-color: #3B5998;
+//   display: flex;
+//   width: 300px;
+//   height: 50px;
+//   &:hover {
+//     background-color: #3B5998;
+//     border-color: #3B5998 !important;
+//   }
+// }
