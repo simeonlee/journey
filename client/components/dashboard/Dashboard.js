@@ -74,7 +74,7 @@ export default class Dashboard extends Component {
     // Send request to server to run some analytics on user's journal for later retrieval
     axios.post('/api/analytics')
       .then(response => {
-        console.log(response);
+        // console.log(response);
       })
       .catch(err => {
         console.log(err);

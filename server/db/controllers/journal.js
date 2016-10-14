@@ -332,6 +332,6 @@ module.exports = (() => {
     postJournalEntriesForDate: postJournalEntriesForDate,
     getUser: getUser,
     updateUserInfo: updateUserInfo,
-    getEntryInfo: getEntryInfo
+    getEntryInfo: getEntryInfo,
   }
 })();
