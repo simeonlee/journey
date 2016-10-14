@@ -51,26 +51,19 @@ export default class Calendar extends Component {
   render() {
     var svgStyle = {
       padding: this.SQUARE_PADDING + 'px',
-      // position: 'absolute',
-      // top: '60px',
-      // left: 0,
     };
     
     return (
       <div className="calendar">
         <svg
           className="calendar-svg"
-          preserveAspectRatio="xMidYMax meet"
-          // preserveAspectRatio="none"
-          viewBox={'0 0 ' + this.state.width + ' ' + this.state.height} // x, y, width, height
+          viewBox={'0 ' + this.SQUARE_LENGTH + ' ' + this.state.width + ' ' + this.state.height} // x, y, width, height
           width={this.state.width}
           height={this.state.height}
           style={svgStyle}
         >
           <g
             className="calendar-group"
-            // preserveAspectRatio="xMinYMax meet"
-            // transform={'translate(' + 0 + ',' + 60 + ')'}
           ></g>
         </svg>
       </div>
@@ -246,7 +239,7 @@ export default class Calendar extends Component {
 
     var feelings = this.days
       .append('g')
-        .attr('transform', 'translate(44, 20)')
+        .attr('transform', 'translate(' + this.SQUARE_LENGTH / 2 + ', 20)') // move the feelings over to the right
 
     feelings
       .append('text')
@@ -601,6 +594,9 @@ export default class Calendar extends Component {
     this.dateRange = d3.time.days(startDate, now);
 
     this.firstDate = moment(this.dateRange[0]);
+
+    // this.weeksShown = moment().week() - this.firstDate.week(); // for calculations regarding moving the page up and down
+    // this.translateSvgUpwardsBy = this.SQUARE_PADDING + this.weeksShown * (this.SQUARE_LENGTH + this.SQUARE_PADDING) - this.props.height;
 
     var monthRange = d3.time.months(moment(startDate).startOf('month').add(1, 'month').toDate(), now); // ignores the first month if the 1st date is after the start of the month
 
