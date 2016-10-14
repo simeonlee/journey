@@ -24,7 +24,7 @@ export class LoginForm extends Component {
 
         <FormGroup>
           <Col className="flex flex-center" sm={10}>
-            <Button type="submit" className="journey-btn journey-btn-primary journey-btn-sm">
+            <Button type="submit" className="journey-btn journey-btn-primary journey-btn-xl">
               Log In
             </Button>
           </Col>
