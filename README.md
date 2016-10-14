@@ -10,7 +10,7 @@ Journal entries are visualized on a scrolling chronology on the web front end as
 
 <!-- ![journal page](https://github.com/simeonlee/journey/blob/master/images/app/journal-page.png "Journey journal page") -->
 
-<img src=https://github.com/simeonlee/journey/blob/master/images/app/journal-page.png width=300 height=300 />
+<img src=https://github.com/simeonlee/journey/blob/master/images/app/journal-page.png width=500 height=300 />
 
 ## Dashboard Analytics
 
