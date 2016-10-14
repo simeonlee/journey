@@ -1,4 +1,4 @@
-var settings = (process.env.NODE_ENV === 'development' ? require('../../settings').dbDev : require('../../settings').dbProd);
+var settings = require('../../settings').db;
 var Sequelize = require('sequelize');
 
 var sequelize = new Sequelize('journey', settings.username, settings.password, {
