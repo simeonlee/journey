@@ -70,7 +70,7 @@ export default class ActivityFeed extends Component {
         {this._streak()}
         {this._populateInteractions()}
         <div className="flex flex-center">
-          <div onClick={this._moreHistory.bind(this)} className="journey-btn journey-btn-primary">Show More</div>
+          <div onClick={this._moreHistory.bind(this)} className="journey-btn journey-btn-primary">Show Earlier Activity</div>
         </div>
       </div>
     )

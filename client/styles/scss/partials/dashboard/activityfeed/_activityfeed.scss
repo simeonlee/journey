@@ -5,6 +5,12 @@
   flex-direction: column;
   color: white;
   width: 100%;
+  height: 100%;
+  overflow: scroll;
+  div.journey-btn {
+    margin-top: 80px;
+    margin-bottom: 60px;
+  }
 }
 
 .streak {
@@ -14,26 +20,31 @@
 }
 
 .basic-interaction {
-  width: 80%;
+  width: 90%;
+  height: 54px;
+  min-height: 54px;
   background-color: $midLynch;
   padding: 5px;
   border-radius: $border-radius;
-  > div {
-    font-size: 14px;
-  }
 }
 
-.interaction-type {
-  width: 20%;
+.int-date {
+  font-size: 16px;
+  width: 25%;
   text-align: left;
+  font-weight: 100;
 }
 
-.interaction-summary {
-  width: 60%;
+.int-summary {
+  width: 50%;
   text-align: center;
+  font-weight: 400;
+  font-size: 16px;
 }
 
-.interaction-date {
-  width: 20%;
+.int-timestamp {
+  width: 25%;
   text-align: right;
+  font-weight: 100;
+  font-size: 14px;
 }
