@@ -71,15 +71,8 @@ export default class Dashboard extends Component {
       // currentDashboardSubtitle: 'Calendar settings',
     };
 
-    // Send request to server to run some analytics on user's journal for later retrieval
-    axios.post('/api/analytics')
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    this.aggregateCumulativeUserJournalData()
+    this.askServerToRunAnalytics(false); // don't override limiter - wait 12 hours before analysis
+    this.aggregateCumulativeUserJournalData();
   }
 
   componentDidMount() {
@@ -118,6 +111,23 @@ export default class Dashboard extends Component {
     var currentDashboardTitle = this.state.dashboardTypes[selectedDashboardType].title;
     var currentDashboardSubtitle = this.state.dashboardTypes[selectedDashboardType].subtitle;
     this.setState({ selectedDashboardType, currentDashboardTitle, currentDashboardSubtitle });
+  }
+
+  askServerToRunAnalytics(override) {
+    // Send request to server to run some analytics on user's journal for later retrieval
+    axios.post('/api/analytics', {
+        override: override
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  overrideApiRateLimiter() {
+    this.askServerToRunAnalytics(true); // override limiter
   }
 
   render() {
@@ -171,6 +181,12 @@ export default class Dashboard extends Component {
         />
         <div className="dashboard-body">
           {dashboard}
+        </div>
+        <div
+          className="journey-btn journey-btn-secondary journey-btn-md analyze-btn"
+          onClick={this.overrideApiRateLimiter.bind(this)}
+        >
+          Run Analysis
         </div>
       </div>
     )
