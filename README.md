@@ -27,3 +27,12 @@ There is a dashboard with several clickable pages of analytics and D3-enabled gr
 + [MySQL](https://www.mysql.com)
 + [Nexmo](https://www.nexmo.com)
 + [Google Cloud Natural Language API](https://cloud.google.com/natural-language)
+
+## To Be Implemented
+
++ Mobile
++ [Three.js](https://threejs.org/)
++ [Redux](https://github.com/reactjs/redux)
++ [Docker](https://www.docker.com)
++ [Cloudfront](https://aws.amazon.com/cloudfront/) / [NGINX](https://www.nginx.com/)
++ [Cron](https://en.wikipedia.org/wiki/Cron)
