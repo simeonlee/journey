@@ -4,8 +4,8 @@ var util = require('util');
 var JournalEntry = require('./../db/models/journals/journalEntry');
 var request = require('request');
 var bcrypt = require('bcrypt-nodejs');
+var moment = require('moment');
 var saltRounds = 10;
-
 
 module.exports = (() => {
 
