@@ -23,14 +23,29 @@ export default class Calendar extends Component {
     this.SQUARE_PADDING = 3;
     this.SQUARE_LENGTH = (this.state.width - (8 * this.SQUARE_PADDING)) / 7; // 8 pads around 7 squares in a row
 
-    this.max = 5;
+    this.max = 8;
     this.dayRectExpanded = false; // set to true when we have something expanded to fill the page
   }
 
   componentDidMount() {
     this.setDates();
-    this.countData = this.generateTestData(this.dateRange); // generate dummy data of random counts for every day
+    this.countData = {}; // generate dummy data of random counts for every day
     this.initD3();
+    axios.get('/api/entries', {
+      params: {
+        limit: 100
+      }
+    })
+    .then(entries => {
+      var data = entries.data;
+      var obj = {}
+      for (var i = 0; i < data.length; i++) {
+        obj[moment(data[i].datetime).toDate()] = data[i];
+        obj[moment(data[i].datetime).toDate()].count = data[i].eveningCount + data[i].morningCount;
+      }
+      this.countData = obj;
+      this.update()
+    })
   }
 
   render() {
@@ -169,7 +184,7 @@ export default class Calendar extends Component {
         .attr('class', 'day-rect')
         .attr('width', this.SQUARE_LENGTH)
         .attr('height', this.SQUARE_LENGTH)
-        .attr('fill', (d, i) => { return this.countData[d] ? color(this.countData[d].count) : '#ECECEC'; }); // assign color to each rect
+        .attr('fill', (d, i) => {console.log(d); return this.countData[d] ? color(this.countData[d].count) : '#ECECEC'; }); // assign color to each rect
 
     this.days
       .append('text')
@@ -605,17 +620,17 @@ export default class Calendar extends Component {
   }
 
   // Generate fake data for testing
-  generateTestData(dateRange) {
-    var data = {};
-    for (var i = Math.floor(dateRange.length / 5); i < dateRange.length; i++) {
-      var date = dateRange[i];
-      data[date] = {
-        date: date,
-        count: Math.floor(Math.random() * (this.max + 1))
-      }
-    }
-    return data;
-  }
+  // generateTestData(dateRange) {
+  //   var data = {};
+  //   for (var i = Math.floor(dateRange.length / 5); i < dateRange.length; i++) {
+  //     var date = dateRange[i];
+  //     data[date] = {
+  //       date: date,
+  //       count: 0
+  //     }
+  //   }
+  //   return data;
+  // }
 }
 
 
