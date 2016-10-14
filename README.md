@@ -8,7 +8,9 @@ Journey is a web and Alexa journaling application that promotes mental wellbeing
 
 Journal entries are visualized on a scrolling chronology on the web front end as per below. The eventual progression is to have voice be the primary journaling input vehicle (currently enabled by Alexa, with other services - Google Home, Siri - to come) with ancillary input methods via web (functional) and mobile (pending).
 
-![journal page](https://github.com/simeonlee/journey/blob/master/images/app/journal-page.png "Journey journal page")
+<!-- ![journal page](https://github.com/simeonlee/journey/blob/master/images/app/journal-page.png "Journey journal page") -->
+
+<img src=https://github.com/simeonlee/journey/blob/master/images/app/journal-page.png width=300 height=300 />
 
 ## Dashboard Analytics
 
