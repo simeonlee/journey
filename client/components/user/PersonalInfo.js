@@ -54,9 +54,9 @@ export default class PersonalInfo extends Component {
 
   _editOrSave(passed) {
     if (!this.state[passed].edit) {
-      return (<div className="col-md-1"><button onClick={() => this._edit(passed)} type="button" className="journey-btn journey-btn-secondary journey-btn-sm pull-right">Edit</button></div>)
+      return (<div className="col-md-1"><button onClick={() => this._edit(passed)} type="button" className="journey-btn journey-btn-secondary journey-btn-sm">Edit</button></div>)
     } else {
-      return <div className="col-md-1"><button onClick={() => this._saveInfo(passed)} type="button" className="journey-btn journey-btn-primary journey-btn-sm pull-right">Save</button></div>
+      return <div className="col-md-1"><button onClick={() => this._saveInfo(passed)} type="button" className="journey-btn journey-btn-primary journey-btn-sm">Save</button></div>
     }
   }
 
