@@ -43,7 +43,7 @@ export default class SignUp extends Component {
 
         <FormGroup>
           <Col className="flex flex-center" sm={10}>
-            <Button className="journey-btn journey-btn-primary" type="submit">
+            <Button className="journey-btn journey-btn-primary journey-btn-xl" type="submit">
               Sign up
             </Button>
           </Col>
