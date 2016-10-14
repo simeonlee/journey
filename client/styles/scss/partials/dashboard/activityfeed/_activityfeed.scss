@@ -15,6 +15,9 @@
 
 .basic-interaction {
   width: 80%;
+  background-color: $midLynch;
+  padding: 5px;
+  border-radius: $border-radius;
   > div {
     font-size: 14px;
   }
