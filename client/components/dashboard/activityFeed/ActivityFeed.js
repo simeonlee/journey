@@ -46,6 +46,7 @@ export default class ActivityFeed extends Component {
       }
       current.subtract(1, 'days')
     })
+    this.state.entries.reverse()
     return count;
   }
 
