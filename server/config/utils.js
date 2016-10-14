@@ -263,8 +263,8 @@ module.exports = (() => {
   }
 
   var storeAlexaData = (req, res) => {
-    // User.findOne({where: { alexaID: req.body.userId }})
-    //   .then((user) => {
+    User.findOne({where: { alexaID: req.body.userId }})
+      .then((user) => {
     //     JournalEntry.findOrCreate({
     //       where: {
     //         datetime: moment().format('lll'),

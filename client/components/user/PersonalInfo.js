@@ -80,7 +80,7 @@ export default class PersonalInfo extends Component {
   render() {
     return (
       <div className="col-md-12 journal-content">
-        <h4>Hello, {this.state.username.info}</h4>
+        <h4>Hello, {this.state.firstName.info}!</h4>
         <div className="individual-info col-md-12">
           <h5>Name</h5>
           {this.state.firstName.info} {this.state.lastName.info}
