@@ -1,6 +1,10 @@
 {
-  "db": {
+  "dbDev": {
     "username": "root",
     "password": "password"
+  },
+  "dbProd": {
+    "username": "root",
+    "password": "goddamnhowdidiforgetthisshit"
   }
 }
