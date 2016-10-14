@@ -9,10 +9,9 @@ module.exports = (() => {
     config.Reflection
   ];
 
+  // Only run our text analysis and use API call if it has been more than 12 hours since we last ran this analysis
   var analyzeDays = (req, res) => {
     var userId = req.user.id /* Amazon */ || req.user.dataValues.id /* Facebook */;
-
-    // Only run our text analysis and use API call if it has been more than 12 hours since we last ran this analysis
 
     config.User.find({
         where: {
@@ -31,7 +30,9 @@ module.exports = (() => {
 
         var twelveHoursAgo = moment().subtract({ hours: hourDelta }).valueOf(); // .valueOf converts to milliseconds
 
-        if (lastTime < twelveHoursAgo) {
+        // if it has been 12 hours since the last time the user had analysis run
+        // or if the user (such as developer) has ability to override, run analysis
+        if (lastTime < twelveHoursAgo || req.body.override) {
 
           // when we save data to the database for the user's journal, also update the days that need to be analyzed
           // at certain intervals, we'll check that list of days to be analyzed and run analysis over them
