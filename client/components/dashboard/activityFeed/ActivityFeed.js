@@ -38,7 +38,7 @@ export default class ActivityFeed extends Component {
     var current = moment().startOf('day');
     var count = 0;
     var counting = true;
-    this.state.entries.reverse().forEach(entry => {
+    this.state.entries.slice().reverse().forEach(entry => {
       if (counting === true && current.format('LLLL') === moment(entry.datetime).startOf('day').format('LLLL')) {
         count++
       } else {
@@ -46,7 +46,6 @@ export default class ActivityFeed extends Component {
       }
       current.subtract(1, 'days')
     })
-    this.state.entries.reverse()
     return count;
   }
 
