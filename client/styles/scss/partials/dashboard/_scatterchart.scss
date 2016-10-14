@@ -1,0 +1,31 @@
+line {
+  stroke-width: 2;
+  stroke: #34495E;
+}
+
+line.recharts-cartesian-axis-line {
+  stroke: $lightLynch !important;
+}
+
+line.recharts-cartesian-axis-tick-line {
+  stroke: $lightLynch !important;
+}
+
+.recharts-cartesian-grid-horizontal > line{
+  stroke-width: 1;
+}
+
+.recharts-cartesian-grid-vertical > line{
+  stroke-width: 1;
+}
+
+.recharts-text {
+  stroke: #6C7A89;
+  font-size: 17px;
+}
+
+// #5C97BF
+// 67809F
+// 34495E
+
+//6C7A89

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, Legend, CartesianGrid, Bar } from 'recharts'
+import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, Legend, CartesianGrid, Bar, Rectangle } from 'recharts'
 import d3 from 'd3'
 import moment from 'moment'
 import axios from 'axios'
@@ -91,16 +91,19 @@ export default class Chart extends Component {
   }
 
   render() {
+    var morningColor="#F89406",
+        eveningColor="#BE90D4";
+
     return (
       <div className="barchart">
-        <ScatterChart width={this.state.width} height={window.innerHeight - 70} margin={{ top: 20, right: 20, bottom: 10, left: 10 }}>
-          <XAxis dataKey="day" name="day" unit="" />
-          <YAxis dataKey="time" name="time" unit=" o'clock" />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip cursor={{strokeDasharray: '3 3'}} />
-          <Legend />
-          <Scatter name="morning" data={this.generateTestData().morning} fill="#9C9C9C" />
-          <Scatter name="evening" data={this.generateTestData().evening} fill="#666666" />
+        <ScatterChart width={this.state.width} height={window.innerHeight - 70} margin={{ top: 30, right: 20, bottom: 10, left: 10 }} >
+          <XAxis dataKey="day" name="Day" unit="" />
+          <YAxis dataKey="time" name="Time" unit=" o'clock"/>
+          <CartesianGrid strokeDasharray="10 3" wrapperStyle={{ strokeWidth: '.5' }} />
+          <Tooltip cursor={{ stroke: '#6C7A89', strokeDasharray: '4 10'}} wrapperStyle={{ backgroundColor: '#ccc', borderRadius: '2px' }} />
+          <Legend iconSize="18" wrapperStyle={{color: 'white'}} />
+          <Scatter name="Morning" shape="circle" data={this.generateTestData().morning} fill={morningColor} />
+          <Scatter name="Evening" shape="circle" data={this.generateTestData().evening} fill={eveningColor} />
         </ScatterChart>
       </div>
     )
