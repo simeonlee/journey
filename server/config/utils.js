@@ -1,6 +1,7 @@
 var passport = require('passport');
 var { User, FacebookUser, AmazonUser, Gratitude, Outlook, Affirmation, Amazing, Reflection } = require('../db/config.js');
 var util = require('util');
+var JournalEntry = require('./../db/models/journals/journalEntry');
 var request = require('request');
 var bcrypt = require('bcrypt-nodejs');
 var saltRounds = 10;
@@ -264,6 +265,58 @@ module.exports = (() => {
   var storeAlexaData = (req, res) => {
     User.findOne({where: { alexaID: req.body.userId }})
       .then((user) => {
+    //     JournalEntry.findOrCreate({
+    //       where: {
+    //         datetime: moment().format('lll'),
+    //         userId: user.id
+    //       },
+    //       defaults: {
+    //         datetime: req.body.date,
+    //         userId: user.id,
+    //         morningCount: req.body.entryType === 'morning' ? 6 : 0,
+    //         morning: req.body.entryType === 'morning' ? moment().startOf('day').format('lll'),
+    //         eveningCount: req.body.entryType === 'evening' ? 7 : 0,
+    //         evening: req.body.entryType === 'evening' ? moment().startOf('day').format('lll')
+    //       }
+    //     })
+    //     .spread((journal, created) => {
+    //       if (!created) { 
+    //         if (req.body.entryType === 'morning') {
+    //           journal.update({
+    //             morningCount: 6,
+    //             morning: moment().startOf('day').format('lll')
+    //           })
+    //           // .then(() => {
+    //           //   if (req.body.morning > journal.dataValues.morning || journal.dataValues.morning === null) {
+    //           //     journal.update({
+          
+    //           //     })
+    //           //   }
+    //           // })
+    //           .catch(err => {
+    //             console.log(err)
+    //           })
+    //         }
+    //         if (req.body.entryType === 'evening') {
+    //           journal.update({
+    //             eveningCount: 7,
+    //             evening: moment().startOf('day').format('lll')
+    //           })
+    //           // .then(() => {
+    //           //   if (req.body.evening > journal[0].dataValues.evening || journal[0].dataValues.evening === null) {
+    //           //     journal[0].update({
+                    
+    //           //     })
+    //           //   }
+    //           // })
+    //           .catch(err => {
+    //             console.log(err)
+    //           })
+    //         }
+    //       }
+    //     })
+
+
         var Entry = req.body.entryType === 'morning' ? morningEntryMap[req.body.prompt] : eveningEntryMap[req.body.prompt];
         Entry.create({
           entry: req.body.text,
