@@ -19,7 +19,7 @@ export default class Chart extends Component {
     axios.get('/api/entries')
     .then(entries => {
       this.formatData(entries.data);
-    })
+    });
   }
 
   formatData(data) {
@@ -64,16 +64,21 @@ export default class Chart extends Component {
       morning: [],
       evening: []
     };
+    var day, dayLetter;
     var dateRange = this.generateDateRange(2, 'week');
 
     for (var i = 0; i < dateRange.length; i++) {
       var date = dateRange[i];
+      day = date.getDay();
+      dayLetter = this.days[day];
       data.morning.push({
-        day: date.getDay(), // return day of week 0 - 6
+        dayLetter: dayLetter,
+        day: day, // return day of week 0 - 6
         time: this.generateRandomTime(6, 12)
       });
       data.evening.push({
-        day: date.getDay(), // return day of week 0 - 6
+        dayLetter: dayLetter,
+        day: day, // return day of week 0 - 6
         time: this.generateRandomTime(12, 24)
       });
     }
@@ -101,7 +106,7 @@ export default class Chart extends Component {
           <YAxis dataKey="time" name="Time" unit=" o'clock"/>
           <CartesianGrid strokeDasharray="10 3" wrapperStyle={{ strokeWidth: '.5' }} />
           <Tooltip cursor={{ stroke: '#6C7A89', strokeDasharray: '4 10'}} wrapperStyle={{ backgroundColor: '#ccc', borderRadius: '2px' }} />
-          <Legend iconSize="18" wrapperStyle={{color: 'white'}} />
+          <Legend iconSize={18} wrapperStyle={{color: 'white'}} />
           <Scatter name="Morning" shape="circle" data={this.generateTestData().morning} fill={morningColor} />
           <Scatter name="Evening" shape="circle" data={this.generateTestData().evening} fill={eveningColor} />
         </ScatterChart>
