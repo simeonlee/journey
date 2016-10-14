@@ -23,12 +23,12 @@ text {
   }
 }
 
-.day-rect {
-  fill-opacity: .7;
+.day-rects {
+  fill-opacity: 0.8;
   pointer-events: all;
   cursor: pointer;
   &:hover {
-    fill-opacity: 1.0;
+    fill-opacity: 0.9;
   }
 }
 
