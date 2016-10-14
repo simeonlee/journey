@@ -1,13 +1,36 @@
-.dashboard-activity-feed {
-  width: 80%;
+.activity-feed {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  width: 100%;
 }
 
-.streak-header {
-  margin-top: 50px;
+.streak {
+  font-size: 24px;
+  font-weight: 200;
   text-align: center;
 }
 
-.activity-feed {
-  margin-right: 26%;
-  color: white;
+.basic-interaction {
+  width: 80%;
+  > div {
+    font-size: 14px;
+  }
+}
+
+.interaction-type {
+  width: 20%;
+  text-align: left;
+}
+
+.interaction-summary {
+  width: 60%;
+  text-align: center;
+}
+
+.interaction-date {
+  width: 20%;
+  text-align: right;
 }

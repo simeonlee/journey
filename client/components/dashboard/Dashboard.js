@@ -183,10 +183,10 @@ export default class Dashboard extends Component {
           {dashboard}
         </div>
         <div
-          className="journey-btn journey-btn-secondary journey-btn-md analyze-btn"
+          className="journey-btn journey-btn-secondary journey-btn-sm analyze-btn"
           onClick={this.overrideApiRateLimiter.bind(this)}
         >
-          Run Analysis
+          Analyze
         </div>
       </div>
     )

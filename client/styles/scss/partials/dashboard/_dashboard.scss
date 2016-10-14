@@ -6,37 +6,43 @@
 }
 
 .menu {
+  z-index: 99999999;
   position: absolute;
-  top: #{(2 * $nav-height)};
+  top: #{(1.5 * $nav-height)};
   bottom: $nav-height;
   left: 0;
-  width: 20%;
+  min-width: 60px;
+  width: 8%;
   display: flex;
   cursor: pointer;
   justify-content: center;
   padding: 0 10px 0 0;
-  // justify-content: center;
   flex-direction: column;
-  > div {
+  > div.menu-button {
     border-radius: 0 4px 4px 0;
-    margin: 2% 0;
-    height: 20%;
+    margin: 3% 0;
+    height: 25%;
     width: 80%;
-    color: white;
-    font-size: 16px;
-    padding-left: 10%;
     background-color: #87D37C;
     display: flex;
     align-items: center;
+    justify-content: center;
     -webkit-transition: width 300ms;
     -moz-transition: width 300ms;
     -o-transition: width 300ms;
     transition: width 300ms;
+    > div.menu-text { // button's text
+      color: white;
+      font-weight: 400;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+    }
   }
-  > div:hover {
+  > div.menu-button:hover {
     width: 100%;
   }
-  > .selected {
+  > div.menu-button.selected {
     width: 100%;
   }
 }
@@ -44,14 +50,12 @@
 .dashboard-body {
   position: absolute;
   top: $nav-height;
-  // left: 0;
-  right: 0;
+  left: 10%;
+  right: 10%;
   bottom: 0;
-  width: 80%;
   display: flex;
   align-items: center;
   flex-direction: column;
-  // justify-content: space-around;
 }
 
 .header {

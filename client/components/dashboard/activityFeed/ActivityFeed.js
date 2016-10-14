@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { BasicInteraction } from './BasicInteraction'
+import BasicInteraction from './BasicInteraction'
 import moment from 'moment'
 
 export default class ActivityFeed extends Component {
   constructor(props) {
     super(props);
-    this.limit = 0;
     this.state = {
       entries: []
     }
+    this.limit = 0;
     this._populateInteractions = this._populateInteractions.bind(this)
     this._streak = this._streak.bind(this)
     this._checkStreak = this._checkStreak.bind(this)
-    this._moreHistory = this._moreHistory.bind(this)
   }
 
   componentWillMount() {
@@ -29,7 +28,7 @@ export default class ActivityFeed extends Component {
     })
     .then(entries => {
       this.setState({
-        entries: entries.data.reverse()
+        entries: entries.data
       });
     })
   }
@@ -38,29 +37,31 @@ export default class ActivityFeed extends Component {
     var current = moment().startOf('day');
     var count = 0;
     var counting = true;
-    this.state.entries.slice().reverse().forEach(entry => {
+    this.state.entries.slice().forEach(entry => {
       if (counting === true && current.format('LLLL') === moment(entry.datetime).startOf('day').format('LLLL')) {
-        count++
+        count++;
       } else {
-        counting = false
+        counting = false;
       }
-      current.subtract(1, 'days')
+      current.subtract(1, 'days');
     })
     return count;
   }
 
   _streak() {
     if (this.state.entries.length > 0) {
-      return (<h4 className="streak-header">Your are on a {this._checkStreak()} day streak!</h4>)
-    }
+      return (<div className="streak">You are on a {this._checkStreak()} day streak!</div>);
+    };
   }
 
   _populateInteractions() {
     if (this.state.entries.length > 0) {
       return this.state.entries.map(entry => {
-        return (<BasicInteraction entry={entry}/>)
-      })
-    }
+        // Prevent 0% journal page progress from being shown via check below
+        var totalEntryCountForDay = entry.morningCount + entry.eveningCount;
+        return totalEntryCountForDay > 0 ? <BasicInteraction entry={entry}/> : null;
+      });
+    };
   }
 
   render() {
@@ -68,7 +69,9 @@ export default class ActivityFeed extends Component {
       <div className="activity-feed">
         {this._streak()}
         {this._populateInteractions()}
-        <button onClick={() => this._moreHistory()} type="button" className="btn btn-default center-block">Show More</button>
+        <div className="flex flex-center">
+          <div onClick={this._moreHistory.bind(this)} className="journey-btn journey-btn-primary">Show More</div>
+        </div>
       </div>
     )
   }

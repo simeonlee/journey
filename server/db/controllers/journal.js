@@ -317,6 +317,7 @@ module.exports = (() => {
   var getEntryInfo = (req, res, next) => {
     var userId = req.user.localId /* Amazon */ || req.user.dataValues.userId /* Facebook */;
     JournalEntry.findAll({
+      order: [['datetime', 'DESC']],
       where: {
         userId: userId
       },

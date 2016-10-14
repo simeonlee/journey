@@ -35,7 +35,7 @@ export default class LoginModal extends Component {
       <div>
         <Modal className="login-modal" show={showModal} onHide={this.props.close}>
           <Modal.Header closeButton>
-            <Modal.Title className="login-modal-title">Login</Modal.Title>
+            <Modal.Title className="login-modal-title">Log in</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <LoginForm/>
@@ -45,13 +45,13 @@ export default class LoginModal extends Component {
                 className="journey-btn journey-btn-auth journey-btn-facebook"
                 onClick={this.loginWithFacebook}
               >
-                Login with Facebook
+                Log in with Facebook
               </div>
               <div
                 className="journey-btn journey-btn-auth journey-btn-amazon amazon-bumper"
                 onClick={this.loginWithAmazon}
               >
-                Login with Amazon
+                Log in with Amazon
               </div>
             </div>
           </Modal.Body>

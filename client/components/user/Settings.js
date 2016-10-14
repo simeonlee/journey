@@ -120,7 +120,7 @@ export default class Settings extends Component {
           >
            Connect to Facebook
           </div>
-          <p className="amazon-bumper">Link your account to Amazon to record your journal with the Amazon Echo!</p>
+          <p className="amazon-bumper">Link your account to Amazon to write in your journal via Alexa</p>
           <div
            className="journey-btn journey-btn-auth journey-btn-amazon"
            onClick={this._linkToAmazon}

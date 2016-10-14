@@ -4,11 +4,16 @@ const Menu = ({selectDashboardType, selectedDashboardType, dashboardTypes}) => {
   var menuItems = Object.keys(dashboardTypes).map(type => {
     return (
       <div
-        className={'menu-item menu-' + type + (type === selectedDashboardType ? ' selected' : '')}
+        className={'menu-button menu-' + type + (type === selectedDashboardType ? ' selected' : '')}
         onClick={selectDashboardType}
         key={type}
       >
-        {dashboardTypes[type].display}
+        <div 
+          className={'menu-text menu-' + type + ' rotate'}
+          onClick={selectDashboardType}
+        >
+          {dashboardTypes[type].display}
+        </div>
       </div>
     )
   })
