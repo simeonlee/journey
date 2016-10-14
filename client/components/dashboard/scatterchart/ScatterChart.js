@@ -73,12 +73,12 @@ export default class Chart extends Component {
       dayLetter = this.days[day];
       data.morning.push({
         dayLetter: dayLetter,
-        day: day, // return day of week 0 - 6
+        day: day + 1, // return day of week 0 - 6
         time: this.generateRandomTime(6, 12)
       });
       data.evening.push({
         dayLetter: dayLetter,
-        day: day, // return day of week 0 - 6
+        day: day + 1, // return day of week 0 - 6
         time: this.generateRandomTime(12, 24)
       });
     }
@@ -103,12 +103,12 @@ export default class Chart extends Component {
       <div className="barchart">
         <ScatterChart width={this.state.width} height={window.innerHeight - 70} margin={{ top: 30, right: 20, bottom: 10, left: 10 }} >
           <XAxis dataKey="day" name="Day" unit="" />
-          <YAxis dataKey="time" name="Time" unit=" o'clock"/>
+          <YAxis dataKey="time" name="Time" unit=" o'clock" yAxisId="2"/>
           <CartesianGrid strokeDasharray="10 3" wrapperStyle={{ strokeWidth: '.5' }} />
           <Tooltip cursor={{ stroke: '#6C7A89', strokeDasharray: '4 10'}} wrapperStyle={{ backgroundColor: '#ccc', borderRadius: '2px' }} />
           <Legend iconSize={18} wrapperStyle={{color: 'white'}} />
-          <Scatter name="Morning" shape="circle" data={this.generateTestData().morning} fill={morningColor} />
-          <Scatter name="Evening" shape="circle" data={this.generateTestData().evening} fill={eveningColor} />
+          <Scatter name="Morning" shape="circle" data={this.generateTestData().morning} fill={morningColor} xAxisId="1" />
+          <Scatter name="Evening" shape="circle" data={this.generateTestData().evening} fill={eveningColor} xAxisId="1" />
         </ScatterChart>
       </div>
     )
